@@ -1,0 +1,213 @@
+1. Como funciona o modelo IVA Dual?
+
+Resposta: O IVA Dual é um tributo indireto, portanto incidente sobre cada operação que envolva bens e serviços na cadeia econômica. No Sistema Tributário Nacional, este imposto será dual, subdividido em dois tributos:
+
+Contribuição sobre bens e serviços (CBS): em substituição ao PIS/Pasep, Cofins
+
+Imposto sobre bens e serviços (IBS): em substituição ao ICMS e ISS
+
+No modelo de tributação do IVA, existe a não cumulatividade plena. Significa que os adquirentes de produtos ou tomadores de serviços pagam o preço dos bens e serviços e tomam créditos sobre os tributos pagos pelo fornecedor ou prestador, os quais foram incluídos no preço na etapa anterior. Após agregarem valor ao produto, mercadoria ou serviço, podem, então, compensar os créditos apropriados com os débitos por ele devidos, acabando por tributar apenas o valor adicionado na sua etapa da cadeia produtiva.
+
+2. Como será a materialidade da CBS e do IBS?
+
+Resposta: A administração dos referidos tributos será separada, mas eles terão regras harmônicas entre si.
+
+A Lei Complementar n° 214/2025 define de forma única para CBS e IBS:
+
+a) fatos geradores, bases de cálculo, hipóteses de não incidência e sujeitos passivos;
+
+b) imunidades;
+
+c) regimes específicos ou favorecidos de tributação; e
+
+d) regras de não cumulatividade e creditamento.
+
+3. Com a reforma tributária, haverá impacto na tributação sobre a renda?
+
+Resposta: Não. A Emenda Constitucional n° 132/2023 não envolve tributação sobre a renda.
+
+4. Posso tomar crédito sobre minhas aquisições sendo optante pelo Simples Nacional?
+
+Resposta: O artigo 146, § 2°, da Constituição Federal, prevê a possibilidade de recolhimento do IBS e da CBS de forma apartada dos demais tributos na sistemática do Simples Nacional. Caso o optante pelo Simples Nacional queira recolher os novos tributos no regime unificado, não haverá creditamento. Contudo, caso opte em recolher a CBS e o IBS por fora dele, poderá tomar crédito nas suas aquisições e, ainda, transferir mais créditos ao adquirente do que se recolhesse por dentro.
+
+5. Quando ocorre o fato gerador do IBS e da CBS?
+
+Resposta: O fato gerador do IBS e da CBS ocorre no momento do fornecimento. Isso se aplica tanto a operações com bens quanto com serviços, inclusive se forem de execução continuada ou fracionada. Considera-se ocorrido o fornecimento no momento:
+
+do início do transporte, na prestação de serviço de transporte iniciado no País;
+
+do término do transporte, na prestação de serviço de transporte iniciado no exterior;
+
+do término do fornecimento, no caso dos demais serviços;
+
+em que o bem for encontrado desacobertado de documentação fiscal idônea; e
+
+da aquisição do bem em licitação promovida pelo poder público de bem apreendido ou abandonado, ou por leilão judicial;
+
+no momento em que se realiza o pagamento, nas aquisições de bens e serviços pela administração pública direta, por autarquias e por fundações públicas, que estejam sujeitas ao disposto no artigo 473 da Lei Complementar n° 214/2025.
+
+6. Onde é considerado o local da operação com bens móveis materiais?
+
+Resposta: O local da operação para bens móveis materiais é o local onde o bem é entregue ou disponibilizado ao destinatário. Para operações não presenciais, o local será o destino indicado pelo adquirente ao fornecedor ou ao transportador, dependendo de quem for responsável pelo transporte. Em caso de veículos automotores, considera-se o domicílio principal do destinatário.
+
+Ainda, considera-se ocorrida a operação no local onde se encontra o bem móvel material:
+
+a) na aquisição de bem em licitação promovida pelo poder público ou em hasta pública, ainda que apreendido ou abandonado ou leilão; e
+
+b) na constatação de irregularidade pela falta de documentação fiscal ou pelo acobertamento por documentação inidônea.
+
+7. Como é definido o local da operação com bens imóveis?
+
+Resposta: O local da operação com bens imóveis, ou com direitos relacionados a imóveis, é o local onde o imóvel está situado. Se o imóvel se estender por mais de um município, será considerado o município com a maioria da área.
+
+8. Onde é considerado o local da operação com energia elétrica?
+
+Resposta: Nas operações com energia elétrica, considera-se como local da operação:
+
+a) o local da disponibilização, nas operações destinadas a consumo;
+
+b) o local do estabelecimento principal do adquirente.
+
+1. Quem ficará sujeito à incidência do IBS e da CBS?
+
+Resposta: Conforme o artigo 21 da Lei Complementar n° 214/2025, figura como sujeito passivo da relação tributária, ficando obrigado a se inscrever nos cadastros do IBS e da CBS como contribuinte destes tributos, o fornecedor que realizar operações:
+
+a) no desenvolvimento de atividade econômica;
+
+b) de modo habitual ou em volume que caracterize atividade econômica; ou
+
+c) de forma profissional, ainda que a profissão não seja regulamentada;
+
+A responsabilidade se aplica, ainda, ao importador, e ao adquirente, ainda que não enquadrado nas hipóteses acima, na aquisição de bem apreendido ou abandonado, em licitação promovida pelo poder público, ou em leilão judicial.
+
+Além das hipóteses elencadas acima, também é sujeito passivo aquele que se enquadre em outras situações expressamente previstas na mencionada Lei Complementar.
+
+2. Quais entidades não são contribuintes do IVA Dual?
+
+Resposta: Segundo o artigo 26 da Lei Complementar n° 214/2025, não são contribuintes do IBS e da CBS:
+
+a) condomínio edilício;
+
+b) consórcio;
+
+c) sociedade em conta de participação (SCP);
+
+d) nanoempreendedor;
+
+e) fundos de investimento;
+
+f) produtor rural previsto no artigo 164 da referida Lei;
+
+g) transportador autônomo de carga previsto no artigo 169 da Lei Complementar retromencionada;
+
+h) entidade sem fins lucrativos que presta serviços de planos de assistência à saúde sob a modalidade de autogestão;
+
+i) entidades de previdência complementar fechada, constituídas conforme a Lei Complementar nº 109/2001; e
+
+j) fundos patrimoniais instituídos nos termos da Lei n° 13.800/2019.
+
+3. O que é nanoempreendedor?
+
+Resposta: A figura do nanoempreendedor, incluída no rol dos não contribuintes do IVA Dual, foi definida no inciso IV do artigo 26 da Lei Complementar n° 214/2025 como sendo a pessoa física que tenha auferido receita bruta inferior a 50% do limite estabelecido para adesão ao regime do MEI, e não tenha aderido a esse regime. Ou seja, considerando o limite de faturamento atual do MEI, a pessoa física que não tenha se formalizado como MEI e tenha receita bruta anual inferior a R$ 40.500 mil não será contribuinte do IBS e da CBS.
+
+4. O IVA Dual incidirá sobre quais operações?
+
+Resposta: O IBS e a CBS incidirão sobre todas as operações onerosas e as não onerosas listadas na Lei Complementar n° 214/2025, isso inclui a compra e venda, permuta, locação, licenciamento, cessão, arrendamento e prestação de serviços, além de operações com contraprestação, como doação com benefício ao doador.
+
+1. Empresas que possuem operação em diversos estados e municípios precisarão ter diversos cadastros?
+
+Resposta: Visando simplificar o processo de identificação e eliminar a necessidade de múltiplos registros para diferentes partes exigentes, como estados e municípios, a Reforma Tributária estabelece a obrigatoriedade do Cadastro com Identificação Única. Essa medida visa consolidar as informações cadastrais em um sistema integrado, permitindo maior eficiência na administração fiscal.
+
+Segundo o artigo 59 da Lei Complementar n° 214/2025 o cadastro será obrigatório para todas as pessoas físicas e jurídicas e as entidades sem personalidade jurídica sujeitas ao IBS e à CBS. Para efeito do Cadastro com Identificação Única, serão considerados os seguintes cadastros:
+
+a) Cadastro de Pessoas Físicas (CPF): de pessoas físicas;
+
+b) Cadastro Nacional da Pessoa Jurídica (CNPJ): de pessoas jurídicas e entidades sem personalidade jurídica; e
+
+c) Cadastro Imobiliário Brasileiro (CIB): de imóveis rurais e urbanos.
+
+As informações cadastradas serão integradas, sincronizadas e compartilhadas obrigatoriamente entre as administrações tributárias federal, estaduais, distrital e municipais, em um ambiente nacional de dados. Isso garantirá o fluxo contínuo e atualizado das informações, permitindo maior agilidade e precisão nos processos fiscais.
+
+2. Quando houver CBS, IBS ou IS incidentes na operação, o valor destes tributos deverá ser escriturado na EFD ICMS / IPI?
+
+Resposta: Os novos tributos, CBS, IBS e IS, devem ser considerados na escrituração do valor total do documento fiscal. Por exemplo, Campo 12 (VL_DOC) do registro C100.
+
+No entanto, não devem ser incluídos no valor da operação dos registros analíticos os valores relativos a CBS, IBS ou IS incidentes na operação. Por exemplo: campo 05 (VL_OPR) do registro C190.
+
+Esta orientação se aplica a todos os modelos de documentos fiscais escriturados na EFD ICMS / IPI.
+
+1. Como será feita a apuração do IVA?
+
+Resposta: A apuração do IBS e da CBS será mensal, considerando os prazos de sua conclusão e vencimento dos tributos definidos em regulamentação, conforme estabelecem os artigos 41 a 46 da Lei Complementar n° 214/2025. A apuração deverá consolidar as operações realizadas por todos os estabelecimentos do contribuinte.
+
+Destaca-se que o pagamento do IBS e da CBS, bem como o pedido de ressarcimento, serão centralizados em um único estabelecimento.
+
+O artigo 45 da mesma Lei Complementar estabelece que o contribuinte deverá apurar separadamente o saldo do IBS e da CBS para cada período de apuração. O saldo será o resultado da diferença entre o valor do IBS e da CBS incidentes sobre as operações realizadas no período e o montante dos tributos já pagos no próprio período de apuração, desde que correspondentes:
+
+a) ao recolhimento na liquidação financeira (split payment);
+
+b) ao recolhimento pelo adquirente; ou
+
+c) ao recolhimento por aquele ao qual foi atribuído a responsabilidade.
+
+2. O que é apuração assistida?
+
+Resposta: A apuração assistida consiste em um sistema fornecido pelo Comitê Gestor do IBS e pela RFB que trará informações coletadas por estas entidades e que poderá ser ajustada pelo contribuinte na forma e no prazo previsto em regulamento, considerando dados obtidos mediante:
+
+a) documentos fiscais eletrônicos;
+
+b) informações relativas aos pagamentos do IBS e da CBS efetuados por todas as modalidades, inclusive mediante recolhimento; e
+
+c) outras informações prestadas pelo contribuinte ou a ele relativas.
+
+Caso não haja manifestação contrária à apuração assistida, presume-se correto o saldo apurado, constituindo-se o crédito tributário.
+
+Ressalta-se que, caso a apuração assistida seja apresentada, a apuração pelo contribuinte, prevista artigo 46 da Lei Complementar n° 214/2025, será realizada exclusivamente por meio de ajustes na apuração assistida.
+
+Ademais, a apuração assistida não impede o lançamento de ofício de crédito tributário relativo a eventuais diferenças verificadas posteriormente pela administração tributária, conforme esclarece o artigo 46, § 7°, da referida Lei Complementar.
+
+3. Como poderá ser feita a extinção do débito tributário do IBS e da CBS?
+
+Resposta: Os débitos tributários poderão ser extintos mediante as seguintes modalidades:
+
+a) compensação com créditos;
+
+b) pagamento pelo contribuinte;
+
+c) recolhimento na liquidação financeira (split payment);
+
+d) recolhimento pelo adquirente;
+
+e) pagamento pelo responsável definido.
+
+4. Qual é a base de cálculo do IBS e da CBS?
+
+Resposta: o artigo 12 da Lei Complementar n° 214/2025, determina que a base de cálculo do IBS e da CBS é o valor da operação, com exceção de situações específicas previstas neste mesmo dispositivo.
+
+Conforme o § 1° do artigo 12 da Lei Complementar n° 214/2025, o valor da operação compreende o valor integral cobrado pelo fornecedor, a qualquer título, inclusive os valores correspondentes a:
+
+a) acréscimos decorrentes de ajuste do valor da operação;
+
+b) juros, multas, acréscimos e encargos;
+
+c) descontos concedidos sob condição;
+
+d) valor do transporte cobrado como parte do valor da operação, no transporte efetuado pelo próprio fornecedor ou no transporte por sua conta e ordem;
+
+e) tributos e preços públicos, inclusive tarifas, incidentes sobre a operação ou suportados pelo fornecedor, exceto aqueles previstos no § 2° do artigo 12 da Lei Complementar n° 214/2025; e
+
+f) demais importâncias cobradas ou recebidas como parte do valor da operação, inclusive seguros e taxas.
+
+1. O que é não cumulatividade plena?
+
+Resposta: A não cumulatividade é o sistema pelo qual o contribuinte poderá se apropriar de crédito tributário sobre o imposto pago nas suas aquisições de bens e de serviços, de forma tal que o custo de aquisição dos bens e serviços será o valor líquido, anulando a tributação incidente quando da aquisição deste.
+
+É necessário que a não cumulatividade seja “plena”, para que realmente ocorra a desoneração do setor produtivo, ou seja, que não existam restrições para o creditamento como atualmente ocorre para PIS/Pasep, Cofins, IPI e ICMS. Desta forma, o inciso VIII do § 1° do artigo 156-A da CF/88 e o artigo 28 da Lei Complementar n° 214/2025 preveem que a não cumulatividade somente não se aplicará nas aquisições consideradas de uso e consumo pessoal.
+
+2. Quais as hipóteses de vedação ao creditamento?
+
+Resposta: Segundo o artigo 47 da Lei Complementar n° 214/2025, o contribuinte sujeito ao regime regular poderá apropriar créditos do IBS e da CBS quando ocorrer a extinção dos débitos relativos às operações em que seja adquirente, excetuadas exclusivamente aquelas consideradas de uso ou consumo pessoal, nos termos do artigo 57 da referida Lei complementar e hipóteses previstas na referida Lei.
+
+As operações imunes, isentas ou sujeitas a alíquota zero não permitirão a apropriação de crédito para utilização nas operações subsequentes, ressalvadas as hipóteses expressamente previstas na Lei Complementar n° 214/2025.
+
+A imunidade e a isenção acarretarão a anulação do crédito relativo às operações anteriores, e será proporcional ao valor das operações imunes e isentas sobre o valor de todas as operações do fornecedor. A anulação não se aplica às exportações, às operações com livros, jornais, periódicos e do papel destinado à sua impressão e de serviço de comunicação nas modalidades de radiodifusão sonora e de sons e imagens de recepção livre e gratuita.

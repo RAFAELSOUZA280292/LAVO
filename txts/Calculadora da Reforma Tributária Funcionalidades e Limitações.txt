@@ -1,0 +1,52 @@
+Desvendando a calculadora da Reforma Tributária: o que ela faz (e o que não faz)
+Hoje (24/07/2025), a Receita Federal promoveu mais uma da série de lives, com o grupo inicial de empresas do projeto-piloto de testes da reforma tributária, cujo número de empresas deverá chegar, em alguns dias a 500 empresas de diversos ramos, para que os diversos setores possam iniciar testes e validações com situações do dia a dia de cada área, a fim de que em 2026 já estejam em pleno vigor o período de testes com 1% de IBS/CBS sobre toas as vendas e prestações de serviços.
+Insights da live de hoje
+E qual foi o tema central desta live: A nova calculadora de tributos desenvolvida pelo SERPRO para a receita federal, e disponibilizada para os contribuintes, para simular o cálculo do IBS e CBS. Tudo que essa calculadora realiza, quais suas funcionalidades e limitações de escopo, impacto para as empresas e profissionais contábeis, dentre outras coisas, é o que nós vamos desvendar nesse artigo.
+Durante o evento, a Receita destacou que a ferramenta é parte de um “novo modelo de cooperação” Fisco‑contribuinte . A intenção é criar um sistema mais transparente e eficiente, reduzindo divergências e custos de conformidade.
+O que é a calculadora da reforma tributária da receita federal
+É uma ferramenta código aberto, multiplataforma, que pode ser utilizada tanto on-line, quanto offline, integrada ao seu ERP via API ou até mesmo baixada para uso local. Ela foi desenvolvida pelo fisco, para inaugurar uma nova era na administração tributária, que é realizada de forma colaborativa, onde o contribuinte tem a disposição uma ferramenta que permite que ele valide, analise e corrija eventuais problemas legais, antes de enviar o arquivo de sua nota fiscal (xml) em definitivo para o fisco. O que gerará em seguida, a declaração definitiva dos novos tributos CBS e IBS (contribuição sobre bens e serviços federal e IBS imposto sobre bens e serviços, que é destinado a estados e municípios) com maior segurança e compliance.
+O contribuinte poderá também simular on line, manualmente, como fica o cálculo do tributo sobre bens e serviços, informando os seguintes dados:
+Data de ocorrência
+Cidade
+UF
+NCM
+Grupo de Tributação e CST do IBS/CBS
+Classificação Tributária
+Valor, quantidade e unidade de medida
+Ao final deste artigo, disponibilizo o link para a calculadora para que você possa dar uma olhada.
+O que eu consigo fazer com essa calculadora?
+A ferramenta, lançada em versão Beta, simula tributos como IBS, CBS e o Imposto Seletivo, seguindo as regras da EC 132/2023 e da LC 214/2025, sem a necessidade um banco de dados com todas as regras, sem necessidade de parametrização manual. É coerente, auditável e traz “memória de cálculo” — ou seja, uma trilha clara que explica o porquê de cada valor gerado, com base legal aplicada.
+Você pode usá-la pelo navegador (ideal para simulações pontuais) ou incorporá-la no sistema ERP via API — o que torna possível a geração automática de grupos tributários para NF‑e, CT‑e e CT‑e Simplificado.
+A Receita inovou ao criar uma ferramenta aberta, que busca transparência e padronização, alinhada às melhores práticas internacionais (“Tax as a Service”). Até como modelo preconizado pela OCDE.
+O que ajuda pra resolver um meme muito comum, que foi mencionado durante a live, o qual o contribuinte é cobrado pelo fisco: – Me pague o que deve de imposto? Ao qual ele pergunta: – Quanto devo? E o fisco responde: – Você quem deve saber! Ao qual o contribuinte retruca: Mas e se eu errar o valor? E finalmente o fisco diz: Aí eu te multo rss (Sei que é tragicômico pois isso acontece frequentemente em nosso manicômio tributário, sob as regras atuais).
+Com essa calculadora nas novas regras unificadas, eles querem romper com esse problema, deixando mais seguro o cálculo e declaração dos novos impostos, pois o contribuinte simula, valida e tem mais clareza e tranquilidade de que o imposto está correto, afinal será agora a apuração definitiva e o imposto pago por split payment (retido na fonte no momento do pagamento do serviço ou produto pelo cliente, com a divisão entre o preço e o imposto que já será separado e depositado direto na conta do fiscao). O Split Payment é assunto pra outro artigo em breve.
+O que ela faz de verdade
+Aplica regras legais de forma padronizada e confiável;
+Simula cálculos para IBS, CBS e IS, com ambos formatos — online e local;
+Gera grupos de tributação (CBS, IBS, IS) prontos para usar em notas fiscais eletrônicas;
+Permite auditabilidade com base legal e memória de cálculo.
+O que ela Não faz
+Aqui que o filho chora e a mãe não vê (não poderia deixar essa piada rsss).
+Antes de pegar um preço qualquer e mandar calcular os tributos da empresa, você primeiro precisa saber que preço eu devo vender meu produto, para que em seguida calcule esses impostos.
+Desse modo a calculadora não foi criada com finalidade de definir qual deve ser o seu custo, a margem a ser empregada, desoneração dos tributos em cada período de transição, a avaliação do preço final, tampouco o nível de competitividade da sua empresa durante todo o período em que tributos serão incorporados (CBS em 2027, IBS de 2029 a 2032). Para isso você deve observar:
+Análise estratégica de caixa: ela não diz se sua empresa tem fluxo para pagar tributos nesse regime;
+Planejamento financeiro: não considera capital de giro, sazonalidade ou impacto no mercado;
+Interpretação tributária personalizada: não avalia o que é melhor para o seu negócio em longo prazo;
+Gestão de contingências: não oferece simulações de passivo, contingência ou buffer de segurança.
+E esse detalhe é essencial: muitos usuários confundem essa solução com a panaceia do compliance tributário. Se você achava que só usar a calculadora já resolveria inúmeros desafios que as empresas terão que enfrentar coma reforma tributária, te adianto que essa conta não fecha sozinha.
+Mas atenção: os limites
+A calculadora é poderosa mas não é médica. Você precisa:
+Definir quais cenários serão testados, com base em documentos fiscais reais;
+Validar os grupos de tributação gerados;
+Confrontar o resultado com o fluxo de caixa projetado;
+Integrá-la como parte de uma estratégia maior: planejamento tributário, financeira, operacional.
+Por que isso importa
+Essa ferramenta é sim uma revolução, ela traz transparência, padronização e pode ser integrada ao ERP. Mas é apenas o motor de cálculo. A verdadeira vantagem está em saber o que fazer com os resultados e que valor você vai colocar na calculadora: ele é o valor ideal? Considera adequadamente os créditos? que tipo de regime tributário tem seus fornecedores? Se estão no regime regular? Se o custo de cada produto e/ou serviço irá aumentar após a desoneração dos tributos e a aplicação das novas regras? E quais essas variações antes dos preços em cada período de entrada em vigor de cada novo tributo?
+Se você usar isso apenas como calculadora de bolso, pode até se enganar acreditando estar bem preparado. Mas a competitividade real vem de interpretá-la com inteligência, estratégia e visão de negócio.
+Então, meus amigos, a calculadora da Receita é um avanço, não apenas pelo código aberto e pela integração, mas por representar um novo modelo de participação com o Fisco. Em vez de um processo opaco, teremos mais previsibilidade e consistência.
+Mas quem busca fazer a diferença e garantir a perenidade do seu negócio, precisa agora: planejar, comparar cenários, entender o caixa e antecipar impactos, preparar ERP`s e muito mais.
+Se você quiser saber como montar todo esse processo, como interpretar os resultados, como aproveitar as oportunidades da reforma tributária para planejar e crescer, estou aqui para ajudar, inclusive com as ferramentas adequadas que poderão te ajudar em todo esse processo e preencher esse gap que necessita de uma ferrametna específica para esse fim.
+Então, me siga nas redes sociais no insgragram @ronaldodiasoliveira e na @pricetax e acompanhe nossos conteúdos e novidades.
+Ah como prometido segue o Link da calculadora da reforma tributária oficial:
+https://piloto-cbs.tributos.gov.br/servico/calculadora-consumo/calculadora
+Grande abraço e até a próxima. Há não perca minha palestra no CombCon 2025, vamos bater um papo interessante sobre os impactos da reforma nos negócios contábeis e nas PME`s. Ronaldo Dias Oliveira.

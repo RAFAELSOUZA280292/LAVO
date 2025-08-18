@@ -1,0 +1,96 @@
+1. 📌 Estrutura e Conceitos (Artigos 1º a 3º)
+A LC 214/2025 define os conceitos fundamentais para o regime do IBS e da CBS:
+“Bem”: inclui bens materiais e imateriais, inclusive direitos;
+“Fornecimento”: abrangendo entrega, disponibilização, cessão, licenciamento ou prestação de serviço;
+“Fornecedor”, “Adquirente”, e “Destinatário”: com definições que consideram quem paga, recebe ou é beneficiário da operação
+Wikipédia
++15
+Mayer Brown
++15
+Cescon Barrieu
++15
+.
+2. Fato Gerador & Incidência (Arts. 4° a 7°)
+Inclui um rol exemplificativo de operações tributáveis, abrangendo comércio, serviços, cessões, licenciamento e ações não onerosas
+Mayer Brown
+.
+Operações não onerosas (brindes, bonificações, transferências entre partes relacionadas) têm tratamento específico e em muitos casos não geram incidência
+Apet
++4
+Cescon Barrieu
++4
+Modelo Inicial
++4
+.
+3. Hipóteses de Não Incidência
+Estão também previstas isenções:
+Serviços prestados por pessoas físicas em situação de relação de emprego, entidades religiosas, partidos políticos, entidades de educação e assistência social sem fins lucrativos, entre outros
+Apet
++5
+Cescon Barrieu
++5
+Modelo Inicial
++5
+.
+Ouro definido como instrumento financeiro ou cambial também pode ser excluído da base tributável.
+4. Determinação do Local da Incidência (Art. 11)
+A lei adota o princípio do destino, com regras específicas:
+Bens móveis: local da entrega ou destino final;
+Bens intangíveis e serviços: domicílio do adquirente ou destinatário;
+Serviços a distância: tributo devido no domicílio principal do adquirente, mesmo se parcialmente presenciais
+Legis Senado
++13
+Cescon Barrieu
++13
+Apet
++13
+Apet
+.
+Este artigo traz mais de 10 critérios novos, que prometem gerar debates jurídicos até estarem consolidados em jurisprudência.
+5. Base de Cálculo e Alíquotas
+A base é o valor da operação, incluindo acréscimos contratuais, juros, encargos, ajustamentos e tributos embutidos (ex.: ICMS, PIS/Cofins durante o período de transição)
+Apet
+Cescon Barrieu
+.
+Alíquotas de referência são fixadas pelo Senado, revisadas anualmente e aplicáveis na ausência de legislação específica do ente federado; os Estados e municípios podem fixar alíquotas próprias respeitando limites e regras de anterioridade nonagesimal
+Cescon Barrieu
+.
+Alíquota global estimada (~27,8 %) com pressões regulatórias para mantê-la abaixo de 26,5 %
+Cescon Barrieu
+.
+6. Sujeito Passivo & Responsáveis
+Contribuinte: fornecedor habitual de bens ou serviços, importadores, adquirentes em leilão judicial ou em licitação;
+Responsáveis solidários: adquirente ou alienante de operação sem documento fiscal, transmissoras em energia etc.
+Inclusive inclui regras para plataformas digitais intermediadoras, que podem ser responsáveis pela emissão fiscal e recolhimento, com obrigações específicas de registro
+Ira Advogados
++15
+Cescon Barrieu
++15
+TOTVS - Espaço Legislação
++15
+.
+7. Regime de Apuração e Split Payment
+Apuração mensal individualizada do IBS e da CBS; possibilidade de apuração assistida (pré-preenchida) e prazo reduzido para contribuinte regular. Regimes diferenciados têm apuração própria
+Portal Reforma Tributária
++4
+Cescon Barrieu
++4
+TOTVS - Espaço Legislação
++4
+.
+Até o split payment ser operacionalizado, previsto regime simplificado para recolhimento quando o adquirente não contribui no regime regular
+Cescon Barrieu
+.
+8. Créditos Tributários e Não-Cumulatividade
+O sistema instituído prevê não-cumulatividade ampla, com créditos em todas as aquisições, salvo algumas exceções (como bens de uso pessoal)
+Cescon Barrieu
++2
+Portal Reforma Tributária
++2
+.
+Saldo credor pode ser ressarcido ou compensado: prazos de decisão de 30 a 180 dias, com aplicação da SELIC em atraso; créditos elevados ou do ativo imobilizado têm prazo maior
+Cescon Barrieu
+.
+9. Importação & Exportação
+Importações de bens e serviços estão sujeitas a IBS e CBS, mesmo para não contribuintes; mas os tributos pagos na importação são creditáveis
+Cescon Barrieu
