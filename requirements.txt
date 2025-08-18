@@ -1,8 +1,6 @@
 streamlit>=1.36.0
 openai>=1.40.0
 faiss-cpu>=1.8.0
-pypdf>=4.2.0
 numpy>=1.26.0
 tqdm>=4.66.0
-sentence-transformers>=3.0.0
-python-dotenv
+python-dotenv>=1.0.0
