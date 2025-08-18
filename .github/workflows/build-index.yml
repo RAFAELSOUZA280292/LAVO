@@ -1,0 +1,39 @@
+name: Build FAISS index from TXT
+
+on:
+  push:
+    paths:
+      - "txts/**"
+      - "build_index.py"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          pip install openai faiss-cpu numpy
+
+      - name: Build index
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python build_index.py
+
+      - name: Commit index files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index/faiss.index index/faiss_meta.pkl index/manifest.json
+          git commit -m "Update FAISS index" || echo "No changes"
+          git push
