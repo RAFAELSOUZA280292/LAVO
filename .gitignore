@@ -1,17 +1,5 @@
-# Arquivo de variáveis de ambiente (chaves e senhas)
 .env
-
-# Pasta com PDFs originais (não subir para o GitHub)
-pdfs/
-
-# Pasta com índices gerados (FAISS, metadados, etc.)
-index/
-
-# Arquivos temporários
-*.pyc
 __pycache__/
-.DS_Store
-
-# Ambiente virtual (se você criar um venv dentro da pasta)
-.venv/
-venv/
+*.pyc
+index/
+uploads/
