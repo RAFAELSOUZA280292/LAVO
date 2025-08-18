@@ -12,11 +12,15 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-# Credenciais vindas dos Secrets do Streamlit
-USERS = {
-    "rafa": os.getenv("APP_PASS_RAFA"),
-    "rosa": os.getenv("APP_PASS_ROSA")
+# -------------------
+# 🔐 LOGIN - Usuários
+# -------------------
+USERS_RAW = {
+    "rafael souza": os.getenv("APP_PASS_RAFAEL"),
+    "alex montu": os.getenv("APP_PASS_ALEX"),
 }
+# normaliza nomes (tudo minúsculo)
+USERS = {k.lower(): (v or "") for k, v in USERS_RAW.items()}
 
 INDEX_DIR = "index"
 
@@ -43,10 +47,13 @@ if not st.session_state.auth:
     st.title("🔒 Login")
     user = st.text_input("Usuário")
     password = st.text_input("Senha", type="password")
+
     if st.button("Entrar"):
-        if user in USERS and USERS[user] == password:
+        u = (user or "").strip().lower()
+        p = (password or "").strip()
+        if u in USERS and USERS[u] == p:
             st.session_state.auth = True
-            st.success("Bem-vindo ao chat da LAVO!")
+            st.success(f"Bem-vindo ao chat da LAVO, {user}!")
             st.rerun()
         else:
             st.error("Usuário ou senha inválidos")
@@ -128,4 +135,5 @@ if user_q:
             hits = retrieve(user_q, k=5)
             text = answer_with_context(user_q, hits)
             st.markdown(text)
+
             st.session_state.history.append(("assistant", text))
