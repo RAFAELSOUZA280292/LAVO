@@ -1,16 +1,18 @@
 # app.py
-# LAVO - Especialista em Reforma Tributária (RAG + FAISS + OpenAI)
-# Revisão: Hybrid Search (FAISS + BM25), metadados JSONL estáveis
-# Mudanças:
-#  - Sem expander de fontes
-#  - Sem exemplo automático: só inclui se o usuário pedir
-#  - Sanitizador forte para remover \n no meio de números/palavras
+# LAVO - Especialista em Reforma Tributária (RAG + FAISS + BM25 + Context-First Engine)
+# Principais pontos:
+#  - Context-first: se o contexto já contém a resposta, usamos e normalizamos (ex.: 'faltam X dias')
+#  - Normalização de datas e contagens (recalcula de forma determinística)
+#  - Hybrid Search (FAISS + BM25) e metadados JSONL estáveis
+#  - Sem expander de fontes; sem exemplo automático
+#  - Sanitizador forte para números/moedas
 
 import os
 import re
 import json
 import pickle
-from typing import List, Tuple, Dict, Any
+from typing import List, Tuple, Dict, Any, Optional
+from datetime import date, datetime
 
 import numpy as np
 import faiss
@@ -89,14 +91,14 @@ MANIFEST_JSON = os.path.join(INDEX_DIR, "manifest.json")    # info do índice
 # Prompt
 # -----------------------------
 SYSTEM_PROMPT = (
-    "Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group. "
-    "Responda com objetividade e clareza. "
-    "Só inclua exemplo numérico se o usuário pedir explicitamente. "
-    "Quando houver exemplo, use notação brasileira (R$ 1.234,56 e 12%). "
-    "Cite leis/EC/LC apenas quando forem estritamente necessárias e de forma enxuta; não invente. "
-    "Nunca mencione arquivos internos (.txt, .pdf). "
-    "Se a pergunta estiver vaga, peça UMA precisão curta. "
-    "Não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e evite espaços entre dígitos."
+    "Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.\n"
+    "POLÍTICA DE RESPOSTA:\n"
+    "1) SEMPRE priorize as informações do <contexto> quando ele existir; se o contexto já trouxer a resposta, responda com base nele.\n"
+    "2) Somente complemente com conhecimento próprio se o contexto não cobrir o necessário.\n"
+    "3) Só inclua exemplo numérico se o usuário pedir explicitamente. Quando houver exemplo, use notação brasileira (R$ 1.234,56 e 12%).\n"
+    "4) Cite leis/EC/LC apenas quando estritamente necessárias e de forma enxuta; não invente.\n"
+    "5) Nunca mencione arquivos internos (.txt, .pdf).\n"
+    "6) Não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e evite espaços entre dígitos.\n"
 )
 
 # -----------------------------
@@ -157,7 +159,7 @@ def _read_jsonl(path: str) -> List[Dict[str, Any]]:
 
 def _chunks_count(metas): return len(metas or [])
 
-# ====== Sanitização de saída ======
+# ===== Sanitização =====
 _EXAMPLE_TAG_RE = re.compile(r'(?is)\bexemplo\s+num[eé]rico.*?(?:\n\n|$)')
 
 def _wants_example(question: str) -> bool:
@@ -169,26 +171,127 @@ def _clean_output(s: str) -> str:
     if not s: 
         return s
     s = s.replace("\r\n", "\n").replace("\u200b", " ")
-    # 1) converter quebras simples em espaço (preserva parágrafos duplos)
-    s = re.sub(r'(?<!\n)\n(?!\n)', ' ', s)
-    # 2) remover espaços entre dígitos (1 000 -> 1000)
-    s = re.sub(r'(?<=\d)\s+(?=\d)', '', s)
-    # 3) manter "R$" colado ao número
-    s = re.sub(r'R\s*\$', 'R$', s)
-    s = re.sub(r'R\$(\s+)(?=\d)', 'R$', s)
-    # 4) remover espaços antes de % (12 % -> 12%)
-    s = re.sub(r'\s+%', '%', s)
-    # 5) reduzir múltiplos espaços
-    s = re.sub(r'[ \t]{2,}', ' ', s)
-    # 6) reduzir quebras excessivas
-    s = re.sub(r'\n{3,}', '\n\n', s)
+    s = re.sub(r'(?<!\n)\n(?!\n)', ' ', s)            # quebra simples -> espaço
+    s = re.sub(r'(?<=\d)\s+(?=\d)', '', s)            # 1 000 -> 1000
+    s = re.sub(r'R\s*\$', 'R$', s)                    # R $ -> R$
+    s = re.sub(r'R\$(\s+)(?=\d)', 'R$', s)            # R$  1 -> R$1
+    s = re.sub(r'\s+%', '%', s)                       # 12 % -> 12%
+    s = re.sub(r'[ \t]{2,}', ' ', s)                  # múltiplos espaços
+    s = re.sub(r'\n{3,}', '\n\n', s)                  # quebras em excesso
     return s.strip()
 
 def _strip_example_if_unwanted(text: str, question: str) -> str:
     if _wants_example(question):
         return text
-    # remove bloco iniciado por "Exemplo numérico:" até fim do parágrafo
     return _EXAMPLE_TAG_RE.sub('', text).strip()
+
+# ===== Datas & contagens (determinístico) =====
+BR_DATE_RE = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{4})')
+# Frases típicas no contexto: "Hoje é 19/08/2025", "Restam 135 dias", "faltam 135 dias"
+CTX_TODAY_RE = re.compile(r'(?i)\bhoje\s+é\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
+CTX_DAYS_RE  = re.compile(r'(?i)\b(restam|faltam)\s+(\d{1,4})\s+dias\b')
+CTX_TARGET_RE = re.compile(r'(?i)\b(em|no|para)\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
+
+def _parse_br_date_str(s: str) -> Optional[date]:
+    m = BR_DATE_RE.search(s or "")
+    if not m: return None
+    d, mth, y = map(int, m.groups())
+    try:
+        return date(y, mth, d)
+    except ValueError:
+        return None
+
+def _date_from_context_text(txt: str) -> Optional[date]:
+    # Prioriza "Hoje é dd/mm/aaaa" no contexto
+    m = CTX_TODAY_RE.search(txt or "")
+    if m:
+        return _parse_br_date_str(m.group(1))
+    # Se não houver, pega a primeira data qualquer do trecho
+    return _parse_br_date_str(txt or "")
+
+def _target_from_context_text(txt: str) -> Optional[date]:
+    # Tenta achar uma data futura explicitada (ex.: "em 01/01/2026")
+    m = CTX_TARGET_RE.search(txt or "")
+    if m:
+        return _parse_br_date_str(m.group(2))
+    # Se não houver, padrão = 01/01/2026
+    return None
+
+def _days_from_context_text(txt: str) -> Optional[int]:
+    m = CTX_DAYS_RE.search(txt or "")
+    if m:
+        try:
+            return int(m.group(2))
+        except:
+            return None
+    return None
+
+def _best_candidate_snippet(context_text: str) -> str:
+    """
+    Pega o primeiro parágrafo do contexto que contenha 'restam/faltam ... dias' ou 'Hoje é ...'.
+    """
+    paras = [p.strip() for p in context_text.split("\n") if p.strip()]
+    for p in paras:
+        if CTX_DAYS_RE.search(p) or CTX_TODAY_RE.search(p):
+            return p
+    # fallback: todo contexto (curto)
+    return context_text[:2000]
+
+def _extract_ref_and_target_from_question(q: str) -> Tuple[date, date]:
+    # data de referência na pergunta ("Hoje é 20/08/2025")
+    ref = _parse_br_date_str(q) or date.today()
+    # data-alvo mencionada na pergunta (ex.: 05/01/2026); se não houver, padrão 01/01/2026
+    all_dates = BR_DATE_RE.findall(q or "")
+    target = None
+    for d, mth, y in all_dates:
+        dt = _parse_br_date_str(f"{d}/{mth}/{y}")
+        if dt and dt.year >= 2026:
+            target = dt
+            break
+    if not target:
+        target = date(2026, 1, 1)
+    return ref, target
+
+def _recompute_days_paragraph(paragraph: str, question: str) -> Optional[str]:
+    """
+    Se o parágrafo do contexto disser 'Hoje é X' e 'Restam/Faltam N dias' até 'data-alvo',
+    recalcula N considerando a data da PERGUNTA e (se houver) uma nova data-alvo.
+    """
+    if not paragraph:
+        return None
+
+    # Extrai do parágrafo
+    ctx_ref = _date_from_context_text(paragraph)              # ex.: 19/08/2025
+    ctx_days = _days_from_context_text(paragraph)             # ex.: 135
+    ctx_target = _target_from_context_text(paragraph)         # ex.: 01/01/2026 (se escrito)
+    if not ctx_reference_is_useful(ctx_ref, ctx_days):
+        return None
+
+    # Extrai da pergunta
+    q_ref, q_target = _extract_ref_and_target_from_question(question)
+    target = q_target or ctx_target or date(2026, 1, 1)
+
+    # Recalcula a partir da data da pergunta (q_ref)
+    new_days = (target - q_ref).days
+
+    # Constrói frase simples e correta
+    if new_days > 0:
+        return f"Faltam **{new_days} dias** para o início em {target.strftime('%d/%m/%Y')}."
+    elif new_days == 0:
+        return f"**Hoje** ({q_ref.strftime('%d/%m/%Y')}) é o início."
+    else:
+        return f"O início ({target.strftime('%d/%m/%Y')}) já passou há **{abs(new_days)} dias**."
+
+def ctx_reference_is_useful(ctx_ref: Optional[date], ctx_days: Optional[int]) -> bool:
+    return (ctx_ref is not None) and (ctx_days is not None)
+
+# ====== Detecção de intenção "dias" (pergunta) ======
+DAYS_INTENT_RE = re.compile(
+    r'(?i)(faltam\s+quantos\s+dias|quantos\s+dias\s+faltam|quantos\s+dias|dias\s+faltam|quanto\s+tempo).*?(reforma|ibs|cbs|in[ií]cio)',
+    re.DOTALL
+)
+def _is_days_intent(q: str) -> bool:
+    return bool(DAYS_INTENT_RE.search(q or ""))
 
 # -----------------------------
 # Loaders (cacheados)
@@ -301,46 +404,63 @@ def _hybrid_rank(
     reranked = sorted(combo.items(), key=lambda x: x[1], reverse=True)
     return [i for i, _ in reranked[:top_k]]
 
-def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800) -> Tuple[str, List[Dict[str, Any]]]:
+def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800) -> str:
     parts, total = [], 0
-    used = []
     for rank, i in enumerate(idxs, start=1):
         if i < 0 or i >= len(metas): 
             continue
         m = metas[i] or {}
         snippet = str(m.get("text") or m.get("text_preview") or "").replace("\u200b", " ")
         title   = str(m.get("title", ""))[:200]
-        source  = str(m.get("source", ""))
         piece = f"[{rank}] {title}\n{snippet}\n"
         parts.append(piece); total += len(piece)
-        used.append({
-            "rank": rank,
-            "title": title,
-            "source": source,
-            "chunk_id": m.get("chunk_id"),
-            "preview": snippet[:400]
-        })
         if total >= max_chars:
             break
-    return "\n".join(parts).strip(), used
+    return "\n".join(parts).strip()
 
 # -----------------------------
-# Resposta (RAG)
+# Context-First Answer Engine
+# -----------------------------
+def _context_first_transform(question: str, context_text: str) -> Optional[str]:
+    """
+    Tenta responder SOMENTE com base no contexto, aplicando transformações determinísticas
+    (ex.: recalcular 'faltam X dias' quando a data da pergunta mudou).
+    Retorna a resposta pronta se conseguir; caso contrário, retorna None (para cair no modelo).
+    """
+    # Se intenção for dias: tente achar no contexto um parágrafo com 'dias'
+    if _is_days_intent(question):
+        para = _best_candidate_snippet(context_text)
+        fixed = _recompute_days_paragraph(para, question)
+        if fixed:
+            return fixed
+
+    # (Outras transformações genéricas poderiam entrar aqui no futuro)
+    return None
+
+# -----------------------------
+# Resposta (RAG) com política context-first
 # -----------------------------
 def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> str:
-    contexto = ""
+    context_text = ""
     if index is not None and metas:
         idxs = _hybrid_rank(question, index, metas, k_faiss=8, k_bm25=12, top_k=top_k)
-        contexto, _ = _build_context(metas, idxs, max_chars=2800)
+        context_text = _build_context(metas, idxs, max_chars=2800)
 
+    # 1) Context-first transform: se der para responder só com contexto, faça
+    if context_text:
+        direct = _context_first_transform(question, context_text)
+        if direct:
+            return _clean_output(direct)
+
+    # 2) Caso não dê, consulta o modelo (forçado a usar o contexto primeiro)
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user",
          "content": (
              f"Usuário: {user_name}\n"
-             + (f"<contexto>\n{contexto}\n</contexto>\n" if contexto else "")
+             + (f"<contexto>\n{context_text}\n</contexto>\n" if context_text else "")
              + f"Pergunta: {question}\n"
-             "- Evite fórmulas que quebrem a renderização."
+             "- Use o contexto acima como base, responda de forma direta; só complemente se necessário.\n"
          )},
     ]
     resp = client.chat.completions.create(
@@ -350,9 +470,7 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> str
         max_tokens=MAX_TOKENS,
     )
     text = resp.choices[0].message.content.strip()
-    # remover bloco "Exemplo numérico" se não pedido
     text = _strip_example_if_unwanted(text, question)
-    # limpar quebras/espaços indevidos
     return _clean_output(text)
 
 # -----------------------------
@@ -405,4 +523,4 @@ if user_q:
             st.markdown(text)
             st.session_state.history.append(("assistant", text))
 
-st.caption("Dica: se quiser respostas com números, peça: “traga 1 exemplo com números”.")
+st.caption("Dica: você pode dizer “Hoje é 20/08/2025, quantos dias para o início?” que eu calculo direto.")
