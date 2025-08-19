@@ -1,0 +1,63 @@
+O que é o Split Payment?
+
+O Split Payment, ou pagamento dividido, é um mecanismo inovador de recolhimento de tributos que antecipa a liquidação financeira do imposto para o momento da transação, conforme previsto na Emenda Constitucional nº 132, de 2023 (EC 132/2023), especialmente em seu Art. 156-A, § 5º, inciso II, alínea "b". A Lei Complementar nº 214, de 2025 (LC 214/2025, referida em algumas fontes como PLP 68/2024), detalha sua operacionalização nos Arts. 31 a 35 e Art. 27.
+
+
+Sua premissa fundamental é a separação automática dos valores dos tributos (IBS e CBS) do preço do bem ou serviço no ponto de venda ou liquidação financeira da transação. Em vez de o fornecedor receber o valor total da venda e, posteriormente, recolher os tributos ao final do período de apuração, o Split Payment faz com que:
+
+
+
+O valor líquido da mercadoria ou serviço seja transferido para a conta do fornecedor.
+
+O valor correspondente ao IBS e à CBS seja segregado e recolhido diretamente aos cofres públicos (Comitê Gestor do IBS e Receita Federal do Brasil) pelas instituições financeiras ou operadoras de sistemas de pagamentos eletrônicos.
+
+
+Propósito e Benefícios
+
+O principal objetivo do Split Payment é combater a sonegação e a inadimplência fiscal, especialmente fraudes como a "fraude carrossel" no IVA, que são comuns globalmente. Ao garantir que o imposto seja recolhido diretamente ao Fisco no momento da transação, ele promove:
+
+
+
+Maior eficiência na arrecadação, simplificando o processo e permitindo a realocação da fiscalização para casos mais complexos.
+
+Redução de litígios relacionados ao não recolhimento do imposto na etapa anterior.
+
+Aumento da transparência da carga tributária efetiva.
+
+Vinculação do crédito ao pagamento: Conforme a LC 214/2025, Art. 47, o adquirente pode apropriar créditos de IBS e CBS somente quando ocorrer a extinção dos débitos correspondentes, inclusive por meio do Split Payment. Isso significa que o crédito só será utilizável se o imposto tiver sido efetivamente recolhido.
+
+
+Modalidades de Split Payment
+
+A LC 214/2025 prevê diferentes modalidades:
+
+
+
+Split Inteligente (ou Super Inteligente): Esta é a regra geral para pagamentos eletrônicos. Antes da liquidação financeira, o prestador de serviço de pagamento consulta um sistema do Comitê Gestor do IBS e da Receita Federal para verificar o saldo devedor do fornecedor. O Split Payment retém apenas o saldo dos débitos líquidos da compensação dos créditos do fornecedor. Se houver excedente (valor retido a maior), a administração tributária fará a devolução ao fornecedor em até 3 dias úteis (Art. 32, LC 214/2025). Isso mitiga o impacto no fluxo de caixa das empresas, um ponto crucial destacado por professores como Alexandre Alkmim Teixeira e Roberto Albuquerque.
+
+Exemplo prático: Uma empresa varejista vende um produto por R$ 126,00 (sendo R$ 100,00 o valor do bem e R$ 26,00 de IBS/CBS). Se, no momento da venda, a varejista já tiver R$ 13,00 de créditos compensáveis de aquisições anteriores, o Split Payment reterá apenas R$ 13,00 (R$ 26,00 - R$ 13,00), e o restante do valor da transação (R$ 150,00 - R$ 13,00) será destinado ao fornecedor.
+
+
+
+Split Simplificado: Poderá ser uma opção para operações cujo adquirente não seja contribuinte do IBS e da CBS no regime regular (consumidor final). Nesse caso, os valores segregados são calculados com base em um percentual pré-estabelecido do valor das transações, definido pelo Comitê Gestor do IBS e pela RFB (Art. 33, LC 214/2025). Isso é especialmente relevante para o varejo.
+
+Recolhimento pelo Adquirente (Split Manual): Quando o Split Payment eletrônico não for viável (ex: pagamentos em dinheiro), o adquirente pode optar por efetuar o pagamento dos tributos diretamente, mediante guia de recolhimento. Essa opção garante ao adquirente o direito ao crédito, mas a responsabilidade do fornecedor pelo valor devido a menor, caso ocorra, permanece solidária (Art. 36, LC 214/2025).
+
+
+Desafios e Preocupações
+
+Apesar dos benefícios, a implementação do Split Payment levanta discussões importantes, como os potenciais impactos no fluxo de caixa das empresas, a complexidade administrativa e tecnológica exigida e a necessidade de mecanismos ágeis de devolução de valores excedentes. Professores como Mary Elbe Queiroz e Antonio Carlos de Souza Junior, bem como Daniel Piga Vagetti e Larissa de Melo Clemêncio Sanches, alertam para esses desafios, enfatizando a necessidade de que os sistemas de restituição sejam eficientes para não prejudicar as empresas e o princípio da neutralidade tributária.
+
+
+Quem criou o Split Payment?
+
+O conceito do Split Payment, especialmente em sua aplicação no contexto da Reforma Tributária brasileira, foi desenvolvido por Miguel Abuhab.
+
+
+Engenheiro e fundador de empresas de software ERP (como Datasul e Neogrid), Miguel Abuhab foi desafiado pelo Governo de Santa Catarina em 2003 a criar uma solução para a evasão fiscal e a complexidade tributária. A partir daí, ele concebeu o modelo de separação automática do valor dos tributos no momento do pagamento da nota fiscal.
+
+
+Sua proposta, conhecida como "Modelo Abuhab" em diversos círculos técnicos e legislativos, evoluiu ao longo de mais de duas décadas e foi apresentada a diversas autoridades, incluindo a Receita Federal do Brasil e o Congresso Nacional. Miguel Abuhab participou ativamente das discussões do Grupo de Trabalho da Reforma Tributária na Câmara dos Deputados em 2024, sendo citado por figuras como o Secretário Extraordinário da Reforma Tributária do Ministério da Fazenda, Bernard Appy.
+
+
+O Split Payment é, portanto, uma das inovações tecnológicas e fiscais que se busca consolidar no novo Sistema Tributário Nacional.
