@@ -1,0 +1,422 @@
+1 - O que o IBS substitui?
+
+O IBS faz parte do novo modelo de tributação do consumo, conhecido como IVA Dual, e é de competência compartilhada entre Estados, Municípios e Distrito Federal. Ele foi criado para substituir dois tributos que hoje incidem sobre o consumo nessas esferas:
+
+
+
+Imposto sobre a Circulação de Mercadorias e Serviços (ICMS), de competência estadual.
+
+Imposto Sobre Serviços de Qualquer Natureza (ISS), de competência municipal.
+
+
+Essa substituição está prevista na Emenda Constitucional nº 132/2023 e na Lei Complementar nº 214/2025, que institui o IBS e a CBS.
+
+
+Para que você visualize de forma prática:
+
+
+Imagine uma empresa que, atualmente, vende uma mercadoria. Ela paga o ICMS para o Estado e, se for uma prestadora de serviços, paga o ISS para o Município. Com a Reforma Tributária, a partir da transição, esses dois tributos serão gradualmente substituídos pelo IBS.
+
+
+O objetivo dessa mudança é a simplificação, eliminando a complexidade das diferentes legislações estaduais de ICMS e municipais de ISS, além de acabar com a "guerra fiscal". A cobrança do IBS será no local de destino, ou seja, onde o consumo do bem ou serviço de fato ocorre.
+
+
+2 - qual a LEI que criou o IBS e a CBS?
+
+A criação do IBS e da CBS foi estabelecida por dois importantes instrumentos normativos:
+
+
+
+A Emenda Constitucional nº 132/2023: Foi ela que inseriu o Imposto sobre Bens e Serviços (IBS) no artigo 156-A da Constituição Federal e a Contribuição Social sobre Bens e Serviços (CBS) no inciso V do art. 195 da Constituição Federal, autorizando a instituição desses tributos sobre o consumo. Essa Emenda definiu as bases e os princípios gerais do novo sistema tributário.
+
+A Lei Complementar nº 214/2025: Esta é a lei que efetivamente institui o IBS e a CBS, detalhando suas normas gerais, regimes específicos e diferenciados, hipóteses de incidência, base de cálculo, sujeitos passivos, regras de não cumulatividade e creditamento. É nela que encontramos a regulamentação completa para a operacionalização desses tributos.
+
+
+Portanto, a Emenda Constitucional nº 132/2023 criou a previsão para esses tributos na Constituição, e a Lei Complementar nº 214/2025 os instituiu e regulamentou de forma detalhada.
+
+
+3 - o que é IVA dual?
+
+O IVA Dual (Imposto sobre Valor Agregado Dual) é o novo modelo de tributação sobre o consumo adotado pelo Brasil com a Reforma Tributária. Ele é chamado de "Dual" porque é composto por dois tributos distintos, mas que operam de forma harmônica, com as mesmas regras:
+
+
+
+
+Contribuição sobre Bens e Serviços (CBS): Este é o tributo de competência federal.
+
+
+
+Substitui: as atuais contribuições federais PIS/Pasep e COFINS, e o IPI (parcialmente, pois o Imposto Seletivo também assumirá parte de sua função regulatória).
+
+
+
+
+Imposto sobre Bens e Serviços (IBS): Este é o tributo de competência compartilhada entre Estados, Municípios e o Distrito Federal.
+
+
+
+Substitui: o ICMS (estadual) e o ISS (municipal).
+
+
+
+
+A criação e a estrutura do IVA Dual estão estabelecidas na Emenda Constitucional nº 132/2023 e detalhadas na Lei Complementar nº 214/2025.
+
+
+As principais características do IVA Dual são:
+
+
+
+
+Não Cumulatividade Plena: Diferente dos impostos atuais que são parcialmente cumulativos (como ICMS, PIS, COFINS, IPI) ou totalmente cumulativos (como ISS), o IVA Dual busca eliminar o "efeito cascata". Isso significa que o imposto será cobrado em cada etapa da cadeia produtiva, mas os contribuintes poderão aproveitar créditos integrais do imposto pago nas aquisições de bens e serviços, de modo que o ônus econômico recaia somente sobre o consumidor final. O objetivo é que as empresas não sejam oneradas pelo tributo e que ele não distorça as decisões econômicas, promovendo a neutralidade.
+
+
+
+Exemplo Contábil: Se uma indústria compra matéria-prima por R$ 100,00 e o fornecedor destaca R$ 10,00 de IBS, a indústria tem um crédito de R$ 10,00. Ao vender o produto acabado por R$ 200,00, gerando um débito de R$ 20,00 de IBS, ela pagará ao fisco apenas a diferença de R$ 10,00 (débito de R$ 20,00 menos crédito de R$ 10,00). O consumidor final pagará o imposto total embutido no preço.
+
+
+
+
+Princípio do Destino: A tributação ocorrerá no local de consumo do bem ou serviço, e não na origem. Isso elimina a "guerra fiscal" entre os entes federativos.
+
+
+
+Exemplo Fiscal Prático: Atualmente, uma venda de mercadoria de São Paulo para o Rio Grande do Sul envolveria ICMS de origem. Com o IBS, o imposto será devido e destinado ao Rio Grande do Sul, onde o consumo efetivamente ocorre.
+
+
+
+
+Base Ampla de Incidência: O IBS e a CBS incidirão sobre todas as operações com bens materiais ou imateriais (incluindo direitos) e serviços, ou seja, sobre o valor da operação.
+
+
+
+
+Regras Harmonizadas: Apesar de serem dois tributos, eles terão as mesmas regras quanto a fatos geradores, bases de cálculo, hipóteses de não incidência, sujeitos passivos, imunidades e regimes específicos ou favorecidos.
+
+
+
+
+Split Payment (Pagamento Dividido): Previsto como um mecanismo de arrecadação, o split payment permite que, no momento da liquidação financeira da operação (especialmente por meios eletrônicos), o valor do imposto seja automaticamente segregado e destinado aos cofres públicos, enquanto o fornecedor recebe apenas o valor líquido. O objetivo é combater a sonegação e fraudes fiscais.
+
+
+
+Exemplo Prático: Ao vender um serviço com pagamento por cartão de crédito, o sistema eletrônico de pagamento direcionará a parcela correspondente ao IBS/CBS diretamente para o Comitê Gestor do IBS e para a Receita Federal, respectivamente, e o restante (valor líquido) para a conta do fornecedor.
+
+
+
+
+Em resumo, o IVA Dual é a pedra angular da Reforma Tributária, visando simplificar o sistema, torná-lo mais transparente, eficiente e neutro para as empresas, e combater a cumulatividade que tanto onera a economia.
+
+4 - o que é Split payment?
+
+O Split Payment, ou pagamento dividido, é um mecanismo inovador de recolhimento de tributos previsto na Reforma Tributária. Sua essência é segregar o valor do imposto do preço do bem ou serviço no momento da liquidação financeira da transação.
+
+
+A Emenda Constitucional nº 132/2023 e a Lei Complementar nº 214/2025 estabelecem o Split Payment como uma das formas de extinção dos débitos de IBS (Imposto sobre Bens e Serviços) e CBS (Contribuição sobre Bens e Serviços).
+
+
+Vamos entender em detalhes:
+
+
+O que é o Split Payment?
+
+É uma sistemática em que, ao efetuar o pagamento por um bem ou serviço, o valor correspondente aos tributos (IBS e CBS) é automaticamente separado e direcionado diretamente para os cofres públicos (Comitê Gestor do IBS e Receita Federal do Brasil), enquanto o valor líquido da operação é repassado ao fornecedor.
+
+
+Como ele funciona na prática?
+
+
+
+Emissão do Documento Fiscal Eletrônico (DF-e): O fornecedor (vendedor ou prestador de serviço) emite a nota fiscal eletrônica, que conterá informações detalhadas sobre o valor da operação e os tributos incidentes (IBS e CBS).
+
+
+
+
+Transação de Pagamento: Quando o adquirente (comprador ou tomador de serviço) realiza o pagamento, especialmente por meios eletrônicos como Pix, Drex, cartão de crédito, cartão de débito ou boleto, os prestadores de serviços de pagamento eletrônico (instituições financeiras ou operadoras de sistemas de pagamentos) atuam como intermediários.
+
+
+
+
+Segregação e Recolhimento: Antes de disponibilizar os recursos ao fornecedor, a instituição de pagamento consulta um sistema integrado (do Comitê Gestor do IBS e da Receita Federal) para verificar o saldo devedor do fornecedor. O valor dos tributos é segregado e recolhido diretamente para as contas fiscais do governo, e apenas o valor líquido da venda é transferido para a conta do fornecedor.
+
+
+
+Exemplo Contábil-Fiscal Prático: Uma empresa (Atacadista) vende um produto por R$ 100,00 para outra empresa (Varejista), com IBS + CBS de 26% (R$ 26,00). Se o pagamento for via Pix, a instituição financeira irá:
+
+Consultar o saldo devedor do Atacadista.
+
+Segregar R$ 26,00 (correspondente ao IBS e CBS) e encaminhar para o Comitê Gestor do IBS e a RFB.
+
+Transferir R$ 100,00 (valor líquido) para a conta do Atacadista.
+
+O Atacadista, por sua vez, registrará um débito de R$ 26,00 e um pagamento por Split Payment de R$ 26,00, que extingue o débito da operação.
+
+
+
+
+
+
+Apropriação de Créditos: A apropriação dos créditos do IBS e da CBS pelo adquirente ocorre na data do pagamento dos débitos de IBS e CBS relativos à aquisição. Ou seja, não basta o destaque na nota fiscal; o crédito só é apropriado quando o tributo da etapa anterior é efetivamente pago.
+
+
+
+Exemplo de Crédito: A Varejista (que comprou do Atacadista) tem um crédito de R$ 26,00 referente à sua aquisição, mas só poderá utilizá-lo para compensar seus próprios débitos de IBS/CBS após o pagamento desses R$ 26,00 ao fisco (via Split Payment ou outra modalidade pelo Atacadista).
+
+
+
+
+Modalidades de Split Payment:
+
+A Lei Complementar nº 214/2025 prevê algumas modalidades:
+
+
+
+Split Inteligente: É o modelo padrão, onde a segregação considera o saldo de débitos e créditos do fornecedor. A instituição de pagamento consulta o Comitê Gestor do IBS e a RFB para recolher apenas a diferença do imposto não coberta por créditos já utilizados pelo fornecedor. Se houver excesso de recolhimento via Split, o valor é devolvido ao fornecedor em até 3 dias úteis.
+
+Split Simplificado: Uma opção para o varejo, especialmente em operações com consumidores finais (que não são contribuintes regulares de IBS e CBS). Nesse caso, os valores a serem segregados são calculados com base em um percentual pré-estabelecido sobre o valor da transação, definido pelo Comitê Gestor do IBS e pela RFB.
+
+Recolhimento pelo Adquirente (ou Split Manual): Em situações onde o Split Payment automático não é viável (como pagamentos em dinheiro), o adquirente, se for contribuinte do IBS e CBS no regime regular, pode optar por efetuar o pagamento do imposto diretamente.
+
+
+Benefícios e Desafios:
+
+O Split Payment é considerado uma ferramenta poderosa para:
+
+
+
+Combater a Sonegação e Inadimplência: Garante que o imposto seja recolhido na fonte, eliminando a "fraude carrossel" (onde empresas simulam operações para gerar créditos indevidos ou desaparecem sem recolher o imposto).
+
+Aumentar a Eficiência da Arrecadação: Automatiza o processo, reduzindo a necessidade de fiscalização manual e o custo de conformidade para muitas empresas.
+
+
+No entanto, há desafios:
+
+
+
+Impacto no Fluxo de Caixa das Empresas: A segregação imediata do imposto pode impactar a liquidez das empresas, pois o valor do tributo não transitará mais pelo caixa do fornecedor, que o utilizava como capital de giro até a data do vencimento do imposto.
+
+Complexidade Tecnológica: Exige grande adaptação e integração de sistemas de emissão de notas fiscais eletrônicas (ERP), bancos e intermediadores de pagamento.
+
+
+A experiência internacional (como na Itália e Polônia) com mecanismos similares demonstra tanto os benefícios na arrecadação quanto os desafios relacionados ao fluxo de caixa das empresas, especialmente as de menor porte. O modelo brasileiro busca mitigar esses problemas com o "Split Inteligente" e prazos mais curtos para ressarcimento de créditos.
+
+
+5 - Quem criou o Split Payment?
+
+O conceito do Split Payment foi desenvolvido por Miguel Abuhab.
+
+
+Em 2003, Miguel Abuhab, engenheiro e fundador da Datasul e Neogrid, foi desafiado pelo Governo de Santa Catarina a buscar uma solução para a evasão fiscal e a complexidade tributária. A partir desse desafio, ele desenvolveu o conceito de Split Payment, que se baseia na separação automática do valor dos tributos no momento do pagamento da nota fiscal.
+
+
+A proposta de Abuhab evoluiu ao longo de duas décadas e foi apresentada à Receita Federal e ao Congresso Nacional, culminando na sua incorporação pela Emenda Constitucional nº 132/2023 e regulamentação pela Lei Complementar nº 214/2025, que tratam do Imposto sobre Bens e Serviços (IBS) e da Contribuição sobre Bens e Serviços (CBS).
+
+
+6 - o que é o IS?
+
+O Imposto Seletivo (IS), também conhecido como "imposto do pecado" (sin tax), é um dos pilares da Reforma Tributária do consumo. Ele foi instituído pela Emenda Constitucional nº 132/2023 e regulamentado pela Lei Complementar nº 214/2025.
+
+
+Vamos detalhar o que é e como funciona:
+
+
+1. Finalidade e Caráter
+
+
+O IS é um imposto de competência federal.
+
+Sua principal finalidade é extrafiscal, ou seja, seu objetivo primordial não é a arrecadação, mas sim desestimular a produção, comercialização e o consumo de bens e serviços considerados prejudiciais à saúde ou ao meio ambiente. A Lei Complementar nº 214/2025 prevê uma avaliação quinquenal da eficiência, eficácia e efetividade do IS como política social, ambiental e sanitária (Art. 476 da LC 214/2025).
+
+
+2. Incidência
+
+O IS incidirá sobre a produção, extração, comercialização ou importação de bens e serviços específicos, listados no Anexo XVII da Lei Complementar nº 214/2025, tais como:
+
+
+
+Veículos
+
+Embarcações e aeronaves
+
+Produtos fumígenos (somente quando acondicionados em embalagem primária, em contato direto com o produto e destinada ao consumidor final)
+
+Bebidas alcoólicas (somente quando acondicionadas em embalagem primária, em contato direto com o produto e destinada ao consumidor final)
+
+Bebidas açucaradas
+
+Bens minerais extraídos (como carvão mineral, minério de ferro, petróleo e gás natural)
+
+Concursos de prognósticos e fantasy sports
+
+
+3. O que ele substitui (e não substitui)
+
+
+O Imposto Seletivo visa a substituição parcial e/ou complementação do IPI (Imposto sobre Produtos Industrializados), que foi perdendo relevância na arrecadação federal.
+
+É importante notar que o IS não incide sobre as exportações, energia elétrica e telecomunicações (Art. 153, §6º, I da CF/88 e Art. 409 da LC 214/2025). Bens e serviços com alíquotas reduzidas em 60% também são imunes ao IS.
+
+
+4. Características Principais
+
+
+Monofasia: O IS será monofásico, ou seja, incidirá uma única vez na cadeia produtiva, geralmente na primeira etapa (produção, extração ou importação), ou na comercialização ou consumo em algumas hipóteses.
+
+Não Cumulatividade: Diferentemente do IBS e da CBS, o Imposto Seletivo não gera direito a crédito para operações posteriores (não é não cumulativo). Isso significa que o imposto pago em etapas anteriores não pode ser compensado, visando que o ônus recaia integralmente sobre o produto final para desestimular seu consumo.
+
+Base de Cálculo:
+
+Poderá ser o valor da operação (em operações de comercialização).
+
+Para bens minerais extraídos, transferências não onerosas ou consumo pelo fabricante, a base de cálculo será o valor de referência, definido por ato do Poder Executivo da União (Art. 414 da LC 214/2025).
+
+Para produtos fumígenos, levará em consideração o preço de venda no varejo.
+
+Para concursos de prognósticos e fantasy sports, a base de cálculo é a receita própria da entidade promotora, deduzidas as premiações pagas e destinações obrigatórias (Art. 245 da LC 214/2025).
+
+
+
+Alíquotas: Serão fixadas em lei ordinária e podem ser:
+
+Ad valorem: um percentual aplicado sobre o valor da operação.
+
+Ad rem: um valor fixo por unidade de medida do bem.
+
+A lei ordinária poderá estabelecer, cumulativamente, alíquotas ad valorem e específicas para certos produtos (ex: cigarros e bebidas alcoólicas, considerando o teor alcoólico). As alíquotas ad rem serão atualizadas anualmente.
+
+A alíquota para bens minerais extraídos é limitada a 0,25% sobre o valor de referência (Art. 422, §7º da LC 214/2025).
+
+Gás Natural: A alíquota será fixada em zero para gás natural destinado a ser utilizado como insumo em processo industrial ou como combustível para transporte, caso o adquirente ou importador declare essa finalidade. Se a destinação for diferente, o imposto deverá ser recolhido com multa e juros (Art. 423 da LC 214/2025).
+
+
+
+Transparência: A incidência do IS será informada no documento fiscal.
+
+
+5. Sujeição Passiva (Contribuinte)
+
+O contribuinte do Imposto Seletivo, conforme o Art. 424 da LC 214/2025, pode ser:
+
+
+
+O fabricante (na primeira comercialização, incorporação ao ativo imobilizado, transferência não onerosa ou consumo do bem).
+
+O importador (na entrada do bem estrangeiro no território nacional).
+
+O arrematante (em leilão público).
+
+O produtor-extrativista (na extração de bem mineral).
+
+O fornecedor do serviço (ainda que residente ou domiciliado no exterior, no caso de fantasy sport).
+
+
+6. Integração com Outros Tributos
+
+O valor do IS integra a base de cálculo do IBS, da CBS, do ICMS e do ISS, mas não integra sua própria base de cálculo (Art. 153, §6º da CF/88 e Material Aula Prof Leticia Tourinho Dantas).
+
+
+Exemplo Fiscal Prático:
+Se uma indústria fabrica cigarros (produto fumígeno) e os vende, o Imposto Seletivo incidirá sobre essa primeira operação. O valor do IS pago por essa indústria não gerará crédito para o próximo elo da cadeia (o distribuidor ou varejista). No momento em que o distribuidor ou varejista vender esse cigarro ao consumidor final, o IBS e a CBS incidirão sobre o preço de venda, e o valor do IS já embutido no custo fará parte da base de cálculo desses novos tributos, mas sem que haja crédito do IS para o distribuidor ou varejista.
+
+
+O Imposto Seletivo é uma ferramenta para alinhar a tributação a objetivos de saúde pública e proteção ambiental, representando uma mudança significativa no modelo tributário brasileiro.
+
+
+7 - O QUE É O IMPOSTO DO PECADO?
+
+O Imposto do Pecado, mais formalmente conhecido como Imposto Seletivo (IS), é uma das grandes novidades da Reforma Tributária do consumo, introduzido pela Emenda Constitucional nº 132/2023 e detalhado pela Lei Complementar nº 214/2025.
+
+
+Vamos entender em profundidade o que ele é:
+
+
+1. Finalidade e Caráter:
+
+O Imposto Seletivo é um tributo de competência federal com uma função primordialmente extrafiscal. Isso significa que seu principal objetivo não é a arrecadação, mas sim desestimular a produção, a comercialização, a importação e o consumo de bens e serviços considerados prejudiciais à saúde ou ao meio ambiente.
+
+
+Ele busca corrigir as chamadas "externalidades negativas", ou seja, custos que a produção ou consumo de certos produtos geram para a sociedade (como gastos com saúde pública devido ao consumo de bebidas açucaradas ou danos ambientais pela extração mineral) e que não são refletidos no preço final. Ao onerar esses produtos, o IS visa incentivar a redução do seu consumo ou a busca por alternativas menos prejudiciais. A própria Lei Complementar nº 214/2025, no seu Art. 476, prevê que o Poder Executivo da União realizará uma avaliação quinquenal da eficiência, eficácia e efetividade do Imposto Seletivo como política social, ambiental e sanitária.
+
+
+2. Incidência (O que ele tributa):
+
+O IS incidirá sobre a produção, extração, comercialização ou importação de bens e serviços específicos. A Lei Complementar nº 214/2025 lista no seu Anexo XVII alguns exemplos, como:
+
+
+
+Bens minerais extraídos (como carvão mineral, minério de ferro, petróleo e gás natural). Para o gás natural, a alíquota pode ser zero quando usado como insumo industrial ou combustível para transporte, caso o adquirente declare essa finalidade. Se o destino for diferente, o imposto será recolhido com acréscimos.
+
+Produtos fumígenos (somente quando acondicionados em embalagem primária e destinados ao consumidor final).
+
+Bebidas alcoólicas (idem, acondicionadas em embalagem primária e destinadas ao consumidor final).
+
+Bebidas açucaradas.
+
+Veículos, embarcações e aeronaves.
+
+Concursos de prognósticos e fantasy sports.
+
+
+É crucial entender que o Imposto Seletivo NÃO incidirá sobre as exportações, energia elétrica e telecomunicações, conforme previsto no Art. 153, §6º, I, da Constituição Federal de 1988 e no Art. 409 da Lei Complementar nº 214/2025. Além disso, bens e serviços com alíquotas reduzidas em 60% também são imunes ao IS.
+
+
+3. Relação com o IPI:
+
+O Imposto Seletivo tem como objetivo a substituição parcial e/ou complementação do Imposto sobre Produtos Industrializados (IPI), que vinha perdendo sua relevância arrecadatória e regulatória ao longo do tempo. Durante o período de transição, a incidência do IPI sobre os produtos sujeitos ao Imposto Seletivo será vedada.
+
+
+4. Principais Características:
+
+
+Monofasia: O Imposto Seletivo será monofásico, ou seja, incidirá apenas uma única vez na cadeia produtiva, geralmente na primeira etapa (produção, extração ou importação), ou na comercialização ou consumo em algumas situações.
+
+Não Cumulatividade: Ao contrário do IBS e da CBS, o Imposto Seletivo não gera direito a crédito para as operações seguintes na cadeia. Isso significa que o valor pago de IS não pode ser compensado por outros elos da cadeia, visando que o ônus total recaia sobre o produto final para desestimular o consumo do bem considerado prejudicial. Ele não integra sua própria base de cálculo.
+
+Base de Cálculo:
+
+Poderá ser o valor da operação (para comercialização).
+
+Para bens minerais extraídos, transferências não onerosas ou consumo pelo fabricante, a base será o valor de referência, a ser definido por ato do Poder Executivo da União.
+
+Para produtos fumígenos, levará em conta o preço de venda no varejo.
+
+Para concursos de prognósticos e fantasy sports, a base é a receita própria da entidade promotora, com deduções de premiações pagas e destinações obrigatórias.
+
+Na importação, a base será o valor aduaneiro acrescido do Imposto sobre a Importação.
+
+
+
+Alíquotas: Serão definidas em lei ordinária e podem ser:
+
+Ad valorem: um percentual sobre o valor da operação (ex: 10% sobre o preço de venda).
+
+Ad rem (ou específica): um valor fixo por unidade de medida do bem (ex: R$ 5,00 por litro de bebida). As alíquotas ad rem serão atualizadas anualmente.
+
+A lei ordinária pode, inclusive, estabelecer a aplicação cumulativa de alíquotas ad valorem e ad rem para certos produtos (ex: cigarros, considerando o teor de nicotina, ou bebidas alcoólicas, considerando o teor alcoólico). A alíquota para bens minerais extraídos é limitada a 0,25% sobre o valor de referência.
+
+
+
+Integração com Outros Tributos: O valor do Imposto Seletivo integra a base de cálculo do IBS, da CBS, do ICMS e do ISS.
+
+Transparência: A incidência do Imposto Seletivo será informada no documento fiscal para o consumidor.
+
+
+5. Sujeição Passiva (Quem paga):
+
+São contribuintes do Imposto Seletivo, conforme o Art. 424 da Lei Complementar nº 214/2025:
+
+
+
+O fabricante (na primeira comercialização, incorporação do bem ao ativo imobilizado, transferência não onerosa ou consumo do bem).
+
+O importador (na entrada do bem estrangeiro no território nacional).
+
+O arrematante (em leilão público).
+
+O produtor-extrativista (na extração de bem mineral).
+
+O fornecedor do serviço, mesmo que residente no exterior (no caso de fantasy sport).
+
+
+Exemplo Contábil/Fiscal Prático:
+Imagine uma fábrica de bebidas açucaradas. Ao vender seu produto para um distribuidor, ela recolherá o Imposto Seletivo. O valor desse IS não será um crédito para o distribuidor na sua apuração. Quando o distribuidor vender para um varejista, e o varejista para o consumidor final, o custo do IS já estará embutido no preço do produto. Sobre esse preço, incluindo o IS, incidirão o IBS e a CBS. Assim, o consumidor final arca com todo o ônus do Imposto Seletivo, sem que ele seja compensado nas etapas intermediárias, cumprindo a finalidade de desestimular o consumo.
