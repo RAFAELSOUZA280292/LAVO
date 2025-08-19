@@ -1,345 +1,300 @@
 # app.py
 import os
-import re
 import json
+import re
 import pickle
-from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple, Dict, Any
+
 import numpy as np
-import faiss
 import streamlit as st
+
+# FAISS é opcional para a UI inicial; só exigimos quando o índice existir
+try:
+    import faiss  # type: ignore
+except Exception:
+    faiss = None
+
 from openai import OpenAI
 
-# ===================== Config Básica =====================
-st.set_page_config(page_title="LAVO - Reforma Tributária", page_icon="📚", layout="wide")
+# ======================================================================================
+# CONFIG GERAL
+# ======================================================================================
 
-INDEX_DIR = "index"
-FAISS_PATH = os.path.join(INDEX_DIR, "faiss.index")
-META_PATH = os.path.join(INDEX_DIR, "faiss_meta.pkl")
-MANIFEST_PATH = os.path.join(INDEX_DIR, "manifest.json")
+st.set_page_config(page_title="LAVO - Especialista em Reforma Tributária", page_icon="🧑‍🏫")
 
-EMB_MODEL = "text-embedding-3-small"
-CHAT_MODEL = st.secrets.get("CHAT_MODEL", os.getenv("CHAT_MODEL", "gpt-4o"))
-DEFAULT_TEMP = float(st.secrets.get("TEMPERATURE", os.getenv("TEMPERATURE", "0.3")))
-DEFAULT_MAXTOK = int(st.secrets.get("MAX_TOKENS", os.getenv("MAX_TOKENS", "1400")))
-
-SYSTEM_PROMPT = """
-Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.
-- Responda como uma consultora sênior: clara, direta, precisa e prática.
-- Adapte o tom e a estrutura à pergunta do usuário (sem respostas engessadas).
-- Use apenas o <CONTEXTO>; não traga conhecimento externo, a menos que o modo híbrido esteja LIGADO (instrução do usuário indicará isso).
-- Cite leis/PECs/pareceres/pessoas apenas se aparecerem no CONTEXTO.
-- Traga exemplos contábeis/fiscais quando forem úteis.
-- Nunca mencione “PDF”, “arquivo”, “material” ou “chunk”.
-- Se não houver base suficiente no CONTEXTO e o modo híbrido estiver DESLIGADO, responda apenas:
-  “Ainda estou estudando, mas logo aprendo e voltamos a falar.”
-- Formate moeda como “R$ 1.000,00” e percentuais como “12%”, sem quebras de linha.
-Nota: Para saudações simples (ex.: “oi”, “olá”, “bom dia”), responda com boas-vindas amigáveis sem necessidade de contexto.
-"""
-
-# ===================== Sidebar: knobs de conversa =====================
-with st.sidebar:
-    st.header("⚙️ Ajustes da conversa")
-    tone = st.selectbox(
-        "Tom da resposta",
-        ["Natural", "Executivo (direto ao ponto)", "Professoral (exemplos)"],
-        index=0
-    )
-    depth = st.select_slider(
-        "Profundidade",
-        options=["Curta", "Média", "Detalhada"],
-        value="Média"
-    )
-    hybrid_mode = st.toggle("Modo híbrido (complementar além do CONTEXTO quando faltar)", value=False)
-
-def style_booster(tone: str, depth: str, hybrid: bool) -> str:
-    bits = []
-    if tone == "Executivo (direto ao ponto)":
-        bits.append("Seja concisa, focada em decisão e impacto prático. Evite prolixidade.")
-    elif tone == "Professoral (exemplos)":
-        bits.append("Inclua exemplos contábeis/fiscais claros com números quando ajudar a compreensão.")
-    else:
-        bits.append("Fale naturalmente como consultora sênior, ajustando detalhes à pergunta.")
-    if depth == "Curta":
-        bits.append("Responda em 5–8 linhas, sem detalhes desnecessários.")
-    elif depth == "Detalhada":
-        bits.append("Aprofunde com nuances práticas, mas sem enrolação.")
-    if hybrid:
-        bits.append(
-            "Se o CONTEXTO não cobrir totalmente, complemente com conhecimento geral consolidado "
-            "em trechos iniciados por 'Complemento geral:'."
-        )
-    else:
-        bits.append("Use exclusivamente o CONTEXTO; não extrapole além dele.")
-    return " ".join(bits)
-
-# ===================== Helpers de Formatação =====================
-_num_fix_regexes = [
-    (re.compile(r"R\$\s*\n\s*"), "R$ "),
-    (re.compile(r"(\d)\s*\n\s*(\d)"), r"\1\2"),
-    (re.compile(r"(\d)\s*,\s*(\d{2})"), r"\1,\2"),
-    (re.compile(r"(\d)\s*%\b"), r"\1%"),
-    (re.compile(r"\s*→\s*"), " → "),
-]
-
-def sanitize_numbers(text: str) -> str:
-    out = text
-    for rgx, repl in _num_fix_regexes:
-        out = rgx.sub(repl, out)
-    out = re.sub(r"\bR\s+(\d)", r"R$ \1", out)
-    return out
-
-def escape_currency(text: str) -> str:
-    return text.replace("R$", "R\\$")
-
-# ===================== Login (via Secrets) =====================
-def get_users_from_secrets() -> dict:
-    users = {}
-    for k in st.secrets:
-        if k.startswith("APP_USER_"):
-            suf = k.split("APP_USER_")[1]
-            user_name = st.secrets[k]
-            pass_key = f"APP_PASS_{suf}"
-            if pass_key in st.secrets:
-                users[user_name] = st.secrets[pass_key]
-    return users
-
-def login_screen():
-    st.title("🔐 Login · LAVO")
-    st.caption("Acesso restrito")
-    user = st.text_input("Usuário (nome completo)")
-    pwd = st.text_input("Senha", type="password")
-    if st.button("Entrar", type="primary", use_container_width=True):
-        users = get_users_from_secrets()
-        if user in users and pwd == users[user]:
-            st.session_state.auth = True
-            st.session_state.nome_usuario = user
-            st.success("Autenticado!")
-            st.rerun()
-        else:
-            st.error("Usuário ou senha inválidos.")
+# Carrega segredos (Streamlit Cloud)
+OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", ""))
+if not OPENAI_API_KEY:
+    st.error("OPENAI_API_KEY não encontrado em Secrets.")
     st.stop()
 
-if "auth" not in st.session_state:
-    st.session_state.auth = False
-if not st.session_state.auth:
-    login_screen()
+# Usuários (nome completo → senha)
+# Exemplo em Secrets:
+# APP_USERS = {"Rafael Souza":"Ra@15062017","Alex Montu":"Lavoratory@753"}
+raw_users = st.secrets.get("APP_USERS", None)
+if isinstance(raw_users, str):
+    try:
+        USERS: Dict[str, str] = json.loads(raw_users)
+    except Exception:
+        USERS = {}
+elif isinstance(raw_users, dict):
+    USERS = raw_users
+else:
+    USERS = {}
 
-# ===================== OpenAI Client =====================
-def openai_client() -> OpenAI:
-    api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY"))
-    if not api_key:
-        st.error("OPENAI_API_KEY não configurada em Secrets/variáveis de ambiente.")
+if not USERS:
+    # fallback de emergência (evite em produção)
+    USERS = {"Admin": "admin"}
+
+INDEX_DIR = "index"
+FAISS_INDEX_PATH = os.path.join(INDEX_DIR, "faiss.index")
+FAISS_META_PATH = os.path.join(INDEX_DIR, "faiss_meta.pkl")
+
+# Cliente OpenAI
+client = OpenAI(api_key=OPENAI_API_KEY)
+
+# ======================================================================================
+# PROMPT DA LAVO
+# ======================================================================================
+
+SYSTEM_PROMPT = """
+Você é a **LAVO**, especialista em Reforma Tributária da Lavoratory Group.
+
+Estilo:
+- Sempre trate a pessoa pelo **nome** (se conhecido).
+- Seja objetiva, clara e **didática**, como **professora de cursinho**, mas **nunca diga isso**.
+- Quando útil, traga **exemplos contábeis e fiscais práticos** e **numéricos redondinhos**.
+- Cite **apenas** leis, ECs, PECs, LCs, pareceres e nomes de professores/relatores. **Não cite PDFs, arquivos, anexos, slides**.
+- Se a pergunta for vaga, faça **uma** pergunta de esclarecimento (no fim) e **já entregue** um esboço de resposta.
+- **Não use modelos prontos/repetitivos** (“O que muda no dia a dia”, “Financeiro/Fiscal/TI/Compras/Comercial”…). Responda **sob medida**.
+- Se **não souber**, diga: “Ainda estou estudando, mas logo aprendo e voltamos a falar.” (e diga **onde** você procuraria).
+- Evite formatação quebrada de moeda (ex.: “R 100 , 00”). Use sempre **R$ 100,00**.
+- Quando fizer contas, mostre de forma simples (poucas linhas) e apenas quando ajudar.
+
+Contexto a seguir são **recortes normativos/explicativos**; use-os para fundamentar a resposta **sem mencionar que vieram de documentos**.
+"""
+
+# ======================================================================================
+# UTILITÁRIOS
+# ======================================================================================
+
+def load_index() -> Tuple[Any, List[Dict[str, Any]]]:
+    """
+    Carrega FAISS + metadados, se existirem.
+    """
+    if not (os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_META_PATH)):
+        return None, []
+    if faiss is None:
+        st.error("FAISS não está disponível no ambiente.")
         st.stop()
-    return OpenAI(api_key=api_key)
+    index = faiss.read_index(FAISS_INDEX_PATH)
+    with open(FAISS_META_PATH, "rb") as f:
+        metas = pickle.load(f)
+    return index, metas
 
-client = openai_client()
 
-# ===================== Index / Metas =====================
-@dataclass
-class Meta:
-    source: str
-    chunk_id: int
-    text_preview: str
-
-def load_index():
-    if not (os.path.exists(FAISS_PATH) and os.path.exists(META_PATH)):
-        st.warning("⚠️ Nenhum índice encontrado. Gere `index/faiss.index` e `index/faiss_meta.pkl` via GitHub Actions a partir de `txts/`.")
-        st.stop()
-    index = faiss.read_index(FAISS_PATH)
-    with open(META_PATH, "rb") as f:
-        metas: List[Meta] = pickle.load(f)
-    manifest = {}
-    if os.path.exists(MANIFEST_PATH):
-        with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
-            manifest = json.load(f)
-    return index, metas, manifest
-
-index, metas, manifest = load_index()
-
-# ===================== BM25 (híbrido com FAISS) =====================
-try:
-    from rank_bm25 import BM25Okapi
-    BM25_AVAILABLE = True
-except Exception:
-    BM25_AVAILABLE = False
-
-def prepare_bm25(metas: List[Meta]):
-    if not BM25_AVAILABLE:
-        return None, None
-    corpus = [m.text_preview for m in metas]
-    tokenized = [c.lower().split() for c in corpus]
-    return BM25Okapi(tokenized), corpus
-
-bm25, corpus = prepare_bm25(metas)
-
-# ===================== Embeddings / Busca =====================
 def embed_query(text: str) -> np.ndarray:
-    resp = client.embeddings.create(model=EMB_MODEL, input=[text])
+    """
+    Gera embedding da consulta usando OpenAI.
+    """
+    resp = client.embeddings.create(model="text-embedding-3-small", input=[text])
     vec = np.array(resp.data[0].embedding, dtype="float32")
-    faiss.normalize_L2(vec.reshape(1, -1))
+    # Normalização melhora a busca de cosseno no FAISS
+    norm = np.linalg.norm(vec)
+    if norm > 0:
+        vec = vec / norm
     return vec
 
-def rrf_fuse(lists: List[List[int]], k_rrf: int = 60, limit: int = 10) -> List[int]:
-    scores = {}
-    for lst in lists:
-        for rank, doc_id in enumerate(lst):
-            scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (k_rrf + rank + 1)
-    ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-    return [i for i, _ in ranked][:limit]
 
-def retrieve_hybrid(query: str, k_faiss: int = 12, k_bm25: int = 20, k_final: int = 8) -> List[int]:
-    # FAISS
-    q = embed_query(query).reshape(1, -1)
-    _, I = index.search(q, k_faiss)
-    faiss_ids = I[0].tolist()
+def search(index, metas: List[Dict[str, Any]], query: str, k: int = 6) -> List[Dict[str, Any]]:
+    """
+    Busca top-k trechos no FAISS.
+    """
+    if index is None or not metas:
+        return []
+    q = embed_query(query).reshape(1, -1).astype("float32")
+    D, I = index.search(q, k)
+    hits = []
+    for idx, score in zip(I[0], D[0]):
+        if 0 <= idx < len(metas):
+            m = metas[idx]
+            # tentamos chaves comuns: 'text', 'text_preview', 'chunk'
+            text = m.get("text") or m.get("text_preview") or m.get("chunk") or ""
+            src = m.get("src") or m.get("source") or ""
+            hits.append({"text": str(text), "score": float(score), "src": src})
+    return hits
 
-    # BM25
-    if bm25 is not None:
-        tokens = query.lower().split()
-        scores = bm25.get_scores(tokens)
-        bm25_ranked = sorted(range(len(corpus)), key=lambda i: scores[i], reverse=True)[:k_bm25]
-    else:
-        bm25_ranked = []
 
-    fused = rrf_fuse([faiss_ids, bm25_ranked], limit=max(k_faiss, k_bm25))
-    return fused[:k_final]
+def build_messages(nome: str, pergunta: str, trechos: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+    """
+    Monta as mensagens do chat com o contexto.
+    """
+    # Junta o contexto em blocos curtos
+    contexto_parts = []
+    for i, h in enumerate(trechos, start=1):
+        snippet = h["text"].strip()
+        if len(snippet) > 1200:
+            snippet = snippet[:1200] + "..."
+        contexto_parts.append(f"[{i}] {snippet}")
 
-def build_context(ids: List[int], max_chars: int = 4500) -> str:
-    parts, used, total = [], set(), 0
-    for idx in ids:
-        if idx in used:
-            continue
-        s = metas[idx].text_preview
-        if total + len(s) > max_chars:
-            break
-        parts.append(s)
-        total += len(s)
-        used.add(idx)
-    return "\n\n---\n\n".join(parts)
+    contexto = "\n\n".join(contexto_parts) if contexto_parts else ""
 
-# ===================== User message (com estilo da sidebar) =====================
-def make_user_message(question: str, nome: str, contexto: str, style_hint: str, hybrid: bool) -> str:
-    return (
-        f"NOME: {nome}\n\n"
-        f"<CONTEXTO>\n{contexto}\n</CONTEXTO>\n\n"
-        f"{style_hint}\n\n"
-        + (
-            "O modo híbrido está LIGADO: se o CONTEXTO não cobrir totalmente, complemente com conhecimento geral "
-            "somente em trechos iniciados por 'Complemento geral:'.\n\n"
-            if hybrid else
-            "O modo híbrido está DESLIGADO: use exclusivamente o CONTEXTO; se não houver base suficiente, use a frase padrão de incerteza.\n\n"
-        )
-        f"PERGUNTA: {question}"
+    # Monta o USER com tags para separar contexto de pergunta
+    user_content = []
+    if nome:
+        user_content.append(f"NOME: {nome}\n")
+    if contexto:
+        user_content.append("<contexto>\n" + contexto + "\n</contexto>\n")
+    user_content.append("Pergunta do usuário:\n" + pergunta.strip())
+
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": "\n".join(user_content)},
+    ]
+    return messages
+
+
+def postprocess(text: str) -> str:
+    """
+    Limpa problemas frequentes vindos do modelo (espaços entre dígitos, R $, etc).
+    Mantém formatação do Streamlit (markdown).
+    """
+    s = text
+
+    # Remove espaços entre dígitos (ex.: 1 000 -> 1000)
+    s = re.sub(r"(?<=\d)\s+(?=\d)", "", s)
+
+    # Normaliza "R $" para "R$"
+    s = s.replace("R $", "R$")
+    s = re.sub(r"R\s+\$", "R$", s)
+
+    # "R 100,00" -> "R$ 100,00"
+    s = re.sub(r"\bR\s+(\d)", r"R$ \1", s)
+
+    # Evita "R$100,00" sem espaço (opcional; estética)
+    s = re.sub(r"R\$(\d)", r"R$ \1", s)
+
+    # Remove espaços antes de vírgula e ponto
+    s = re.sub(r"\s+,", ",", s)
+    s = re.sub(r"\s+\.", ".", s)
+
+    # Remove espaços logo após "R$"
+    s = re.sub(r"R\$\s+(\d)", r"R$ \1", s)
+
+    return s.strip()
+
+
+def is_greeting(text: str) -> bool:
+    t = text.strip().lower()
+    return t in {"oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "hey", "hi", "hello"}
+
+
+def greet(nome: str) -> str:
+    base = f"Olá, {nome}! " if nome else "Olá! "
+    return base + (
+        "Sou a LAVO, especialista em Reforma Tributária. "
+        "Diga o tema e o contexto (empresa/ramo/valor aproximado) e eu te explico com exemplos práticos. "
+        "Ex.: “Calcule IBS/CBS numa venda de R$ 12.500,00 (varejo)”, ou “Como funciona o Split Payment no varejo?”."
     )
 
-# ===================== Geração da Resposta (RAG) =====================
-def answer_with_context(question: str, nome: str, tone: str, depth: str, hybrid: bool) -> str:
-    try:
-        doc_ids = retrieve_hybrid(question, k_final=8)
-        contexto = build_context(doc_ids, max_chars=4500)
-    except Exception:
-        q = embed_query(question).reshape(1, -1)
-        D, I = index.search(q, 6)
-        texto_parts = []
-        for idx in I[0].tolist():
-            if 0 <= idx < len(metas):
-                texto_parts.append(metas[idx].text_preview)
-        contexto = "\n\n---\n\n".join(texto_parts)
 
-    if not contexto.strip() and not hybrid:
-        return f"Olá, {nome}! Ainda estou estudando, mas logo aprendo e voltamos a falar."
+# ======================================================================================
+# UI - LOGIN
+# ======================================================================================
 
-    style_hint = style_booster(tone, depth, hybrid)
-    user_msg = make_user_message(question, nome, contexto, style_hint, hybrid)
+def login_ui() -> str:
+    st.title("🧑‍🏫 LAVO - Especialista em Reforma Tributária")
 
-    # Ajuste fino conforme knobs
-    temperature = DEFAULT_TEMP + (0.1 if tone == "Professoral (exemplos)" else 0.0)
-    max_tokens = DEFAULT_MAXTOK + (400 if depth == "Detalhada" else (-300 if depth == "Curta" else 0))
+    if "auth_ok" not in st.session_state:
+        st.session_state.auth_ok = False
+        st.session_state.user_name = ""
 
-    resp = client.chat.completions.create(
-        model=CHAT_MODEL,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_msg},
-        ],
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
-    text = resp.choices[0].message.content.strip()
-    text = sanitize_numbers(text)
-    text = escape_currency(text)
-    return text
+    if not st.session_state.auth_ok:
+        with st.form("login"):
+            user = st.text_input("Nome (igual ao cadastro)", placeholder="Rafael Souza")
+            pwd = st.text_input("Senha", type="password")
+            ok = st.form_submit_button("Entrar")
 
-# ===================== Small talk / Ajuda (bypass RAG) =====================
-SMALLTALK_RE = re.compile(r"\b(oi|olá|ola|e ?a[ií]|hello|hey|hi|bom dia|boa tarde|boa noite)\b", re.I)
-HELP_RE = re.compile(r"\b(ajuda|help|como usar|o que você faz|capacidade|exemplos?)\b", re.I)
+        if ok:
+            # Nome deve bater exatamente (case sensitive) para simplificar; ajuste se quiser
+            if user in USERS and USERS[user] == pwd:
+                st.session_state.auth_ok = True
+                st.session_state.user_name = user
+                st.success(f"Bem-vindo, {user}!")
+                st.rerun()
+            else:
+                st.error("Usuário ou senha inválidos.")
+        st.stop()
 
-def is_greeting(q: str) -> bool:
-    return bool(SMALLTALK_RE.search(q.strip()))
+    return st.session_state.user_name
 
-def is_help(q: str) -> bool:
-    return bool(HELP_RE.search(q.strip()))
 
-def is_empty_or_short(q: str) -> bool:
-    return len(q.strip()) < 2
+# ======================================================================================
+# APP
+# ======================================================================================
 
-def reply_smalltalk(nome: str) -> str:
-    return escape_currency(
-        f"Olá, **{nome}**! Sou a **LAVO**. Posso ajudar com IBS, CBS, Split Payment, regimes, transição e apuração. "
-        "Manda sua dúvida ou peça um exemplo prático."
-    )
+def main():
+    nome = login_ui()
 
-def reply_help(nome: str) -> str:
-    return escape_currency(
-        f"Claro, **{nome}**! Exemplos do que posso responder:\n"
-        "- “Quais são as leis base da Reforma?”\n"
-        "- “Explique Split Payment com um exemplo de R$ 1.000,00.”\n"
-        "- “Como fica o crédito no novo sistema?”\n"
-        "- “Quais os riscos operacionais para varejo?”\n"
-        "Faça sua pergunta 🙂"
-    )
+    # Carrega índice (se existir)
+    index, metas = load_index()
+    total_trechos = len(metas) if metas else 0
 
-# ===================== UI Principal =====================
-st.markdown("## 🧠 LAVO - Especialista em Reforma Tributária")
-st.caption(f"Base carregada • chunks: **{len(metas)}** • modelo: {CHAT_MODEL}")
+    st.caption(f"Base carregada • trechos: {total_trechos}")
 
-if "history" not in st.session_state:
-    st.session_state.history = []
+    # Histórico do chat
+    if "chat" not in st.session_state:
+        st.session_state.chat: List[Tuple[str, str]] = []
+        # Mensagem de boas-vindas
+        st.session_state.chat.append(("assistant", greet(nome)))
 
-if not st.session_state.history:
-    welcome = escape_currency(
-        f"Olá, **{st.session_state.get('nome_usuario','amigo')}**! "
-        "Sou a **LAVO**. Pergunte o que quiser sobre Reforma Tributária (IBS, CBS, Split Payment, regimes, transição etc.). "
-        "Quando fizer sentido, trago exemplos práticos com números."
-    )
-    st.session_state.history.append(("assistant", welcome))
+    # Render histórico
+    for role, content in st.session_state.chat:
+        with st.chat_message("user" if role == "user" else "assistant"):
+            st.markdown(content)
 
-# Render histórico
-for role, content in st.session_state.history:
-    with st.chat_message(role):
-        st.markdown(content)
+    pergunta = st.chat_input("Escreva sua pergunta para a LAVO…")
+    if not pergunta:
+        return
 
-# Entrada do usuário
-user_q = st.chat_input("Digite sua pergunta para a LAVO...")
-if user_q:
-    nome = st.session_state.get("nome_usuario", "amigo")
+    # Mostra a pergunta
+    st.session_state.chat.append(("user", pergunta))
     with st.chat_message("user"):
-        st.markdown(escape_currency(user_q))
-    st.session_state.history.append(("user", escape_currency(user_q)))
+        st.markdown(pergunta)
 
+    # Se for apenas saudação, responda com boas-vindas inteligente
+    if is_greeting(pergunta):
+        resposta = greet(nome)
+        resposta = postprocess(resposta)
+        st.session_state.chat.append(("assistant", resposta))
+        with st.chat_message("assistant"):
+            st.markdown(resposta)
+        return
+
+    # Busca contexto (se houver índice)
+    trechos = search(index, metas, pergunta, k=6) if index is not None else []
+
+    # Monta mensagens
+    messages = build_messages(nome=nome, pergunta=pergunta, trechos=trechos)
+
+    # Chamada ao modelo
+    try:
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=messages,
+            temperature=0.2,
+            max_tokens=900,
+        )
+        raw = resp.choices[0].message.content or ""
+        resposta = postprocess(raw)
+    except Exception as e:
+        resposta = f"Falhou ao consultar a IA: {e}"
+
+    # Exibe
+    st.session_state.chat.append(("assistant", resposta))
     with st.chat_message("assistant"):
-        with st.spinner("Consultando a base…"):
-            try:
-                if is_empty_or_short(user_q) or is_greeting(user_q):
-                    ans = reply_smalltalk(nome)
-                elif is_help(user_q):
-                    ans = reply_help(nome)
-                else:
-                    ans = answer_with_context(user_q, nome, tone, depth, hybrid_mode)
+        st.markdown(resposta)
 
-                st.markdown(ans)
-                st.session_state.history.append(("assistant", ans))
-            except Exception as e:
-                st.error("Ocorreu um erro ao gerar a resposta.")
-                st.exception(e)
+
+if __name__ == "__main__":
+    main()
