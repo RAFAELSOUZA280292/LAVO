@@ -62,7 +62,8 @@ FORMATAÇÃO
 - **NUNCA quebre números, moedas (ex.: R$ 1.000,00), percentuais (ex.: 18%) ou siglas (ex.: IBS/CBS) com quebras de linha ou espaços no meio.**
 """
 
-# ===================== SANITIZADOR DE FORMATAÇÃO (REFORÇADO) =====================
+# ===================== SANITIZADORES =====================
+
 def tidy_text(s: str) -> str:
     """Conserta quebras no meio de números, moedas e siglas (IBS/CBS), e normaliza setas/percentuais."""
     if not s:
@@ -71,20 +72,19 @@ def tidy_text(s: str) -> str:
     # Normaliza NBSP e similares
     s = s.replace("\u00A0", " ")
 
-    # 1) Moeda: colar 'R$' e garantir espaço antes do número (R$1000 -> R$ 1000), inclusive casos 'R 100,00' e 'R\n100,00'
-    s = re.sub(r'R\s*\$\s*', 'R$ ', s)                   # R $  -> R$
-    s = re.sub(r'\bR\$(?=\d)', 'R$ ', s)                 # R$100 -> R$ 100
-    s = re.sub(r'\bR\s+(?=\d)', 'R$ ', s)                # R 100 -> R$ 100
-    s = re.sub(r'\bR(?=\d)', 'R$ ', s)                   # R100  -> R$ 100
+    # 1) Moeda: colar 'R$' e garantir espaço antes do número
+    s = re.sub(r'R\s*\$\s*', 'R$ ', s)         # R $ -> R$
+    s = re.sub(r'\bR\$(?=\d)', 'R$ ', s)       # R$100 -> R$ 100
+    s = re.sub(r'\bR\s+(?=\d)', 'R$ ', s)      # R 100 -> R$ 100
+    s = re.sub(r'\bR(?=\d)', 'R$ ', s)         # R100 -> R$ 100
 
-    # 2) Números “quebrados”: remove QUALQUER espaço/linha entre dígitos e separadores (.,%)
-    #   Ex.: "1  . 000 , 00" / "1\n000,\n00" -> "1.000,00"
+    # 2) Números “quebrados”: remove espaços/linhas entre dígitos e separadores
     s = re.sub(r'(?:(?<=\d)|(?<=[\.,]))\s+(?=(\d|[.,%]))', '', s)
 
     # 3) Percentuais: 12 % -> 12%
     s = re.sub(r'(\d)\s*%\b', r'\1%', s)
 
-    # 4) Siglas: juntar letras separadas (IBS, CBS etc.), inclusive dentro de parênteses
+    # 4) Siglas: juntar letras separadas (IBS, CBS etc.), inclusive em parênteses
     def _join_acronym(m: re.Match) -> str:
         return re.sub(r'\s+', '', m.group(0))
     s = re.sub(r'\b(?:[A-Z]\s+){1,}[A-Z]\b', _join_acronym, s)                     # I B S -> IBS
@@ -94,13 +94,60 @@ def tidy_text(s: str) -> str:
     # 5) Setas: normalizar espaço
     s = re.sub(r'\s*→\s*', ' → ', s)
 
-    # 6) Pequenos ajustes de moeda (casos raros)
-    s = re.sub(r'R\$\s*,', 'R$,', s)            # evita "R$ ,00"
-    s = re.sub(r'R\$\s+\.', 'R$.', s)
+    # 6) Pequenos ajustes de moeda
+    s = re.sub(r'R\$\s+,', 'R$,', s)
 
     return s
 
-# ===================== HELPERS DE BUSCA =====================
+def strip_latex_and_garbage(text: str) -> str:
+    """
+    Remove notação LaTeX e caracteres matemáticos estilizados que poluem a renderização.
+    Também limpa numeração quebrada tipo '.2)' grudada no parágrafo.
+    """
+    if not text:
+        return text
+
+    # Remover blocos/inline LaTeX comuns
+    text = re.sub(r'\$\$.*?\$\$', '', text, flags=re.DOTALL)   # $$...$$
+    text = re.sub(r'\$.*?\$', '', text, flags=re.DOTALL)       # $...$
+    text = re.sub(r'\\\((.*?)\\\)', r'\1', text, flags=re.DOTALL)   # \(..\)
+    text = re.sub(r'\\\[(.*?)\\\]', r'\1', text, flags=re.DOTALL)   # \[..]
+
+    # Substituir letras matemáticas estilizadas por simples
+    replacements = {
+        "𝑅": "R$", "𝐼": "I", "𝐵": "B", "𝑆": "S", "𝐶": "C",
+        "𝑝": "p", "𝑟": "r", "𝑜": "o", "𝑑": "d", "𝑢": "u", "𝑡": "t", "𝑜": "o",
+    }
+    for k, v in replacements.items():
+        text = text.replace(k, v)
+
+    # Corrigir casos de "R500,00" -> "R$ 500,00"
+    text = re.sub(r'\bR(?=\d)', 'R$ ', text)
+
+    # Trocar flecha por "=" quando vier grudada com erros
+    text = text.replace("→", " → ")
+
+    # Remover ".2)" ".3)" grudados em meio a frases
+    text = re.sub(r'\.(\d\))', r' \1', text)     # ".2)" -> " 2)"
+    text = re.sub(r'\s+\d\)\s*', '\n\n', text)   # " 2)" inicia novo bloco
+
+    # Normalizar títulos
+    text = text.replace("Resumo rápido:", "**Resumo rápido:**")
+    text = text.replace("Detalhamento prático:", "**Detalhamento prático:**")
+    text = text.replace("Referências normativas:", "**Referências normativas:**")
+
+    return text
+
+def formatar_resposta(resposta: str) -> str:
+    """Pipeline de limpeza final: remove latex, corrige números/siglas/moeda, títulos, etc."""
+    resposta = strip_latex_and_garbage(resposta)
+    resposta = tidy_text(resposta)
+    # Trocar " → " por " = " somente quando vier em contas simples
+    resposta = re.sub(r'(\d% de R\$ [\d\.\,]+) \s*→\s* (R\$ [\d\.\,]+)', r'\1 = \2', resposta)
+    return resposta
+
+# ===================== BUSCA / RERANK =====================
+
 def load_faiss_index(index_path=INDEX_PATH, meta_path=META_PATH):
     if not (os.path.exists(index_path) and os.path.exists(meta_path)):
         return None, []
@@ -202,7 +249,7 @@ def answer_with_context(question: str, index, metas, nome: str) -> str:
              "content": f"{user_instruction}\n\n<contexto>\n{contexto}\n</contexto>\n\nPergunta: {question}"},
         ],
         temperature=0.0,
-        max_tokens=700,
+        max_tokens=900,
     )
     return resp.choices[0].message.content
 
@@ -279,7 +326,7 @@ if q:
     else:
         with st.chat_message("assistant"):
             with st.spinner("Consultando…"):
-                raw = answer_with_context(q, index, metas, nome)
-                fixed = tidy_text(raw)  # <<<<<< SANITIZADOR REFORÇADO
-                st.markdown(fixed)
-                st.session_state.history.append(("assistant", fixed))
+                bruto = answer_with_context(q, index, metas, nome)
+                limpo = formatar_resposta(bruto)  # <<< limpeza forte contra LaTeX/numeração quebrada
+                st.markdown(limpo)
+                st.session_state.history.append(("assistant", limpo))
