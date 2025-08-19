@@ -1,31 +1,38 @@
-import os, pickle
+# app.py
+import os
+import pickle
 from typing import List, Tuple
 import numpy as np
 import faiss
 import streamlit as st
 from openai import OpenAI
 
-# ====== VISUAL ======
+# ===================== VISUAL =====================
 st.set_page_config(page_title="LAVO - Reforma Tributária", page_icon="📄", layout="centered")
 st.markdown("""
 <style>
-    .block-container {padding-top: 2rem; max-width: 880px;}
-    .login-card {padding: 1.25rem; border-radius: 16px; background: #111827; border: 1px solid #374151;}
-    .login-title {font-size: 1.4rem; margin-bottom: .5rem;}
+  .block-container {padding-top: 2rem; max-width: 900px;}
+  .login-card {padding: 1.25rem; border-radius: 16px; background: #111827; border: 1px solid #374151;}
+  .login-title {font-size: 1.2rem; margin-bottom: .5rem;}
 </style>
 """, unsafe_allow_html=True)
 
-# ====== CONFIG ======
+st.title("🧑‍🏫 LAVO - Especialista em Reforma Tributária")
+
+# ===================== CONFIG =====================
 EMBED_MODEL = "text-embedding-3-small"
 CHAT_MODEL  = "gpt-4o-mini"
 
+# Chave da OpenAI (Streamlit Secrets tem prioridade)
 OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", "")).strip()
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+# Usuários (nome -> senha) vindos dos Secrets
 USERS = {
     "rafael souza": st.secrets.get("APP_PASS_RAFAEL", ""),
     "alex montu":   st.secrets.get("APP_PASS_ALEX",   ""),
 }
+
 INDEX_PATH = "index/faiss.index"
 META_PATH  = "index/faiss_meta.pkl"
 
@@ -33,35 +40,31 @@ SYSTEM_PROMPT = """
 Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.
 Fale SEMPRE em português do Brasil, com precisão técnica e didática.
 
-PERSONA E ESTILO
+PERSONA
 - Seja objetiva, clara e traga exemplos contábeis e fiscais práticos.
-- Comporte-se como professora de cursinho (tom didático), mas nunca diga isso.
-- Mantenha respostas concisas, evitando jargões desnecessários.
-- Sempre que possível, organize em tópicos curtos.
+- Tom didático, mas nunca diga que é “professora de cursinho”.
 
 PERSONALIZAÇÃO
-- Sempre cumprimente o usuário usando o NOME obtido no login (ex.: “Olá, Rafael Souza!”).
-- Use o nome ao longo da conversa.
+- Cumprimente o usuário usando o NOME do login, já fornecido no contexto.
+- Use o nome ao longo da resposta quando fizer sentido.
 
-ESCOPO E FONTES
+ESCOPO
 - Responda SOMENTE sobre Reforma Tributária (BR).
-- Baseie-se APENAS no conteúdo fornecido pelo sistema/assistente (contexto recuperado).
-- Cite somente leis, PECs, ECs, PLPs, pareceres e nomes de professores/relatores (sem links).
-- Nunca mencione “arquivos”, “PDFs”, “slides”, “materiais de aula”, “chunks” ou “contexto recuperado”.
+- Cite apenas leis, ECs, PECs, PLPs, pareceres e nomes de professores/relatores (sem links).
+- Nunca mencione “arquivos/PDFs/slides/material/chunks/contexto”.
 
-INCERTEZA E LIMITES
-- Se não tiver certeza ou não estiver no contexto, diga:
-  “Ainda estou estudando, mas logo aprendo e voltamos a falar.”
+INCERTEZA
+- Se não tiver certeza, diga: “Ainda estou estudando, mas logo aprendo e voltamos a falar.”
 
 FORMATAÇÃO
-- Quando fizer sentido, estruture em:
+- Quando fizer sentido, use:
   1) Resumo rápido (2–4 linhas).
   2) Detalhamento prático (bullets com regras, prazos, cálculos e exemplos).
   3) Referências normativas (ex.: EC 132/2023; PLP 68/2024).
 - Valores: use vírgula (R$ 1.000,00) e mostre a conta: 18% de R$ 1.000,00 → R$ 180,00.
 """
 
-# ====== FUNÇÕES FAISS / OPENAI ======
+# ===================== HELPERS =====================
 def load_faiss_index(index_path=INDEX_PATH, meta_path=META_PATH):
     if not (os.path.exists(index_path) and os.path.exists(meta_path)):
         return None, []
@@ -99,15 +102,28 @@ def answer_with_context(question: str, hits: List[Tuple[int, float, dict]], nome
          "content": f"{user_instruction}\n\n<contexto>\n{contexto}\n</contexto>\n\nPergunta: {question}"},
     ]
     resp = client.chat.completions.create(
-        model=CHAT_MODEL, messages=messages, temperature=0.0, max_tokens=600
+        model=CHAT_MODEL, messages=messages, temperature=0.0, max_tokens=700
     )
     return resp.choices[0].message.content
 
-# ====== LOGIN ======
+def welcome_message(nome: str) -> str:
+    return (
+        f"Olá, {nome}! 👋\n\n"
+        "Sou a **LAVO**, especialista em Reforma Tributária da **Lavoratory Group**.  \n"
+        "Seja muito bem-vindo! 🚀  \n\n"
+        "Qual é a sua dúvida sobre a Reforma Tributária? Estou aqui para ajudar com clareza e objetividade."
+    )
+
+GREETING_WORDS = {
+    "ola", "olá", "bom dia", "boa tarde", "boa noite", "oi", "hey", "hello"
+}
+def is_greeting(text: str) -> bool:
+    t = (text or "").strip().lower()
+    return (len(t.split()) <= 3) and any(w in t for w in GREETING_WORDS)
+
+# ===================== LOGIN =====================
 if "auth" not in st.session_state:
     st.session_state.auth = False
-
-st.title("🧑‍🏫 LAVO - Especialista em Reforma Tributária")
 
 if not st.session_state.auth:
     with st.container():
@@ -120,6 +136,7 @@ if not st.session_state.auth:
             if key in USERS and USERS[key] and USERS[key] == (pwd or ""):
                 st.session_state.auth = True
                 st.session_state.user_name = user or "Usuário"
+                st.session_state.show_welcome = True  # <- mostra saudação pós-login
                 st.success(f"Bem-vindo, {st.session_state.user_name}!")
                 st.rerun()
             else:
@@ -127,9 +144,8 @@ if not st.session_state.auth:
         st.markdown('</div>', unsafe_allow_html=True)
     st.stop()
 
+# ===================== CARGA DO ÍNDICE =====================
 nome = st.session_state.get("user_name", "colega")
-
-# ====== CARREGAR ÍNDICE ======
 index, metas = load_faiss_index()
 if index is None:
     st.warning("⚠️ Nenhum índice encontrado. Gere `index/faiss.index` e `index/faiss_meta.pkl` via GitHub Actions a partir de `txts/`.")
@@ -138,7 +154,12 @@ if index is None:
 
 st.caption(f"Base carregada • trechos: {len(metas)}")
 
-# ====== CHAT ======
+# Saudação automática ao logar (uma vez)
+if st.session_state.pop("show_welcome", False):
+    with st.chat_message("assistant"):
+        st.markdown(welcome_message(nome))
+
+# ===================== CHAT =====================
 if "history" not in st.session_state:
     st.session_state.history = []
 
@@ -152,9 +173,16 @@ if q:
     with st.chat_message("user"):
         st.markdown(q)
 
-    with st.chat_message("assistant"):
-        with st.spinner("Consultando…"):
-            hits = retrieve(index, metas, q, k=5)
-            ans = answer_with_context(q, hits, nome)
-            st.markdown(ans)
-            st.session_state.history.append(("assistant", ans))
+    # Se for uma saudação simples, responde institucionalmente
+    if is_greeting(q):
+        msg = welcome_message(nome)
+        with st.chat_message("assistant"):
+            st.markdown(msg)
+        st.session_state.history.append(("assistant", msg))
+    else:
+        with st.chat_message("assistant"):
+            with st.spinner("Consultando…"):
+                hits = retrieve(index, metas, q, k=5)
+                ans = answer_with_context(q, hits, nome)
+                st.markdown(ans)
+                st.session_state.history.append(("assistant", ans))
