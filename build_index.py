@@ -1,91 +1,111 @@
-# build_index.py
-import os, time, pathlib, json
-from typing import List, Dict
+import os
+import glob
+import json
+import pickle
+from dataclasses import dataclass, asdict
+from typing import List, Tuple
+from tqdm import tqdm
+
 import numpy as np
-import faiss, pickle
+import faiss
 from openai import OpenAI
 
-TXT_DIR = pathlib.Path("txts")
-OUT_DIR = pathlib.Path("index")
-OUT_DIR.mkdir(exist_ok=True)
+INDEX_DIR = "index"
+TXT_DIR = "txts"
+EMB_MODEL = "text-embedding-3-small"
 
-INDEX_PATH = OUT_DIR / "faiss.index"
-META_PATH  = OUT_DIR / "faiss_meta.pkl"
-MANIFEST   = OUT_DIR / "manifest.json"
+FAISS_PATH = os.path.join(INDEX_DIR, "faiss.index")
+META_PATH = os.path.join(INDEX_DIR, "faiss_meta.pkl")
+MANIFEST_PATH = os.path.join(INDEX_DIR, "manifest.json")
 
-EMBED_MODEL = "text-embedding-3-small"
-
-# chunks maiores para aparecer nome/fato no contexto
-MAX_CHARS_PER_CHUNK = 1800
+CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 
-def read_txts() -> List[Dict]:
-    files = sorted(TXT_DIR.rglob("*.txt"))
-    if not files:
-        raise RuntimeError("Nenhum .txt encontrado em txts/.")
+@dataclass
+class Meta:
+    source: str
+    chunk_id: int
+    text_preview: str
+
+def read_txts(txt_dir: str) -> List[Tuple[str, str]]:
+    files = sorted(glob.glob(os.path.join(txt_dir, "**/*.txt"), recursive=True))
     items = []
-    for p in files:
-        try:
-            content = p.read_text(encoding="utf-8", errors="ignore")
-        except UnicodeDecodeError:
-            content = p.read_text(encoding="latin-1", errors="ignore")
-        content = " ".join(content.split())
-        i, n = 0, len(content)
-        while i < n:
-            j = min(i + MAX_CHARS_PER_CHUNK, n)
-            chunk = content[i:j]
-            items.append({"file": p.name, "text": chunk})
-            if j == n: break
-            i = max(0, j - CHUNK_OVERLAP)
+    for fp in files:
+        with open(fp, "r", encoding="utf-8", errors="ignore") as f:
+            items.append((fp, f.read()))
     return items
 
-def embed_texts(client: OpenAI, texts: List[str]) -> np.ndarray:
+def chunk_text(text: str, size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP) -> List[str]:
+    text = " ".join(text.split())  # normaliza espaços
+    chunks = []
+    start = 0
+    n = len(text)
+    while start < n:
+        end = min(start + size, n)
+        chunks.append(text[start:end])
+        if end == n:
+            break
+        start = end - overlap
+        if start < 0:
+            start = 0
+    return chunks
+
+def build_corpus(files: List[Tuple[str, str]]) -> Tuple[List[str], List[Meta]]:
+    texts = []
+    metas = []
+    for src, content in files:
+        chunks = chunk_text(content)
+        for i, ch in enumerate(chunks):
+            # preview curto pra manter pickle leve
+            preview = ch[:1000]
+            texts.append(ch)
+            metas.append(Meta(source=os.path.relpath(src), chunk_id=i, text_preview=preview))
+    return texts, metas
+
+def embed_all(client: OpenAI, texts: List[str], model: str) -> np.ndarray:
     vecs = []
-    B = 100
-    for k in range(0, len(texts), B):
-        batch = texts[k:k+B]
-        for attempt in range(5):
-            try:
-                resp = client.embeddings.create(model=EMBED_MODEL, input=batch)
-                vecs.extend([d.embedding for d in resp.data])
-                break
-            except Exception:
-                time.sleep(1.5*(attempt+1))
-                if attempt == 4:
-                    raise
-        time.sleep(0.1)
-    arr = np.asarray(vecs, dtype="float32")
-    faiss.normalize_L2(arr)  # cos-sim via produto interno
+    BATCH = 100
+    pbar = tqdm(range(0, len(texts), BATCH), desc="🔤 Gerando embeddings")
+    for i in pbar:
+        batch = texts[i:i+BATCH]
+        resp = client.embeddings.create(model=model, input=batch)
+        for item in resp.data:
+            vecs.append(item.embedding)
+    arr = np.array(vecs, dtype="float32")
+    faiss.normalize_L2(arr)
     return arr
 
 def main():
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY não definido (Actions secret).")
+
+    os.makedirs(INDEX_DIR, exist_ok=True)
+
+    files = read_txts(TXT_DIR)
+    if not files:
+        raise RuntimeError("Nenhum .txt encontrado em txts/.")
+    print(f"📂 {len(files)} arquivo(s) .txt encontrados.")
+
+    texts, metas = build_corpus(files)
+    print(f"🧠 Total de chunks: {len(texts)}")
+
     client = OpenAI(api_key=api_key)
+    emb = embed_all(client, texts, EMB_MODEL)
 
-    items = read_txts()
-    texts = [it["text"] for it in items]
-    # GUARDE um preview LONGO (até 1600 chars) — é isso que vai para o LLM
-    metas = [{"file": it["file"], "text_preview": it["text"][:1600]} for it in items]
-
-    emb = embed_texts(client, texts)
-    index = faiss.IndexFlatIP(emb.shape[1])
+    d = emb.shape[1]
+    index = faiss.IndexFlatIP(d)
     index.add(emb)
 
-    faiss.write_index(index, str(INDEX_PATH))
+    faiss.write_index(index, FAISS_PATH)
     with open(META_PATH, "wb") as f:
         pickle.dump(metas, f)
 
-    MANIFEST.write_text(json.dumps({
-        "num_chunks": len(texts),
-        "embed_model": EMBED_MODEL,
-        "dim": int(emb.shape[1]),
-        "max_chars_per_chunk": MAX_CHARS_PER_CHUNK,
-        "chunk_overlap": CHUNK_OVERLAP,
-    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    manifest = {"emb_model": EMB_MODEL, "chunks": len(texts)}
+    with open(MANIFEST_PATH, "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ Index salvo em {INDEX_PATH} e {META_PATH}. Chunks: {len(texts)} | Dim: {emb.shape[1]}")
+    print("✅ Index criado em index/")
 
 if __name__ == "__main__":
     main()
