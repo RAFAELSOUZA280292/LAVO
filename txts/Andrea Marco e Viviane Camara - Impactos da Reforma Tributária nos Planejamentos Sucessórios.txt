@@ -1,0 +1,732 @@
+Impactos da Reforma Tributária nos Planejamentos Sucessórios
+alterações no arquétipo constitucional do ITCMD promovidas pela EC
+132/2023, seus efeitos e reflexos para planejamentos envolvendo doações e
+heranças
+Andrea Marco Antonio1
+Viviane Câmara Strachicini2
+1) Introdução
+Dentre as alterações do texto constitucional trazidas pela Emenda Constitucional
+132/2023 (“EC 132/2023” ou “EC 132”), há relevantes modificações das normas de
+competência relativas aos impostos incidentes sobre a doação e sobre a transmissão causa
+mortis (ITCMD).
+Essas normas têm por objeto a regulação da instituição e cobrança do ITCMD pelos
+Estados e Distrito Federal, delimitando os fatos que podem ser objeto de cobrança, os critérios
+para o cálculo do tributo devido e o sujeito ativo das cobranças, isto é, o Estado apto a instituir
+e regulamentar o ITCMD.
+Esse artigo tem por objetivo analisar as regras da EC 132 que alteraram as normas de
+Esse artigo tem por objetivo analisar as regras da EC 132 que alteraram as normas de
+competência do ITCMD, identificando possíveis impactos dessas alterações para os
+planejamentos sucessórios, que envolvem a gestão de patrimônio e suas movimentações
+sujeitas à incidência do imposto.
+O artigo avaliará, inicialmente, o arquétipo constitucional do ITCMD, indicando as
+modificações nele promovidas pela EC 132. Em seguida, problematizará a produção de efeito
+dessas mudanças, indicando o que deverá ser feito pelos Estados para que possam instituir e
+cobrar o tributo já segundo as novas regras constitucionais, a partir de quando tais cobranças
+poderão se dar e quais as possíveis controvérsias que poderão surgir a respeito da aplicação das
+novas normas pelas legislações ordinárias. Por fim, o artigo trará conclusões a respeito dos
+reflexos esperados para o planejamento tributário sucessório decorrentes das novas regras
+trazidas pela Reforma Tributária.
+trazidas pela Reforma Tributária.
+Concluirá, por fim, que as novas regras trazidas pela EC 132 serão muito relevantes
+tanto para os planejamentos já em curso quanto para aqueles que vierem a ser realizados, tendo
+em vista a perspectiva de aplicação de alíquotas mais gravosas a transmissões de bens de valores
+expressivos, a possibilidade de cobrança de imposto mesmo quando o doador ou de cujus tiver
+domicílio no exterior e antes mesmo de regulamentação do tema pela lei complementar, a
+modificação de competência para cobrança do tributo na transmissão causa mortis em
+1
+
+LL.M. em Tributação Internacional pela Universidade de Leiden, Holanda. MBA em Finanças Empresariais na
+Fundação Getúlio Vargas. Graduação em Direito pela Pontifícia Universidade Católica de São Paulo. Advogada
+em São Paulo.
+2
+Mestre em direito Econômico, Financeiro e Tributário pela USP. Especialista em Direito Tributário pelo IBET.
+Graduada em Direito pela Pontifícia Universidade Católica de São Paulo. Advogada em São Paulo.
+2
+conformidade com o domicílio do de cujus e todos os aspectos relacionados às discussões que
+possivelmente surgirão a respeito da aplicação das novas regras.
+O artigo realiza esforço para antecipar muitas de tais discussões, seja na aplicação das
+novas regras pelos Estados, seja na definição do momento em que tais regras poderão de fato
+ser aplicadas, mas sem a pretensão de esgotá-las, sendo seu objetivo primordial esclarecer as
+elucidar os pontos relevantes para os planejamentos sucessórios a serem realizados sob a égide
+das novas regras e avaliar pontos de dúvidas na sua aplicação que deverão ser considerados nas
+decisões envolvendo tais planejamentos.
+2) ITCMD: arquétipo constitucional de incidência e dispositivos alterados pela EC
+132/2023
+Em seu art. 155, I, a Constituição Federal (“CF”) atribui aos Estados e ao Distrito
+Federal (“DF”) a competência para instituir imposto sobre transmissão causa mortis e doação
+Federal (“DF”) a competência para instituir imposto sobre transmissão causa mortis e doação
+de quaisquer bens ou direitos. A competência outorgada aos Estados implica, então, a atribuição
+aos Estados e DF da possibilidade de instituir e cobrar dois impostos: um sobre a transmissão
+causa mortis e outro sobre a doação de quaisquer bens3.
+Apesar de a CF estabelecer a competência para tributação de dois fatos distintos,
+convencionou-se referir-se aos dois impostos como se um só fossem, por meio da sigla
+“ITCMD”, diante de a atribuição de competência ter se dado de forma unificada pela CF a
+ambos, sendo várias das regras de competência compartilhadas entre ambos. Contudo, nada
+impede que os Estados, no exercício dessa competência, optem por criar apenas “ITCM”s ou
+“ITD”s, desde que obedecidos os critérios do arquétipo constitucional.
+No § 1º do citado dispositivo, há regras para determinação de qual Estado será competente para
+No § 1º do citado dispositivo, há regras para determinação de qual Estado será competente para
+instituir e cobrar os impostos, as quais são divididas em seus incisos da seguinte forma:
+• Bens imóveis (inciso I): o ITCMD incidente sobre bens imóveis e respectivos
+direitos pode ser instituído pelo Estado de situação de bem ou DF;
+• Bens móveis, títulos e créditos na sucessão (inciso II): o ITCMD incidente
+sobre a transmissão de bens móveis, títulos e créditos compete ao Estado:
+o Onde era domiciliado o de cujus no caso do “ITCM”;
+o Onde tiver domicílio o doador no caso do “ITD”.
+A disposição do inciso II acima mencionado foi recentemente alterada pela Emenda
+Constitucional 132/2023 (“Reforma Tributária”), sendo que antes dessa alteração, a regra de
+competência para instituição e cobrança do ITCM sobre bens móveis competia ao Estado onde
+se processava o inventário (e não onde era domiciliado o de cujus).
+3
+
+Conforme ensina Paulo de Barros Carvalho, o tipo tributário é definido pela integração lógico-semântica de dois
+fatores: hipótese de incidência e base de cálculo. “Ao binômio, o legislador constitucional outorgou a propriedade
+de diferençar as espécies tributárias entre si, sendo também operativo dentro das subespécies. Adequadamente
+isolados os dois fatores, estaremos credenciados a dizer, sem hesitação e perplexidades, se um tribo é imposto,
+taxa ou contribuição de melhoria, bem como anunciar que tipo de imposto ou que modalidade de taxa”. In
+CARVALHO, Paulo de Barros. Curso de Direito Tributário. São Paulo: 30ª Edição. P. 193.
+3
+O inciso III do dispositivo constitucional estabelece, ainda, a determinação para que a
+Lei Complementar disponha sobre o Estado competente para instituição e cobrança do ITCMD
+nos seguintes casos:
+• Imposto sobre doação por residente no exterior (alínea a);
+• Imposto sobre a transmissão causa mortis se o de cujus possuía bens, era
+residente ou domiciliado ou teve seu inventário processado no exterior (alínea
+b).
+A disposição tem por objetivo prevenir os chamados “conflitos de competência”, que
+ocorrem em razão da atribuição de competência, por mais de um Estado, para determinar um
+mesmo fato, resultando em legislações ordinárias que acabam por instituir cobranças sobre um
+mesmo fato. A função da Lei Complementar como delimitadora de competências entre os entes
+federados decorre também do art. 146, I4 da CF.
+Em razão dessa previsão constitucional, o STF possui jurisprudência firmada por meio
+de repercussão geral (RE 851108 – Tema 825) no sentido de que sem que haja a edição de Lei
+de repercussão geral (RE 851108 – Tema 825) no sentido de que sem que haja a edição de Lei
+Complementar não há a possibilidade de cobrança de ITCMD sobre doação por residente ou
+domiciliado no exterior, tampouco sobre transmissão causa mortis se o de cujus possuía bens,
+era residente ou domiciliado ou teve seu inventário processado no exterior.5
+Contudo, a EC 132/2023, em seu art. 16, estabeleceu a possibilidade de cobrança do
+imposto nos casos de que trata o inciso III até que lei complementar disponha sobre o tema,
+prevendo o Estado a ser competente para sua instituição e cobrança, nos seguintes termos:
+“Art. 16. Até que lei complementar regule o disposto no art. 155, § 1º, III, da
+Constituição Federal, o imposto incidente nas hipóteses de que trata o referido
+dispositivo competirá:
+I - relativamente a bens imóveis e respectivos direitos, ao Estado da situação do bem,
+ou ao Distrito Federal;
+II - se o doador tiver domicílio ou residência no exterior:
+ou ao Distrito Federal;
+II - se o doador tiver domicílio ou residência no exterior:
+a) ao Estado onde tiver domicílio o donatário ou ao Distrito Federal;
+b) se o donatário tiver domicílio ou residir no exterior, ao Estado em que se encontrar o
+bem ou ao Distrito Federal;
+III - relativamente aos bens do de cujus, ainda que situados no exterior, ao Estado onde
+era domiciliado, ou, se domiciliado ou residente no exterior, onde tiver domicílio o
+sucessor ou legatário, ou ao Distrito Federal.”
+Os incisos IV e VI dispõem sobre as alíquotas do ITCMD, sendo que o primeiro prevê
+a necessidade de o Senado Federal fixar alíquotas máximas para os impostos e o segundo
+estabelece a possibilidade de o ITCMD ser progressivo em razão do valor do quinhão, do
+legado ou da doação. Esta última regra de progressividade foi também prevista pela EC
+132/2023.
+Como se vê, o arquétipo constitucional do ITCMD sofreu importantes mudanças
+132/2023.
+Como se vê, o arquétipo constitucional do ITCMD sofreu importantes mudanças
+relacionadas à sua sujeição ativa (Estado ou DF competentes para instituição e cobrança) e à
+“Art. 146. Cabe à lei complementar: I - dispor sobre conflitos de competência, em matéria tributária, entre a
+União, os Estados, o Distrito Federal e os Municípios”.
+5
+Tese fixada no tema 825: “É vedado aos estados e ao Distrito Federal instituir o ITCMD nas hipóteses referidas
+no art. 155, § 1º, III, da Constituição Federal sem a intervenção da lei complementar exigida pelo referido
+dispositivo constitucional.”
+4
+4
+
+sua alíquota, com a previsão de obrigatoriedade de que sua cobrança progressiva em valor dos
+bens doados ou objeto de sucessão causa mortis.
+Considerando as regras do arquétipo constitucional aqui tratadas que foram modificadas
+pelo texto da EC 132/2023, objeto deste estudo, temos o seguinte cenário:
+Imposto
+
+Transmissão
+causa mortis
+(ITCM)
+
+Critério material
+de cujus residente no
+Brasil
+De
+bens
+de cujus residente no
+imóveis
+exterior
+de cujus residente no
+Brasil
+De
+bens
+de cujus residente no
+móveis
+exterior
+
+doador no Brasil
+De
+bens
+doador no exterior
+Transmissão móveis
+por doação
+(ITD)
+doador no Brasil
+De
+bens doador residente no
+imóveis exterior
+
+Sujeito ativo
+
+Alíquota
+Sujeito ativo
+
+Alíquota
+
+Estado de situação do bem
+Estado a ser definido por LC - até
+previsão em LC, considera-se o
+Estado de situação do bem
+Estado onde era domiciliado o de
+cujus
+Estado a ser definido por LC - até
+previsão em LC, considera-se o
+Estado onde era domiciliado o de
+cujus, ou, se domiciliado ou residente
+no exterior, onde tiver domicílio o
+sucessor ou legatário, ainda que os
+bens estejam situados no exterior.
+Estado de domicílio do doador
+Estado a ser definido por LC - até
+previsão em LC, considera-se o
+Estado onde tiver domicílio o
+donatário ou, se o donatário tiver
+domicílio no exterior, o Estado em
+que se encontrar o bem
+Estado de situação do bem
+Estado a ser definido por LC - até
+previsão em LC, considera-se o
+Estado de situação do bem
+
+Deverá ser
+progressiva,
+observado teto
+estabelecido pelo
+Senado Federal
+Deverá ser
+progressiva,
+observado teto
+estabelecido pelo
+Senado Federal
+
+Conforme mencionado acima, a EC 132/2023 incluiu o inciso VI ao §1º do art. 155 da
+CF para estabelecer que o ITCMD deverá ser progressivo em razão do valor do quinhão, do
+legado ou da doação.
+Antes da EC 132/2023, os Estados possuíam a faculdade de estabelecer alíquotas fixas
+ou progressivas6 para doação e herança, porém, com a mudança da CF, os Estados deverão,
+obrigatoriamente, passar a adotar alíquotas progressivas para o imposto. Atualmente, parte dos
+Estados possui alíquotas fixas e parte já adota alíquotas progressivas.
+Estabelecidas as normas constitucionais a respeito da instituição e cobrança do
+ITCMD, passamos a tratar dos aspectos específicos de suas alterações pela Reforma Tributária
+e como tais alterações poderão afetar os planejamentos tributários sucessórios.
+6
+A constitucionalidade da progressividade do ITCMD foi reconhecida pelo STF nos autos do RE nº 562.045, em
+sede de recursos repetitivos (Tema 21), em 27/11/2013.
+5
+3) Produção de efeitos e vigência da EC 132/2023 em relação ao ITCMD
+Como visto, a EC 132/2023 trouxe importantes alterações ao arquétipo constitucional
+do ITCMD, prevendo (i) a mudança de competência para instituição e cobrança do ITCM no
+caso de bens móveis, (ii) a possibilidade de cobrança nos casos em que o doador é residente ou
+domiciliado no exterior até que lei complementar disponha sobre o tema, bem como (iii) a
+obrigatoriedade de cobrança progressiva pelos Estados em função do valor dos bens
+transmitidos.
+A EC 132 foi publicada em 20/12/2023 e entrou em vigor na data de sua publicação em
+relação às alterações das regras de competência do ITCMD.7 Além disso, o art. 17 da EC previu
+que a alteração do art. 155, § 1º, II da CF aplica-se às sucessões abertas a partir da data de
+publicação da Emenda. Como visto, esse dispositivo previu que o ITCM incidente sobre a
+transmissão de bens móveis poderá ser instituído e cobrado pelo Estado onde era domiciliado
+transmissão de bens móveis poderá ser instituído e cobrado pelo Estado onde era domiciliado
+o de cujus e não mais no Estado onde se processou o inventário.
+Por se tratar de regulamentação da competência dos Estados e DF, tais modificações
+dependem de previsão em lei ordinária instituída pelos Estados para que resultem em
+modificações efetivas no imposto a ser cobrado, estando a modificação de tributos sujeita ao
+princípio constitucional da legalidade.8
+Além disso, quando tal alteração implica majoração de cobrança tributária, a CF exige
+também que haja obediência às regras de anterioridade, que no caso do ITCMD implicam a
+impossibilidade de exigência do imposto no mesmo exercício financeiro em que instituída a
+majoração e também antes de transcorridos 90 dias da data em que publicada a lei que lhe deu
+causa (anterioridades anual e nonagesimal9).
+Considerando esses pressupostos, passamos a tratar da implementação dessas novas
+regras pelos Estados e DF e seus efeitos.
+3.1. Aplicação da alíquota progressiva
+
+A legislação do Estado que passar a instituir uma alíquota progressiva para cobrança de
+ITCMD somente poderá produzir efeitos, em relação às alíquotas mais gravosas que vierem a
+ser previstas, no exercício seguinte à sua instituição – em 2025, caso seja aprovada e publicada
+ainda este ano pela Casa Legislativa do Estado – e 90 dias após sua publicação.
+Para os Estados que já possuíam tal previsão, não haverá qualquer mudança nesse
+sentido, a menos que os percentuais de progressividade sejam alterados.
+
+7
+
+Art. 23, III da EC 132/2023.
+A obrigatória previsão em lei de tributos é estabelecida pelo art. 150, I da CF.
+9
+Art. 150, III, b e c da CF.
+8
+6
+Tomando o exemplo do Estado de São Paulo, a alíquota atualmente aplicável é fixa de
+4%. Após a promulgação da EC 132/2023, foi apresentado o Projeto de Lei 7/2024, buscando
+adequação à nova previsão constitucional, prevendo a substituição da alíquota de 4% pelas
+alíquotas progressivas de 2 a 8%, a depender do valor do patrimônio transmitido10.
+Nessa medida, as alíquotas que vierem a ser cobradas que sejam superiores ao atual
+percentual de 4% somente poderão vir a incidir em transmissões que vierem a ocorrer a partir
+de 01/01/2025, desde que a legislação seja aprovada 90 dias antes dessa data. Caso contrário,
+haverá que se aguardar, ainda, o transcurso do prazo de 90 dias da publicação da lei que instituir
+as alíquotas mais gravosas.
+Vale mencionar que foi mantida a previsão da CF que determina que as alíquotas
+máximas serão fixadas pelo Senado Federal. A alíquota máxima do ITCMD vigente é de 8%,
+nos termos da Resolução nº 9/1992. No entanto, está em trâmite o projeto de Resolução do
+nos termos da Resolução nº 9/1992. No entanto, está em trâmite o projeto de Resolução do
+Senado nº 5/2019, que prevê o aumento do teto da alíquota do ITCMD de 8 para 16%. De
+acordo com a justificação do projeto, de autoria do Senador Cid Gomes, a proposta tem por
+finalidade: (i) atribuir uma margem maior aos Estados; (ii) favorecer a justiça tributária pelo
+princípio da capacidade contributiva; e (iii) aproximar a alíquota máxima daquelas praticadas
+nos países desenvolvidos.
+Significa isso dizer que as alíquotas progressivas cobradas pelos Estados e DF a partir
+de 2025 poderão vir a ser ainda mais gravosas - além da progressividade - que o teto atual de
+8%, respeitada, como visto, a sua necessária previsão em lei e a sua obediência às regras de
+anterioridade.
+3.2. Novas regras para doação e transmissão causa mortis para doador ou de cujus
+residente ou domiciliado no exterior
+
+Em relação ao ITCMD devido quando o doador ou o de cujus possuía residência ou
+domicílio no exterior, houve, como visto, uma importante mudança constitucional relacionada
+à forma de definição de competência para tributar os fatos imponíveis.
+O art. 155, § 1º da CF estabelece – em disposição não alterada pela EC 132/2023 –
+que a competência para instituição do ITCMD nesses casos deve ser regulada por meio de Lei
+Complementar, a qual nunca veio a ser editada. E como já destacado linhas atrás, o STF, no
+
+10
+10
+
+Trecho da justificativa do PL 7/2024: Até 10.000 UFESPs (até R$ 353.600,00), aplicação de alíquota de 2%:
+esta faixa busca assegurar uma tributação mais branda para patrimônios de menor expressão, permitindo redução
+para transmissões de menor valor. De 10.000 a 85.000 UFESPs (de R$ 353.600,00 a R$ 3.005.600,00), aplicação
+de alíquota de 4%: essa faixa continuará com o mesmo percentual aplicado atualmente, sem impor uma carga
+tributária excessiva. De 85.000 a 280.000 UFESPs (R$ 3.005.600,00 a R$ 9.900.800,00), aplicação de alíquota de
+6%: continuando a progressão, nesta faixa aplica-se uma alíquota mais alta para patrimônios substanciais, mas
+mantendo um equilíbrio na tributação. Acima de 280.000 UFESPs (acima de R$ 9.900.800,00), aplicação de
+alíquota de 8%: a alíquota mais elevada nesta faixa reflete a capacidade contributiva robusta dos contribuintes com
+patrimônios significativos.
+7
+Tema 825, estabeleceu justamente que a edição de tal lei complementar seria imprescindível
+para instituição e cobrança desses impostos, em decisão vinculante para todo o Poder Judiciário.
+A decisão teve como fundamento constitucional não apenas a previsão do art. 155, §
+1º da CF, mas também o art. 146 da CF, o qual estabelece cumprir à Lei Complementar dispor
+sobre normas gerais em matéria tributária, com a função precípua de dispor sobre conflitos de
+competência entre a União, os Estados o DF e os Municípios. Roque Antonio Carrazza já
+defendera, inclusive, que a função desse dispositivo era justamente prevenir conflitos de
+competência, em atenção ao art. 146 da CF.11
+Na esteira desse entendimento firmado pelo STF, legislações editadas por alguns
+Estados, dentre eles Alagoas e São Paulo, vieram a ser declaradas inconstitucionais por meio
+de ADIs, por previrem a incidência do ITCMD sobre doações e heranças no exterior.12 13
+de ADIs, por previrem a incidência do ITCMD sobre doações e heranças no exterior.12 13
+Importa entender, então, de que modo será a interação entre o texto vigente da CF, que
+exige Lei Complementar não editada, o dispositivo da EC 132/2023 que, apesar de não alterar
+a CF, possui força de norma constitucional, e, ainda, as legislações ordinárias que, após
+Nas palavras do Professor: “...se o doador tiver domicílio ou residência no exterior ou se o de cujus possuía
+bens, era residente ou domiciliado ou teve o seu inventário processado no exterior, é a lei complementar que,
+desempenhando a função que lhe é atribuída pelo art. 146, I, da Carta Magna (“dispor sobre conflitos de
+competência, em matéria tributária”), vai disciplinar o assunto, dando critérios para que se saiba, com exatidão, a
+qual unidade federativa competem os impostos em tela (...)” in CARRAZZA, Roque Antonio. Curso de Direito
+Constitucional Tributário. 27ª Ed. São Paulo: Malheiros, 2011. P. 1049.
+12
+“(...) AUSÊNCIA DE LEI COMPLEMENTAR FEDERAL. INEXISTÊNCIA DE COMPETÊNCIA
+LEGISLATIVA PLENA DOS ESTADOS E DO DISTRITO FEDERAL. PRECEDENTES. PROCEDÊNCIA DO
+PEDIDO. INCONSTITUCIONALIDADE FORMAL DA EXPRESSÃO “NO EXTERIOR”, CONSTANTE DO
+§1º DO ART. 3º E DA INTEGRALIDADE DO 4º DA LEI 10.705, DE 28.12.2000, DO ESTADO DE SÃO
+§1º DO ART. 3º E DA INTEGRALIDADE DO 4º DA LEI 10.705, DE 28.12.2000, DO ESTADO DE SÃO
+PAULO. MODULAÇÃO DOS EFEITOS DA DECISÃO.” - ADI 6830, Relator(a): GILMAR MENDES, Tribunal
+Pleno, julgado em 10-11-2022, PROCESSO ELETRÔNICO DJe-234 DIVULG 18-11-2022 PUBLIC 21-11-2022.
+13
+EMENTA: AÇÃO DIRETA DE INCONSTITUCIONALIDADE. DIREITO TRIBUTÁRIO. DECRETO
+ESTADUAL Nº 10.306, DE 2011, DE ALAGOAS. IMPOSTO SOBRE TRANSMISSÃO CAUSA MORTIS E
+DOAÇÃO DE QUAISQUER BENS OU DIREITOS (ITCMD). RESERVA DE LEI QUALIFICADA.
+AUSÊNCIA DE LEI COMPLEMENTAR NACIONAL. BASE TRIBUTÁVEL NO EXTERIOR. MODULAÇÃO
+DE EFEITOS. TEMA Nº 825 DO EMENTÁRIO DA REPERCUSSÃO GERAL. (...) 2. Mérito. Vício Formal.
+Caracterizado. São inconstitucionais leis ou decretos estaduais que busquem exercer a competência tributária do
+art. 155, § 1º, inc. III, da Constituição da República, sem amparo em prévia lei complementar nacional.
+Aplicabilidade da ratio decidendi do Tema nº 825 do ementário da Repercussão Geral, cujo paradigma é o RE nº
+851.108-RG/SP, Rel. Min. Dias Toffoli, Tribunal Pleno, j. 1º/03/2021, p. 20/04/2021, e no qual se assentou que
+“é vedado aos estados e ao Distrito Federal instituir o ITCMD nas hipóteses referidas no art. 155, § 1º, III, da
+Constituição Federal sem a intervenção da lei complementar exigida pelo referido dispositivo constitucional.” (...)
+4. Modulação de efeitos. Imperiosa calibragem da eficácia temporal desta decisão em controle abstrato de
+constitucionalidade, nos termos do art. 27 da Lei nº 9.868, de 1999, com a finalidade de que o presente juízo de
+inconstitucionalidade produza efeitos a contar da publicação do acórdão do RE nº 851.108-RG/SP, o que se deu
+em 20/04/2021, ressalvando as ações judiciais pendentes de conclusão até o mesmo momento, nas quais se discuta:
+(1) a qual estado o contribuinte deve efetuar o pagamento do ITCMD, considerando a ocorrência de bitributação;
+e (2) a validade da cobrança desse imposto, não tendo sido pago anteriormente. Precedentes. 5. Em abono aos
+interesses fiscais do ente estadual, urge saber que este Supremo Tribunal Federal declarou recentemente a
+existência de omissão inconstitucional por parte do Congresso Nacional no que toca à edição da lei complementar
+nacional a que se refere o art. 155, § 1º, inc. III, da Constituição da República, estabelecendo prazo para sua edição.
+Precedente: ADO nº 67/DF, Rel. Min. Dias Toffoli, Tribunal Pleno, j. 06/06/2022, p. 29/06/2022. 6. Técnica
+decisória. É necessário o emprego de declaração de nulidade, sem redução de texto, ao art. 7º, inc. I, al. “a”, do
+Decreto nº 10.306, de 2011, impugnado, com o fito de excluir de seu programa normativo a possibilidade de
+incidência de ITCMD em relação a inventários e arrolamentos processados no exterior. 7. Ação direta de
+inconstitucionalidade conhecida e, no mérito, julgada procedente.
+11
+8
+declaradas inconstitucionais, poderiam ter sua constitucionalidade reavaliada em razão da
+previsão do art. 16 da EC 132.
+Inicialmente, é importante verificar que não houve revogação expressa do art. 155,
+§ 1º da CF pela EC 132. Mas enquanto a previsão original da CF exige a Lei Complementar,
+o texto da CF dispensou sua edição para determinação da competência dos Estados e DF. Nessa
+medida, seria adequado concluir, ao menos inicialmente, que houve revogação tácita do texto
+constitucional pela EC 132, apenas na imposição de uma condição sine qua non para a definição
+de competência no caso.
+Contudo, alguns pontos merecem atenção e é possível que venham a ser avaliados pelo
+STF ou, mesmo, sejam objeto de regulamentação via lei complementar:
+1. O primeiro é de técnica legislativa. Apesar de não implicar em si mesma uma
+inconstitucionalidade, não nos pareceu que a forma encontrada pela EC 132/2023
+para dispor sobre o tema foi a mais adequada. O dispositivo constitucional segue
+para dispor sobre o tema foi a mais adequada. O dispositivo constitucional segue
+com a mesma redação, mas sua interpretação dependerá de um texto apartado do
+texto constitucional. Isso poderá trazer confusões interpretativas e mesmo
+dificultar a compreensão do texto constitucional, além de gerar debates a respeito
+do que vige, do que foi revogado, qual a eficácia dessa alteração e assim por diante.
+Desse modo, caberia falar em revogação tácita? Se sim, qual seria o momento a
+partir do qual tal revogação deveria surtir efeitos? E se uma possível lei
+complementar viesse a ser editada?
+2. O segundo é em relação à própria compatibilidade entre o art. 16 da EC 132/2023
+e o art. 146 da CF. Nós já pudemos mencionar linhas atrás que o art. 155, § 1º, III
+da CF, ao exigir lei complementar para a determinação do Estado competente para
+dispor sobre o tema, o faz porque a Constituição outorgou à lei complementar essa
+dispor sobre o tema, o faz porque a Constituição outorgou à lei complementar essa
+função de dirimir conflitos de competência entre os Estados em situações nas quais
+a delimitação da competência constitucional provavelmente implicará situações
+nas quais mais de um ente federado entenderá ser competente para instituir tributos
+e cobrá-los. Cabia, então, à EC resolver esses conflitos, sendo que essa é
+constitucionalmente uma atribuição da legislação complementar? Ou, melhor, a
+EC está apta a resolver conflitos de competência por meio das disposições de seu
+art. 16, ou eles poderão ser intensificados em razão da nova redação da EC 132?
+3. O terceiro é em relação aos seus efeitos em relação às legislações dos Estados que
+já haviam sido declaradas inconstitucionais. Nos casos em que houve declaração
+de inconstitucionalidade por meio de ADI, a eficácia da lei poderia ser
+reestabelecida? Estaremos diante de constitucionalidade superveniente? O
+reestabelecida? Estaremos diante de constitucionalidade superveniente? O
+princípio da anterioridade seria aplicável a esses casos?
+Não é nossa pretensão, neste artigo, esgotar as questões constitucionais de maior
+complexidade apresentadas acima, apenas levantar as possíveis problemáticas que a EC
+132/2023 poderá trazer a respeito da aplicação do arquétipo constitucional do ITCMD.
+De todo modo, em relação ao primeiro ponto, nossas considerações são de ordem
+política e estarão relacionadas, em verdade, com eventuais problemas de eficácia técnica das
+9
+normas constitucionais da Reforma Tributária, bem como de cobranças em duplicidade que
+poderão vir a ser implementadas por diferentes estados em relação a uma mesma doação ou a
+uma mesma transmissão causa mortis.
+Em relação ao segundo ponto, parece-nos que uma eventual discussão a respeito da
+constitucionalidade do texto do art. 16 da Emenda, ao afastar a necessidade de lei complementar
+para um caso em que sua necessidade seria evidente, poderia vir a ser objeto de análise pelo
+STF. Mas nos parece improvável que a Corte venha a entender que, em razão do art. 146 da
+CF, o texto do art. 16 da EC 132/2023 seria enfim considerado inconstitucional, seja por seu
+status de norma constitucional, seja porque o fundamento imediato para a declaração de
+inconstitucionalidade das legislações estaduais que pretenderam cobrar o ITCMD era focado
+especialmente na redação do art. 155, § 1º, III, o qual poderá vir a ser considerado revogado
+tacitamente pelo art. 16 da EC 132.
+tacitamente pelo art. 16 da EC 132.
+Por fim, quanto ao terceiro ponto, a discussão poderá mostrar-se um pouco mais
+complicada. De um lado, há agora autorização constitucional para a cobrança de doações e
+heranças do exterior. Por outro, as legislações haviam sido declaradas inconstitucionais porque
+editadas anteriormente à edição da EC 132/2023. Além disso, ainda que admitíssemos a
+constitucionalidade superveniente, não seria necessário reconhecermos que estaríamos diante
+de instituição / majoração de tributo, sujeitas aos efeitos da anterioridade?
+Para essa questão, seria importante olhar para como o STF já avaliou casos
+semelhantes.
+O STF, em algumas oportunidades, já afastou a figura da chamada
+“constitucionalidade superveniente”. Na ADI 2158/PR, por exemplo, o STF afirmou que o fato
+de uma legislação estadual inconstitucional à época de sua edição poder passar a buscar seu
+fundamento de constitucionalidade no texto constitucional modificado não autorizaria ou
+fundamento de constitucionalidade no texto constitucional modificado não autorizaria ou
+implicaria sua convalidação.14 Esse também havia sido o entendimento do STF ao julgar a
+constitucionalidade do art. 3º, § 1º da Lei 9.718/1998, ocasião em que a Corte afirmou de forma
+clara que a superveniência de emeda constitucional não teria o condão de tornar adequada à
+14
+EMENTA Ação Direta de Inconstitucionalidade. AMB. Lei nº 12.398/98-Paraná. Decreto estadual nº 721/99.
+Edição da EC nº 41/03. Substancial alteração do parâmetro de controle. Não ocorrência de prejuízo. Superação da
+jurisprudência da Corte acerca da matéria. Contribuição dos inativos. Inconstitucionalidade sob a EC nº 20/98.
+Precedentes. 1. Em nosso ordenamento jurídico, não se admite a figura da constitucionalidade superveniente. Mais
+relevante do que a atualidade do parâmetro de controle é a constatação de que a inconstitucionalidade persiste e é
+atual, ainda que se refira a dispositivos da Constituição Federal que não se encontram mais em vigor. Caso
+contrário, ficaria sensivelmente enfraquecida a própria regra que proíbe a convalidação. 2. A jurisdição
+constitucional brasileira não deve deixar às instâncias ordinárias a solução de problemas que podem, de maneira
+mais eficiente, eficaz e segura, ser resolvidos em sede de controle concentrado de normas. 3. A Lei estadual nº
+12.398/98, que criou a contribuição dos inativos no Estado do Paraná, por ser inconstitucional ao tempo de sua
+edição, não poderia ser convalidada pela Emenda Constitucional nº 41/03. E, se a norma não foi convalidada, isso
+significa que a sua inconstitucionalidade persiste e é atual, ainda que se refira a dispositivos da Constituição
+Federal que não se encontram mais em vigor, alterados que foram pela Emenda Constitucional nº 41/03. (...) 7.
+Ação direta de inconstitucionalidade julgada parcialmente procedente. ADI 2158, Relator(a): DIAS TOFFOLI,
+Tribunal Pleno, julgado em 15-09-2010, DJe-247 DIVULG 15-12-2010 PUBLIC 16-12-2010 EMENT VOL02452-01 PP-00010 RTJ VOL-00219-01 PP-00143 RT v. 100, n. 906, 2011, p. 410-426 RSJADV abr., 2011, p.
+40-49.
+10
+Constituição norma que conflitava com ela originalmente15. Há diversos outros exemplos desse
+posicionamento na jurisprudência do STF.16
+Ocorre que de forma aparentemente incoerente, em recentes casos envolvendo a EC
+132, o entendimento da Corte parece ter sido distinto. O STF entendeu por bem julgar
+prejudicadas ADIs que discutiam a inconstitucionalidade de contribuição ao FUNDEINFRA de
+Goiás, em razão do texto da própria EC 132, que introduziu à CF o art. 135 do ADCT. Tal
+dispositivo estabeleceu que os Estados poderiam instituir tais contribuições, o que fez com que
+o STF declarasse prejudicadas as ADIs.17
+Nos casos das legislações dos Estados que pretenderam a cobrança de ITCMD sobre
+situações que deveriam ser objeto de lei complementar, por envolver doador e de cujus residente
+ou domiciliado no exterior, parece-nos clara a impossibilidade de se operar a figura do
+fenômeno da constitucionalidade superveniente. Na linha do entendimento do STF, ter-se-á que
+fenômeno da constitucionalidade superveniente. Na linha do entendimento do STF, ter-se-á que
+editar novas legislações que instituam a cobrança e, ainda, obedeçam às regras de anterioridade.
+Contudo, diante do recente julgamento do STF a respeito da contribuição ao
+FUNDEINFRA, não deixamos de vislumbrar a possibilidade de uma eventual posição distinta
+do STF a respeito do tema, o que implicaria prejuízo à segurança jurídica dos contribuintes de
+Estados que já tiveram suas leis avaliadas pelo STF sob a perspectiva de sua incompatibilidade
+com o texto constitucional. Em nosso entender, contudo, será de fato necessária a edição de
+15
+CONSTITUCIONALIDADE SUPERVENIENTE - ARTIGO 3º, § 1º, DA LEI Nº 9.718, DE 27 DE
+NOVEMBRO DE 1998 - EMENDA CONSTITUCIONAL Nº 20, DE 15 DE DEZEMBRO DE 1998. O sistema
+jurídico brasileiro não contempla a figura da constitucionalidade superveniente. TRIBUTÁRIO - INSTITUTOS EXPRESSÕES E VOCÁBULOS - SENTIDO. A norma pedagógica do artigo 110 do Código Tributário Nacional
+ressalta a impossibilidade de a lei tributária alterar a definição, o conteúdo e o alcance de consagrados institutos,
+conceitos e formas de direito privado utilizados expressa ou implicitamente. Sobrepõe-se ao aspecto formal o
+princípio da realidade, considerados os elementos tributários. CONTRIBUIÇÃO SOCIAL - PIS - RECEITA
+BRUTA - NOÇÃO - INCONSTITUCIONALIDADE DO § 1º DO ARTIGO 3º DA LEI Nº 9.718/98. A
+jurisprudência do Supremo, ante a redação do artigo 195 da Carta Federal anterior à Emenda Constitucional nº
+20/98, consolidou-se no sentido de tomar as expressões receita bruta e faturamento como sinônimas, jungindo-as
+à venda de mercadorias, de serviços ou de mercadorias e serviços. É inconstitucional o § 1º do artigo 3º da Lei nº
+9.718/98, no que ampliou o conceito de receita bruta para envolver a totalidade das receitas auferidas por pessoas
+jurídicas, independentemente da atividade por elas desenvolvida e da classificação contábil adotada.
+(RE 346084, Relator(a): ILMAR GALVÃO, Relator(a) p/ Acórdão: MARCO AURÉLIO, Tribunal Pleno, julgado
+em 09-11-2005, DJ 01-09-2006 PP-00019 EMENT VOL-02245-06 PP-01170)
+16
+Vale destaque também o caso do Protocolo CONFAZ 21/2011, que foi declaro inconstitucional antes de
+alteração à CF que poderia lhe atribuir fundamento de validade, mas o STF não admitiu sua constitucionalidade
+superveniente: “DIREITO TRIBUTÁRIO. AGRAVO REGIMENTAL EM RECURSO EXTRAORDINÁRIO
+COM AGRAVO. PROTOCOLO CONFAZ Nº 21/2011. INCONSTITUCIONALIDADE. ACÓRDÃO
+RECORRIDO QUE NÃO DIVERGE DA JURISPRUDÊNCIA DESTA CORTE. PRECEDENTES. EMENDA
+RECORRIDO QUE NÃO DIVERGE DA JURISPRUDÊNCIA DESTA CORTE. PRECEDENTES. EMENDA
+CONSTITUCIONAL Nº 87/2015. ALEGAÇÃO DE CONSTITUCIONALIDADE SUPERVENIENTE.
+IMPOSSIBILIDADE. 1. No julgamento da ADI 4.628, o Plenário da Suprema Corte assentou que o Protocolo
+Confaz nº 21 subverteu o arquétipo constitucional do ICMS, na medida em que estabeleceu novas regras para a
+cobrança do imposto que destoam dos parâmetros fixados pela Carta. 2. A conclusão do Tribunal de origem não
+diverge da jurisprudência do Supremo Tribunal Federal. 3. O advento da Emenda Constitucional nº 87/2015 não
+tornou constitucional o Protocolo Confaz nº 21/2011. A jurisprudência do Supremo Tribunal Federal não admite
+o fenômeno da constitucionalidade superveniente. Por essa razão, o referido ato normativo, que nasceu
+inconstitucional, deve ser considerado nulo perante a norma constitucional que vigorava à época de sua edição. 4.
+Agravo regimental a que se nega provimento.” (ARE 683849 AgR, Relator(a): ROBERTO BARROSO, Primeira
+Turma, julgado em 09-09-2016, DJe-208 DIVULG 28-09-2016 PUBLIC 29-09-2016)
+17
+ADIs 7363, 7366, 7387, todas de Relatoria do Min. Dias Toffoli, julgadas em 14/02/2024.
+11
+
+nova legislação, que tenha por fundamento de validade as normas de caráter constitucional
+editadas pela EC 132.
+
+3.2. Mudança de competência: do Estado onde se processava o inventário para o Estado
+onde era domiciliado o de cujus
+Antes da EC 132, o ITCMD era devido: (i) relativamente aos bens imóveis e respectivos
+direitos, ao Estado da situação do bem ou ao DF; e (ii) relativamente aos bens móveis, títulos e
+créditos, ao Estado onde se processava o inventário ou arrolamento, ou ao Estado onde tinha
+domicílio o doador, ou ao DF.
+Quanto aos bens imóveis, não houve mudança da previsão constitucional, de modo que
+o ITCMD ainda é devido ao Estado da situação do bem. Já no que tange os bens móveis, títulos
+e créditos, a redação foi alterada para prever que o ITCMD passa a ser devido ao Estado onde
+era domiciliado o de cujus.
+No regime anterior, conforme mencionado acima, o imposto era devido ao Estado onde
+se processava o inventário ou arrolamento. Assim, os herdeiros podiam escolher o estado em
+que seria processado o inventário, de modo que, em muitos casos, era escolhido o estado com
+a menor alíquota de ITCMD vigente, para fins de obtenção de uma tributação mais vantajosa.
+a menor alíquota de ITCMD vigente, para fins de obtenção de uma tributação mais vantajosa.
+A mudança trazida pela EC 132/2023 tem por objetivo evitar que ocorra esse
+“planejamento sucessório” quanto à escolha do Estado onde será devido o ITCMD,
+determinando que o ITCMD será devido ao estado em que o de cujus era domiciliado. Porém,
+a definição do estado onde o de cujus era domiciliado pode ser controversa, de modo que o
+objetivo visado pela alteração constitucional pode não ser plenamente alcançado.
+A definição de domicílio pode ser encontrada no artigo 70 do Código Civil, o qual
+dispõe que se considera domicílio da pessoa natural o lugar onde ela estabelece a sua residência
+com ânimo definitivo. O artigo 71 dispõe, por sua vez, que se a pessoa tiver diversas residências,
+onde viva alternativamente, pode-se considerar domicílio qualquer uma delas.
+Sob o aspecto fiscal, a definição de domicílio encontra-se no artigo 127 do Código
+Sob o aspecto fiscal, a definição de domicílio encontra-se no artigo 127 do Código
+Tributário Nacional, o qual dispõe que, na falta de eleição do domicílio tributário pelo
+contribuinte, considera-se como tal, para pessoas naturais, o local de sua residência habitual e,
+sendo esta desconhecida, o centro habitual de sua atividade.
+Ou seja, pela legislação tributária, tem-se a possibilidade de o contribuinte eleger o local
+de seu domicílio tributário. Assim, numa primeira leitura, seria possível concluir que o
+contribuinte poderia eleger o estado de seu domicílio tributário de acordo com seu planejamento
+sucessório, considerando um estado com tributação mais reduzida, assim como era possível
+antes da EC 132/2023.
+12
+No entanto, para fins de caracterização de domicílio da pessoa natural, há fiscos
+estaduais que desconsideram a definição dada pela legislação tributária, aplicando a definição
+do direito privado, ou seja, aquela prevista pelo Código Civil.
+A discussão acerca do domicílio do contribuinte já existia antes da EC 132/2023 uma
+vez que, para fins de doação, já se considerava devido o ITCMD ao estado em tiver domicílio
+o doador. Portanto, a definição de domicílio utilizada pelos fiscos estaduais na discussão acerca
+de qual estado é competente para fins de cobrança do ITCMD sobre as doações será,
+indubitavelmente, utilizada como fundamento para respaldar futuras decisões sobre o domicílio
+do de cujus, se a regulamentação da reforma tributária não suprir essa lacuna.
+O Tribunal de Impostos e Taxas de São Paulo (“TIT/SP”), por exemplo, possui decisões
+no sentido de reconhecer como domicílio tributário do doador aquele em conformidade com a
+no sentido de reconhecer como domicílio tributário do doador aquele em conformidade com a
+definição do Código Civil. Nessa linha, considera que não pode ser considerado como tal o
+local eleito pelo contribuinte, nos termos do CTN, uma vez que a competência tributária, nesse
+caso, seria facilmente manipulada, fomentando a guerra fiscal entre os estados. Assim,
+considera acertado reconhecer que a definição acertada de domicílio a ser utilizada é aquela do
+Código Civil18.
+Nesses casos, verifica-se a robustez das provas de que o doador é de fato domiciliado
+naquele ou em outro estado para fins de definição da competência tributária, tais como cópias
+de escrituras públicas, comprovantes de energia elétrica e contas telefônicas, em conformidade
+com a definição do Código Civil19.
+Ha decisões nesse mesmo sentido em outros Estados, como no Rio de Janeiro, no qual
+o tribunal administrativo entendeu que o domicílio fiscal eleito pelo contribuinte, por exemplo,
+o tribunal administrativo entendeu que o domicílio fiscal eleito pelo contribuinte, por exemplo,
+por meio da indicação de endereço na Declaração de Imposto de Renda sobre a Pessoa Física,
+Decisão nº 4088734-0, TIT-SP, Publicado em 21/06/2017. Trecho do inteiro teor: “Isso porque, caso fosse o
+domicílio fiscal aquele que definiria o âmbito de incidência do ITCMD, haveria dificuldades instransponíveis para
+a aplicação do tributo, assegurando que o Estado competente pudesse exigir o tributo que, pela repartição de
+competência constitucional, seria devido: tratando-se de local eleito pelo contribuinte, permitir-se-ia que a
+competência tributária – e consequentemente a sujeição ativa da relação tributária – pudesse ser facilmente
+manipulada e alterada pelo contribuinte, permitindo que ele elegesse um Estado com alíquotas menores de ITCMD,
+fomentando a guerra fiscal entre Estados, o que sobre ser danoso ao pacto federativo, não seria admitido em
+hipótese alguma. (...) Mais acertado é reconhecer que o domicílio civil da doadora – o domicílio que tem realmente
+condão de determinar qual o Estado competente para cobrança de ITCMD no caso – está situado no Estado do
+Mato Grosso do Sul, nos termos do Comprovante de Inscrição no Cadastro Agropecuário (fls. 80), emitido pela
+Administração daquele Estado. Por essa razão, conclui-se que o Estado do Mato Grosso é o competente para
+cobrança de ITCMD sobre a transferência patrimonial de quotas sociais à autuada.”
+Decisão nº 4086912-0, TIT-SP , Publicado em 07/11/2017. Trecho do inteiro teor: “Penso que o domicílio fiscal
+não seja determinante para fins de cobrança de ITCMD pois, se assim o fosse, seria facilmente vitimado pela
+manipulação de contribuinte de ma-fé que, em busca da menor alíquota, adotasse esse ou aquele domicílio
+tributário para fins únicos e exclusivos de redução de sua carga tributária.”
+19
+tributário para fins únicos e exclusivos de redução de sua carga tributária.”
+19
+Decisão nº 4051658-1, TIT-SP, Relator: SILVIO RYOKITY ONAGA, Publicado em 06/06/2018. Trecho do
+inteiro teor: “Importante mencionar que no cumprimento da diligência foram juntados aos autos provas robustas
+que indicam que o autuado possui domicílio e exerce atividade no Estado da Bahia. O autuado no cumprimento
+da diligência trouxe aos autos cópia da escritura pública em que se comprova a aquisição do apartamento indicado
+como sua residência (Avenida Sete de Setembro, nº 2252), bairro Vitória, Salvador/BA; cópias de comprovantes
+de energia elétrica; contas telefônicas e principalmente às fls. 237, 238 e 239 cópia de Declarações prestadas pelo
+Fisco do estado da Bahia em que se atesta a cobrança de ITD (ITCMD no caso do Estado de São Paulo) a favor
+daquele Estado relativo aos fatos geradores exigidos neste AIIM. Com efeito, os documentos juntados na diligência
+tornam mais robustas as alegações de que o Sujeito Ativo é o Estado da Bahia.”
+18
+13
+
+não poderia ser automaticamente aplicado para fins de ITCMD20. Em caso semelhante, o
+mesmo tribunal considerou que a caracterização de domicílio deve se dar pela análise de onde
+se realizavam as atividades econômicas do doador21.
+Porém, há decisões, inclusive dos mesmos órgãos (por exemplo, do TIT/SP), que
+consideram que o domicílio do contribuinte deve ser aquele eleito por ele nos cadastros
+constantes dos órgãos competentes da Administração Tributária (por exemplo, da Declaração
+da Imposto de Renda da Pessoa Física), ou seja, conforme a definição da legislação tributária22.
+Nota-se, portanto, que o tema acerca da definição de domicílio do doador não está
+pacificado, inclusive dentro dos mesmos órgãos julgadores administrativos.
+Na esfera judicial o tema ainda é igualmente controverso. Via de regra, o entendimento
+adotado é aquele em linha com a definição do Código Civil23. De todo modo, as decisões do
+20
+CC-RJ , 14.953 | E-04/081.482/2010, Relator: LUIZ CHOR, Julgado em 05/04/2016, Publicado em 14/04/2016.
+Trecho do inteiro teor: “O cerne do debate consiste na definição de domicílio para fins de cobrança do ITD. Em
+suas razões recursais o Recorrente sustenta que o domicílio deve ser especificado na lei ordinária relativa ao tributo
+em cobrança, de modo que o domicílio fiscal não deveria ser considerado de maneira padronizada para todos os
+tributos. Isso porque, cada espécie de tributo estaria vinculada à concepção de domicílio que adequasse a sua
+natureza, sendo possível, por exemplo, a eleição de domicílio fiscal no caso do IR, ao passo que na hipótese do
+IPTU o domicílio estaria diretamente relacionado á localização do imóvel. Sob tal aspecto, o domicílio fiscal
+utilizado para o IR não poderia ser automaticamente estendido à cobrança de ITD, eis que o ato da doação é pessoal
+e subjetivo, não comportando qualquer elemento externo alheio à vontade do doador, o que não ocorre com o IR
+que guarda relação com a aquisição de renda, fato atrelado a uma imensidão de elementos externos (remuneração,
+salário, lucro, proventos, etc...) ligados à relações profissionais e comerciais.”
+21
+CC-RJ, 14.896 | E-04/081.105/2010, Relator: ANTONIO SILVA DUARTE, Julgado em 15/03/2016, Publicado
+em 07/04/2016. Trecho do inteiro teor: “Dessa maneira, com razão contribuinte ao alegar que o domicílio fiscal
+eleito no IR não serve para fins de cobrança do ITD e, além disso, o contribuinte ofereceu fundamentos suficientes
+para concluirmos que o domicílio de fato do doador era no Estado do Paraná, onde se realizavam suas atividades
+econômicas passíveis de tributação, e não no Rio de Janeiro.”
+22
+Decisão nº 4051881-4, TIT-SP, Relator: RAPHAEL ZULLI NETO, Publicado em 09/05/2016. Trecho do inteiro
+teor: “Diante de tais fatos, prefiro concluir, dentro do meu convencimento na forma do artigo 371 do código de
+processo civil vigente e em razão da prova produzida, que o domicílio fiscal escolhido pelo contribuinte
+é aquele situado na cidade de SÃO PAULO, CONFORME INFORMADO NO imposto e renda pessoas físicas.
+Decisão nº 00752/19 (processo 3035354107088), CAT-GO, Relator: JOSÉ FERREIRA DE SOUSA, Julgado em
+23/01/2019.Ementa: ITCD. Obrigação Principal. Imposto sobre herança e doações - IHD. Improcedência.
+Unânime. 1. No caso de doação o ITCD é devido ao Estado onde o doador for domiciliado; 2. Nos termos do artigo
+127 do CTN o domicílio tributário é definido pelo contribuinte; 3. O endereço constante na DIRPF é a eleição do
+domicílio tributário feita pelo contribuinte.”
+“Agravo de Instrumento – ITCMD - EXECUÇÃO FISCAL - DOAÇÃO - EXCEÇÃO DE NÃO
+EXECUTIVIDADE – DOMICÍLIO TRIBUTÁRIO – SUJEITO ATIVO DA OBRIGAÇÃO – (...) o domicílio
+tributário para fins de determinar a competência para a exação do ITCMD corresponde ao local da residência
+habitual do doador (domicílio civil) na data do fato gerador - inteligência do art. 155, I, §1º, II, da CF cc. art. 3º,
+§2º, da LE nº 10.705/2000 e art. 127, I, do CTN cc. arts. 70 e 71 do CC – sendo o caso de multiplicidade de
+residências e exercício de profissão, o imposto será devido no endereço constante da Declaração do Imposto de
+Renda (item 2, do §2º, do art. 4º, da mesma legislação estadual) (...)” (TJSP; Agravo de Instrumento 204971778.2022.8.26.0000; Relator (a): Paulo Barcellos Gatti; Órgão Julgador: 4ª Câmara de Direito Público; Foro das
+Execuções Fiscais Estaduais - Vara das Execuções Fiscais Estaduais; Data do Julgamento: 03/05/2022; Data de
+Registro: 03/05/2022).
+TRIBUTÁRIO E PROCESSUAL CIVIL – PROCEDIMENTO COMUM - ANULATÓRIA DE LANÇAMENTO
+TRIBUTÁRIO - ITCMD – DOAÇÃO – COMPETÊNCIA TRIBUTÁRIA. 1. O ITCMD incidente sobre doação
+de títulos e créditos compete ao Estado do domicílio do doador (art. 155, § 1º, II, CF). 2. Doação de dinheiro feita
+por pessoa natural com domicílio habitual no Estado do Mato Grosso do Sul, apesar de possuir endereço no Estado
+de São Paulo. Falta de competência do Estado de São Paulo para exigência do ITCMD. Inteligência do art. 71 do
+23
+14
+
+STJ não se debruçaram sobre o tema, uma vez que, na maioria dos casos, demandaria necessário
+revolvimento de matéria fática, contrariando a Súmula 07 daquela Corte.
+Portanto, ainda que o objetivo da EC 132/2023 seja evitar a manipulação pelo
+contribuinte do Estado em que o ITCMD será devido, se não houver o adequado endereçamento
+da definição de domicílio na regulamentação da reforma provocarão novas discussões pertinentes que podem esvaziar a
+intenção da EC 132, principalmente no que tange à resolução de conflitos de competência.
+Em relação à alteração da tributação de doações e transmissões causa mortis no caso
+de doador e de cujus residente ou domiciliado no exterior, como visto, há questões a serem
+avaliadas pelo STF em relação à própria compatibilidade entre o art. 16 da EC 132/2023 e o
+art. 146 da CF, bem como em relação a uma possível “constitucionalidade superveniente” das
+legislações que estabeleceram a cobrança pelos Estados nesses casos. Além disso, será
+imprescindível avaliar se as regras anterioridades serão aplicáveis aqui e como.
+Nesse contexto, as manifestações do STF a respeito da eficácia das novas regras
+envolvendo doação e transmissão causa mortis de residentes e domiciliados no exterior serão
+envolvendo doação e transmissão causa mortis de residentes e domiciliados no exterior serão
+determinantes para a tomada de decisão de planejamentos sucessórios, mas o cenário de
+“transição” entre as novas regras nos parece, de toda forma, propício para a antecipação de
+doações e heranças sob a vigência das regras antigas, incluindo a impossibilidade de tributação
+definida pelo STF via repercussão geral. O tema poderá também vir a ser objeto da lei
+complementar regulamentadora da EC 132, o que poderá trazer maior segurança jurídica às
+movimentações patrimoniais nesse período.
+Vale também mencionar o conflito de competência entre os Estados que poderá ser
+gerado se não houver uma regulamentação acerca do conceito de domicílio do de cujus a ser
+considerado, uma vez que a indefinição entre o conceito do Código Civil e do Código Tributário
+Nacional poderá acarretar discussões administrativas e judiciais – assim como já existe quanto
+Nacional poderá acarretar discussões administrativas e judiciais – assim como já existe quanto
+à definição do domicílio do doador -, para fins de definição do Estado competente para cobrar
+o ITCMD.
+Dentre tantas discussões que podem ser levantadas acerca da EC 132/2023 e o
+planejamento sucessório - as quais não temos a pretensão de esgotar – essas foram as principais
+provocações que, ao nosso ver, são de maior relevância e que devem ser endereçadas para que
+o planejamento sucessório no Brasil passe a ter mais justiça social e segurança jurídica,
+permitindo que os contribuintes possam organizar sua sucessão sem que tenham receio de
+deixar como herança um contencioso de anos de incerteza, que onera tanto o fisco quanto o
+contribuinte.
+5) Referências
+BERGESCH, Raul. Importância do planejamento sucessório diante da reforma
+tributária. Conjur, 2023. Disponível em https://www.conjur.com.br/2023-nov28/importancia-do-planejamento-sucessorio-diante-da-reforma-tributaria/
+CARVALHO, Paulo de Barros. Curso de Direito Tributário. 30ª Edição. São Paulo:
+Saraiva, 2019. P. 193.
+CARRAZZA, Roque Antonio. Curso de Direito Constitucional Tributário. 27ª Ed. São
+Paulo: Malheiros, 2011. P. 1049.
+DA FONSECA, Lucas Azevedo. Impactos da reforma tributária do ITCMD nos
+planejamentos sucessórios. Consultor Jurídico, 2024. Disponível em
+16
+
+https://www.conjur.com.br/2024-jan-09/impactos-da-reforma-tributaria-do-itcmdnos-planejamentos-sucessorios/
+
+RODRIGUES, Maria Julia Faidiga. Reforma tributária e planejamento sucessório.
+Migalhas,
+2024.
+Disponível
+em
+https://www.migalhas.com.br/depeso/402267/reforma-tributaria-e-planejamentosucessorio
+```
