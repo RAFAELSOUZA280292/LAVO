@@ -1,6 +1,5 @@
 # app.py
-import os
-import pickle
+import os, json, pickle
 from typing import List, Tuple
 import numpy as np
 import faiss
@@ -20,14 +19,13 @@ st.markdown("""
 st.title("🧑‍🏫 LAVO - Especialista em Reforma Tributária")
 
 # ===================== CONFIG =====================
-EMBED_MODEL = "text-embedding-3-small"
-CHAT_MODEL  = "gpt-4o-mini"
+EMBED_MODEL  = "text-embedding-3-small"
+CHAT_MODEL   = os.getenv("CHAT_MODEL", "gpt-4o")       # mais preciso
+RERANK_MODEL = os.getenv("RERANK_MODEL", "gpt-4o")     # re-ranking com LLM
 
-# Chave da OpenAI (Streamlit Secrets tem prioridade)
 OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", "")).strip()
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-# Usuários (nome -> senha) vindos dos Secrets
 USERS = {
     "rafael souza": st.secrets.get("APP_PASS_RAFAEL", ""),
     "alex montu":   st.secrets.get("APP_PASS_ALEX",   ""),
@@ -79,30 +77,123 @@ def embed_query(q: str) -> np.ndarray:
     faiss.normalize_L2(v.reshape(1, -1))
     return v
 
-def retrieve(index, metas, query: str, k: int = 5):
+# Busca densa (FAISS) + reorder lexical simples
+def retrieve_candidates(index, metas, query: str, top_k: int = 30):
     if index is None: return []
     q = embed_query(query).reshape(1, -1)
-    D, I = index.search(q, k)
+    D, I = index.search(q, top_k)
+
+    q_tokens = set((query or "").lower().split())
+    def kw_score(text: str):
+        t = (text or "").lower()
+        return sum(1 for w in q_tokens if w in t)
+
     hits = []
     for pos, (idx, score) in enumerate(zip(I[0], D[0]), start=1):
         if idx < 0 or idx >= len(metas): continue
-        hits.append((pos, score, metas[idx]))
-    return hits
+        m = metas[idx]
+        hits.append((pos, float(score), m.get("text_preview", "")))
+    # reorder por palavras-chave locais
+    hits.sort(key=lambda h: kw_score(h[2]), reverse=True)
+    return hits[:10]  # 10 candidatos vão para o reranker LLM
 
-def answer_with_context(question: str, hits: List[Tuple[int, float, dict]], nome: str) -> str:
-    contexto = "\n\n".join(f"[{rank}] {m['text_preview']}" for rank, score, m in hits)
+def llm_rerank(question: str, candidates: List[Tuple[int, float, str]]):
+    """
+    Re-ranqueia com LLM e devolve os 5 melhores (id na posição original 'rank' e score 0..5).
+    """
+    if not candidates:
+        return []
+
+    # Monta um pacote compacto de candidatos
+    # Cada item: {"id": rank, "text": "trecho..."}
+    bundle = [{"id": rid, "text": txt[:1600]} for rid, _, txt in candidates]
+
+    prompt = (
+        "Você é um reranker de trechos. Dada a PERGUNTA e uma lista numerada de CANDIDATOS, "
+        "atribua uma nota de relevância de 0 a 5 (5 = responde diretamente). "
+        "Retorne um JSON com a chave 'ranking' contendo uma lista ordenada por "
+        "nota decrescente, com objetos {\"id\": <id_do_candidato>, \"score\": <0..5>, "
+        "\"answer_hint\": \"uma frase CURTA com a informação central, se houver\"}.\n\n"
+        "Regras:\n"
+        "- Use somente o texto dos candidatos.\n"
+        "- Seja estrito: se não responder, score baixo.\n"
+        "- Se a pergunta começar com 'quem', privilegie nomes próprios claros.\n"
+    )
+
+    content = {
+        "pergunta": question,
+        "candidatos": bundle
+    }
+
+    messages = [
+        {"role": "system", "content": "Você é preciso, conciso e sempre retorna JSON válido."},
+        {"role": "user", "content": prompt + "\n\n" + json.dumps(content, ensure_ascii=False)}
+    ]
+    resp = client.chat.completions.create(
+        model=RERANK_MODEL,
+        messages=messages,
+        temperature=0.0,
+        max_tokens=800,
+        response_format={"type": "json_object"},
+    )
+
+    try:
+        data = json.loads(resp.choices[0].message.content)
+        ranking = data.get("ranking", [])
+        # filtra top 5 com score >= 3
+        ranking.sort(key=lambda x: float(x.get("score", 0)), reverse=True)
+        return ranking[:5]
+    except Exception:
+        # fallback simples: devolve os 5 primeiros candidatos originais
+        return [{"id": rid, "score": 0} for rid, _, _ in candidates[:5]]
+
+def build_context_from_ranking(candidates, ranking):
+    """
+    Junta os top-3 reranqueados em um único contexto.
+    """
+    id_to_text = {rid: txt for rid, _, txt in candidates}
+    picked = []
+    for item in ranking[:3]:
+        rid = item.get("id")
+        if rid in id_to_text:
+            picked.append(id_to_text[rid])
+    return "\n\n".join(picked)
+
+def answer_with_context(question: str, index, metas, nome: str) -> str:
+    candidates = retrieve_candidates(index, metas, question, top_k=30)
+    ranking = llm_rerank(question, candidates)
+    contexto = build_context_from_ranking(candidates, ranking)
+
+    # modo específico para "Quem ...?"
+    quem_mode = question.strip().lower().startswith("quem ")
+
+    instr_quem = (
+        "Se a pergunta for 'Quem ...?', responda de forma direta com o NOME encontrado no contexto, "
+        "em uma linha, e finalize. Se não houver nome no contexto, diga: "
+        "'Ainda estou estudando, mas logo aprendo e voltamos a falar.'"
+    )
+
     user_instruction = (
         f"Inicie a resposta cumprimentando a pessoa pelo nome exatamente assim: 'Olá, {nome}!'. "
         "Em seguida responda conforme o estilo e regras do sistema. "
-        "Use apenas o conteúdo abaixo como base."
+        f"{instr_quem if quem_mode else ''} "
+        "Use apenas o conteúdo abaixo como base e não invente normas que não estejam nele."
     )
+
+    # Se não veio contexto útil, responda o fallback honesto
+    if not contexto.strip():
+        return f"Olá, {nome}! Ainda estou estudando, mas logo aprendo e voltamos a falar."
+
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user",
          "content": f"{user_instruction}\n\n<contexto>\n{contexto}\n</contexto>\n\nPergunta: {question}"},
     ]
     resp = client.chat.completions.create(
-        model=CHAT_MODEL, messages=messages, temperature=0.0, max_tokens=700
+        model=CHAT_MODEL,
+        messages=messages,
+        temperature=0.0,
+        max_tokens=700,
     )
     return resp.choices[0].message.content
 
@@ -114,9 +205,7 @@ def welcome_message(nome: str) -> str:
         "Qual é a sua dúvida sobre a Reforma Tributária? Estou aqui para ajudar com clareza e objetividade."
     )
 
-GREETING_WORDS = {
-    "ola", "olá", "bom dia", "boa tarde", "boa noite", "oi", "hey", "hello"
-}
+GREETING_WORDS = {"ola","olá","bom dia","boa tarde","boa noite","oi","hey","hello"}
 def is_greeting(text: str) -> bool:
     t = (text or "").strip().lower()
     return (len(t.split()) <= 3) and any(w in t for w in GREETING_WORDS)
@@ -136,7 +225,7 @@ if not st.session_state.auth:
             if key in USERS and USERS[key] and USERS[key] == (pwd or ""):
                 st.session_state.auth = True
                 st.session_state.user_name = user or "Usuário"
-                st.session_state.show_welcome = True  # <- mostra saudação pós-login
+                st.session_state.show_welcome = True
                 st.success(f"Bem-vindo, {st.session_state.user_name}!")
                 st.rerun()
             else:
@@ -173,7 +262,6 @@ if q:
     with st.chat_message("user"):
         st.markdown(q)
 
-    # Se for uma saudação simples, responde institucionalmente
     if is_greeting(q):
         msg = welcome_message(nome)
         with st.chat_message("assistant"):
@@ -182,7 +270,6 @@ if q:
     else:
         with st.chat_message("assistant"):
             with st.spinner("Consultando…"):
-                hits = retrieve(index, metas, q, k=5)
-                ans = answer_with_context(q, hits, nome)
+                ans = answer_with_context(q, index, metas, nome)
                 st.markdown(ans)
                 st.session_state.history.append(("assistant", ans))
