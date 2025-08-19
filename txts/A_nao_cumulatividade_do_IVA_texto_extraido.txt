@@ -1,0 +1,1085 @@
+239
+
+A NÃO CUMULATIVIDADE DO IVA-DUAL (CBS E IBS) 
+PREVISTA NA PROPOSTA DE REFORMA TRIBUTÁRIA 
+
+Antônio Machado Guedes Alcoforado
+
+Doutor em Direito Tributário pela PUC-SP. Pós-graduado em Direito pelo Instituto Brasileiro de Es-
+tudos Tributários (IBET), Universidade Federal de Pernambuco (UFPE) e University of Georgia, nos 
+EUA. Professor em diversas pós-graduações, dentre elas a do IBET e a da UFPE. 
+
+Artigo recebido em 07.12.2023 e aprovado em 08.01.2024.
+
+SUMÁRIO: 1 Introdução 2 A não cumulatividade na tributação do consumo antes da reforma tributá-
+ria 2.1 Consequências da cumulatividade 2.2 A precária efetivação da não cumulatividade no Brasil 
+3 A não cumulatividade na PEC 45/2019 3.1 A não cumulatividade do IVA-dual (CBS e IBS) 3.1.1 Prin-
+cípio da neutralidade 3.1.2 Crítica à terminologia “cobrado” 3.1.3 Compensação em relação a todas 
+as operações de aquisição de bens, serviços e direitos 3.2 Norma de eficácia limitada: crédito fica 
+condicionado à verificação do efetivo recolhimento do IVA-dual 3.3 Não cumulatividade na isenção 
+e na imunidade 3.4 Não cumulatividade em relação às empresas optantes do regime único (Simples 
+Nacional) 4 Conclusões 5 Referências.
+
+RESUMO: No texto inicial da proposta de reforma tributária (PEC 45/2019), assevera-se que nenhum 
+dos atuais tributos, que incidem sobre o consumo, possuem um modelo adequado de tributação 
+não cumulativa. Neste artigo, demonstra-se a veracidade dessa proposição afirmativa, ou seja, 
+os atuais tributos que incidem sobre o consumo de bens, direitos e serviços, que serão substituídos 
+pelo IVA-dual, ou são parcialmente cumulativos, caso do ICMS, PIS, Cofins e IPI, ou, em se tratando 
+do ISS, o imposto é totalmente cumulativo. O principal objetivo desta pesquisa é analisar os aspectos 
+constitucionais da não cumulatividade do IVA-dual (CBS e IBS), previstos no texto Substitutivo do 
+Senado Federal à PEC 45/2019, comparando-os com os tributos que serão extintos. A conclusão re-
+velou que a prescrição da não cumulatividade do IVA-dual contempla aprimoramentos em relação 
+à disposta no sistema tributário atual, mas prevê a possibilidade de a norma ter eficácia limitada, 
+contrariando cláusula pétrea da Constituição.
+
+PALAVRAS-CHAVE: Reforma tributária. IVA-dual (CBS e IBS). Não cumulatividade.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024240 • Antônio MAchAdo Guedes AlcoforAdo
+
+The non-cumulaTiveness of dual vaT (cBs and iBs) provided in The Tax 
+reform
+
+CONTENTS:  1  Introduction  2  The  non-cumulative  nature  of  consumption  taxation  before  the  tax 
+reform 2.1 Consequences of cumulative activity 2.2 The precarious implementation of non-cumu-
+lative taxation in Brazil 3 The non-cumulative effect of PEC 45/2019 3.1 The non-cumulative effect 
+of  dual-VAT  (CBS  and  IBS)  3.1.1  Principle  of  neutrality  3.1.2  Criticism  of  charged  terminology  3.1.3 
+Compensation in relation to all transactions involving the acquisition of goods, services and rights 
+3.2 Rule of limited effectiveness: credit is subject to verification of effective collection of dual-VAT 3.3 
+No cumulative exemption and immunity 3.4 Non-cumulative status in relation to companies opting 
+for the single regime (Simples Nacional) 4 Conclusions 5 References.
+
+ABSTRACT: In the initial text of the tax reform proposal (PEC 45/2019), it is stated that none of the 
+current  taxes,  which  affect  consumption,  have  an  appropriate  non-cumulative  taxation  model.  In 
+this  article,  the  veracity  of  this  affirmative  proposition  is  demonstrated,  that  is,  the  current  taxes 
+that  apply  to  the  consumption  of  goods,  rights  and  services,  which  will  be  replaced  by  dual-VAT, 
+or are partially cumulative, in the case of ICMS, PIS, Cofins and IPI, or, in the case of ISS, the tax is 
+completely cumulative. The main objective of this research is to analyze the constitutional aspects 
+of the non-cumulative nature of VAT – dual (CBS and IBS), provided for in the Federal Senate’s Sub-
+stitute text for PEC 45/2019, comparing them with the taxes that will be extinguished. The conclusion 
+revealed that the prescription of non-cumulative dual VAT includes improvements in relation to the 
+provisions of the current tax system, but foresees the possibility of the rule having limited effective-
+ness, contradicting an immutable clause of the Constitution.
+
+KEYWORDS: Tax reform. VAT-dual (CBS and IBS). Non-cumulative.
+
+1 inTrodução
+
+Dentre os temas polêmicos relacionados com os tributos que incidem sobre 
+o consumo, invariavelmente são abordados litígios inerentes à não cumulativi-
+dade, cujo maior mérito é evitar a cobrança sobreposta de tributos e impedir o 
+efeito em cascata1.
+
+Antes do surgimento do Imposto sobre o Valor Adicionado (IVA), prevale-
+cia  no  consumo  a  tributação  cumulativa,  a  exemplo  da  alcavala,  exigida  nas 
+colônias espanholas em cada transação comercial. Nessa exação, quanto mais 
+etapas de circulação houvesse entre a produção e o consumidor final, maiores 
+eram a receita auferida e a carga suportada na cadeia econômica2.
+
+1.  LINS, Robson Maia. Curso de direito tributário brasileiro. São Paulo: Noeses, 2019. p. 187.
+2.  MOREIRA, André Mendes. Neutralidade, valor acrescido e tributação. Belo Horizonte: Fórum, 
+
+2020. p. 21.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 241
+
+A versão inicial da Proposta de Emenda Constitucional – PEC 45/20193, em 
+tramitação no Congresso Nacional, tem como um dos objetivos inserir no sis-
+tema tributário nacional um imposto não cumulativo sobre o valor adicionado, 
+que substitua tributos que atualmente incidem sobre o consumo4.
+
+As mudanças sugeridas no texto constitucional, conforme sua justificativa, 
+têm como referência a proposta de reforma tributária desenvolvida pelo Centro 
+de Cidadania Fiscal – CCiF5, na qual se assevera que nenhum dos atuais tributos 
+(ICMS, IPI, ISS, PIS e Cofins), que incidem sobre o consumo de bens, direitos 
+e  serviços,  possuem  um  modelo  adequado  de  tributação  não  cumulativa,  “o 
+que acaba provocando um aumento  do custo dos investimentos, a oneração 
+desproporcional da produção nacional relativamente à de outros países, além 
+de um enorme contencioso entre o fisco e os contribuintes”. 
+
+De  fato,  nesta  pesquisa,  demonstra-se  a  veracidade  dessa  proposição 
+afirmativa, ou seja, os atuais tributos que incidem sobre o consumo de bens, 
+direitos e serviços ou são parcialmente cumulativos, caso do ICMS, PIS, Cofins 
+e IPI, ou, em se tratando do ISS, o tributo é totalmente cumulativo.
+
+Neste estudo, o principal objetivo é analisar os aspectos constitucionais da 
+não cumulatividade do IVA-dual (Contribuição sobre Bens e Serviços – CBS – e 
+Imposto sobre Bens e Serviços – IBS), previstos no texto do Substitutivo do Se-
+nado Federal à PEC 45/20196, que altera o sistema tributário nacional.
+
+4. 
+
+3.  BRASIL. Câmara dos Deputados. Proposta de Emenda Constitucional n., de 2019 (Do Sr. Ba-
+leia Rossi e outros). Altera o Sistema Tributário Nacional e dá outras providências. Disponível 
+em:  https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=1728369&-
+filename=PEC-45-2019. Acesso em: 2 out. 2023.
+Imposto sobre Produtos Industrializados (IPI); Imposto sobre Operações relativas à Circula-
+ção de Mercadorias e sobre Prestações de Serviços de Transporte Interestadual e Intermuni-
+cipal e de Comunicação (ICMS); Imposto sobre Serviços de Qualquer Natureza (ISS); Contri-
+buição para o Financiamento da Seguridade Social (Cofins) e Contribuição para o Programa 
+de Integração Social (PIS).
+
+5.  Como ex-pesquisador doutorando da FGV/SP, o autor trabalhou no CCiF e acompanhou, ao 
+lado de Bernard Appy, Eurico de Santi, Nelson Machado e Isaias Coelho, durante o ano de 
+2015, a concepção da PEC 45/2019, que tem como objetivo promover a simplificação, a não 
+cumulatividade e a transparência na tributação sobre o consumo, inclusive pela previsão da 
+tributação por fora.
+
+6.  BRASIL. Senado Federal. Proposta de Emenda Constitucional n., de 2019 (Do Sr. Baleia Rossi e 
+outros). Altera o Sistema Tributário Nacional e dá outras providências. Disponível em: https://le-
+gis.senado.leg.br/sdleg-getter/documento?dm=9503608&ts=1700000382499&disposition=inli-
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024242 • Antônio MAchAdo Guedes AlcoforAdo
+
+Apesar de o futuro detalhamento do procedimento de apuração de crédi-
+tos e débitos do IVA ser regulamentado por lei complementar, esta não deverá 
+contrariar prescrições constitucionais, com vistas à observância da hierarquia 
+normativa  e  à  neutralidade,  inserida  expressamente  como  princípio  na  PEC 
+45/2019, cujo alicerce se encontra na não cumulatividade.
+
+A importância da análise da não cumulatividade torna-se clarividente, quan-
+do  se  comparam  os  setores  que  poderão  ser  beneficiados  pela  facilidade  de 
+se apropriarem créditos das operações e prestações anteriores, a exemplo do 
+industrial, com aqueles que terão dificuldade, a saber, de serviços, setor que 
+deve ter aumento de carga tributária, porque o valor pago a título de mão de 
+obra com vínculo empregatício não gera crédito.
+
+A comparação entre a carga atual e a futura, após a reforma, é importante, 
+porque uma das premissas dessa reforma é a manutenção da carga tributária 
+sobre  o  consumo.  Todavia,  a  referida  carga  depende  da  apuração  do  tributo 
+não  cumulativo.  Em  outras  palavras,  quanto  mais  eficiente  for  o  mecanismo 
+de créditos e débitos, que garanta mais neutralidade à tributação, maior será 
+a alíquota geral do futuro IVA-dual, necessária para manter a carga tributária 
+sobre o consumo.
+
+Importa destacar que, neste estudo, não há qualquer pretensão de serem 
+oferecidas conclusões definitivas sobre os polêmicos aspectos constitucionais 
+da não cumulatividade, previstos no futuro IVA-dual, se a Constituição for al-
+terada  nos  termos  do  Substitutivo  do  Senado  à  PEC  45/2019,  os  quais  foram 
+examinados com a contribuição da doutrina e da ferramenta metodológica da 
+regra-matriz de incidência tributária – RMIT7. 
+
+7. 
+
+ne&_gl=1*gvfh96*_ga*Nzk4MTk3MDk5LjE2ODE4OTMxNzk.*_ga_CW3ZH25XMK*MTcwMDg-
+zNzg4NS41My4xLjE3MDA4Mzc4OTAuMC4wLjA. Acesso em: 20 nov. 2023.
+Joseph Rudyard Kipling, escritor e poeta britânico, vencedor do prêmio Nobel de literatura, 
+em  1907,  ao  refletir  sobre  o  raciocínio  lógico,  defendia  sua  correlação  com  a  capacidade 
+humana de analisar. Para isso, utilizava perguntas simples a fim de obter informações con-
+cretas. É dele a frase “tenho seis regras que me ensinaram tudo o que sei: O quê? Por quê? 
+Quando? Como? Onde? Quem?”. Disponível em: http://www.citador.pt/frases/imagens/fra-
+ses-tenho-seis-regras-que-me-ensinaram-tudo-o-que-sei-rudyard-kipling-3416.jpg.  Acesso 
+em: 1 maio 2023. O recurso epistemológico da regra-matriz de incidência, criado por Paulo 
+de Barros Carvalho, reduz a complexidade e responde às indagações do poeta britânico com 
+incrível simplicidade, ajudando o intérprete a visualizar a estrutura da norma de incidência 
+tributária em sua integridade, bem como a norma da não cumulatividade.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 243
+
+2 a não cumulaTividade na TriBuTação do consumo anTes da reforma 
+TriBuTária
+
+A evolução da tributação sobre o consumo8 ocorreu após a Segunda Guerra 
+Mundial, quando a França adotou um tributo plurifásico não cumulativo sobre 
+a venda de bens e a prestação de serviços – a Taxe sur la Valeur Ajoutée (TVA). O 
+modelo francês de 1948 tinha como objetivo mitigar a não cumulatividade, mas 
+não a eliminar.
+
+A neutralidade mais eficaz sobre a tributação do consumo adveio da diretriz 
+europeia,  baseada  no  Relatório  de  Neumark  (nome  que  homenageou  um  dos 
+seus elaboradores, Fritz Neumark), publicado em 1962. A partir do referido re-
+latório9, a adoção do IVA em mais de uma centena de países sofreu adaptações, 
+existindo o IVA moderno, com apenas uma alíquota e sem benefícios fiscais, 
+previsto na versão inicial da PEC 45/2019; e o tradicional, com alíquotas gerais 
+elevadas, mas com diversas isenções e alíquotas reduzidas, modelo adotado no 
+Substitutivo do Senado à PEC 45/2019. 
+
+A não cumulatividade ideal, também denominada “plena”, consiste, sobre-
+tudo, no direito de o contribuinte deduzir, do IVA a pagar, todo o valor exigido 
+nas suas operações e prestações anteriores, de modo que, independentemente 
+do tamanho da cadeia de circulação do bem ou da prestação do serviço, o tribu-
+to seja transferido economicamente entre as empresas, não as onerando e, por 
+conseguinte, não implicando que o ônus do tributo suportado pelo consumidor 
+final seja contaminado pelo efeito cascata provocado pela cumulatividade.
+
+De tal modo, a não cumulatividade plena pressupõe crédito financeiro com a 
+total desoneração do IVA pago nas operações e prestações anteriores, inclusive 
+o exigido na aquisição de material para uso e consumo e do ativo permanente, 
+necessários  para  a  atividade  empresarial,  exceto  o  recurso  referente  ao  ativo 
+
+8.  “A tributação indireta sobre o consumo consiste, assim, na incidência jurídica em uma ou 
+mais fases da cadeia econômica, compreendida aquela incidência como tentativa de alcan-
+çar  a  capacidade  contributiva  que  se  manifestará,  in  concreto  no  momento  do  consumo” 
+(SCHOUERI, Luís Eduardo. Direito tributário. São Paulo: Saraiva Educação, 2018. p. 407).
+9.  DE LA FERIA, Rita; KREVER, Richard. Ending VAT exemptions: towards a post-modern VAT. 
+In: DE LA FERIA, Rita (org.). VAT exemptions: consequences and design alternatives. Alphen 
+aan den Rinj: Wolters Kluwer, 2013. p. 10.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024244 • Antônio MAchAdo Guedes AlcoforAdo
+
+destinado para investimentos10, além da rápida devolução de eventuais saldos 
+credores.
+
+Nos próximos parágrafos, serão analisados os modelos de não cumulatividade 
+
+nos tributos que incidem sobre o consumo e que serão extintos pela PEC 45/2019.
+
+2.1 Consequências da cumulatividade 
+
+A cumulatividade na tributação sobre o consumo provoca, quanto maior for 
+o tamanho da cadeia econômica produtiva, aumento da carga tributária para os 
+contribuintes e, consequentemente, para o consumidor final.
+
+Esse  aumento  é  provocado  pela  sobreposição  de  tributos,  que  ocorre  por 
+meio da inclusão, na base de cálculo da exação, do valor: (i) do mesmo tributo, 
+exigido na operação anterior; (ii) do mesmo tributo, exigido na própria operação, 
+como no cálculo por dentro do ICMS; (iii) de outros tributos, como na inclusão 
+do ICMS e do ISS na base de cálculo do IPI e das contribuições PIS-Pasep/Cofins.
+Por exemplo, na comercialização de uma mercadoria, desde a sua produ-
+ção até o consumo (indústria – atacado – varejo – consumidor), em cada fase 
+da cadeia produtiva a carga tributária irá se acumulando em face da cobrança 
+sobreposta, em cascata. Explica-se: a alíquota é aplicada sobre uma base de 
+cálculo que, além de envolver todos os custos da mercadoria e o lucro, também 
+é aplicada sobre o tributo indireto incluso no preço da operação anterior, sem 
+considerar que esse tributo indireto foi exigido pelo fisco na etapa da cadeia 
+econômica antecedente.
+
+Antes do IVA, para evitar exações multifásicas cumulativas, os grandes con-
+glomerados empresariais faziam planejamentos, de modo a concentrarem to-
+das as etapas da cadeia econômica, desde a produção até a venda ao consumi-
+dor final, em fragrante conflito com o princípio da neutralidade, que pressupõe 
+a mínima interferência da tributação no mercado.
+
+10.  O ativo permanente ou não circulante, conforme a Lei 11.638/2007, é dividido em imobiliza-
+do, intangível, diferido e investimentos. O ativo imobilizado contempla o necessário para a 
+manutenção  da  atividade  básica  da  empresa,  por  exemplo,  instalações,  maquinário,  pré-
+dios, veículos e móveis. No intangível, encontram-se a marca, softwares e direitos. O diferido 
+refere-se às atividades que trarão resultado em exercícios futuros, como reorganização da 
+empresa, pesquisa e desenvolvimento de produtos. O investimento é a aplicação de recur-
+sos da empresa em outras, muitas vezes por meio de ações. Tecnicamente, mesmo na não 
+cumulatividade plena, o investimento não deve dar direito a crédito.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 245
+
+O tributo cumulativo é mais fácil de ser calculado (não precisa aferir os cré-
+ditos das operações anteriores) e tem mais poder de arrecadação, sendo mais 
+conveniente  para  o  fisco,  motivo  pelo  qual  um  imposto  cumulativo,  como  a 
+alcavala, exigido desde os tempos das colônias espanholas, em cada transação 
+comercial, foi o modelo utilizado durante séculos.
+
+Todavia,  uma  crise  econômica  sem  precedentes,  provocada  pela  Segunda 
+Guerra Mundial, afetou drasticamente as empresas dos países europeus, mo-
+tivando a alteração da tributação sobre o consumo para melhorar o ambiente 
+dos  negócios,  ocasião  em  que  foi  instituído  o  IVA,  na  França,  para  mitigar  a 
+cumulatividade.
+
+2.2 A precária efetivação da não cumulatividade no Brasil
+
+Segundo  Ana  Carolina  Sotero  e  Paulo  Rosenblatt,  “a  não  cumulatividade, 
+originária do sistema tributário francês, foi recepcionada no Brasil de modo que 
+os tributos não cumulativos devem recair sobre o consumo e não sobre a pro-
+dução e o comércio”11.
+
+A não cumulatividade tributária foi inserida, inicialmente, no Brasil, por meio 
+da Lei 2.974/1956, que tratava do Imposto sobre o Consumo – IC –, antecessor 
+do IPI, mas só beneficiava os importadores, que poderiam deduzir, do imposto 
+devido no mercado interno, o exigido no desembaraço aduaneiro.
+
+Atualmente, existem diversas restrições à tomada de crédito do IPI, não se as-
+segurando ao contribuinte a dedução total do imposto relativo às aquisições de 
+matérias-primas, produtos intermediários e embalagens para industrialização12.
+Por exemplo, embora haja possibilidade da tomada de crédito de produtos 
+intermediários,  inclusive  que  não  façam  parte  da  saída  física,  eles  precisam 
+ser  consumidos  imediata  e  integralmente  no  processo  de  industrialização  – 
+assemelhando-se à não cumulatividade mitigada francesa de 1948 – que afasta 
+
+11.  ROSENBLATT, Paulo; SOTERO, Ana Carolina. A dupla incidência do IPI nas operações de 
+importação e revenda de produtos industrializados: reflexões sobre o artigo 46 do Código 
+Tributário Nacional, oscilações jurisprudenciais e a segurança jurídica. In: OLIVEIRA, José 
+André  Wanderley  Dantas  de;  ROSENBLATT,  Paulo  (org.).  Direito  tributário:  comemoração 
+dos 50 anos do Código Tributário Nacional (estudos em homenagem a Souto Maior Borges). 
+Recife: Editora Nossa Livraria, 2016. p. 24.
+
+12.  MOREIRA, André Mendes. A não cumulatividade dos tributos. São Paulo: Noeses, 2020. p. 129.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024246 • Antônio MAchAdo Guedes AlcoforAdo
+
+a  possibilidade  de  o  contribuinte  se  creditar  de  valores  do  IPI  relacionados  à 
+aquisição de ativo imobilizado, de partes e peças de produtos industrializados.
+Quanto às contribuições do PIS e da Cofins, a previsão constitucional apenas 
+outorgou ao legislador ordinário o poder de instituí-las, conforme § 12 do art. 
+195 da Constituição: “§ 12. A lei definirá os setores de atividade econômica para 
+os quais as contribuições incidentes na forma dos incisos I, ‘b’; e IV do caput, 
+serão não cumulativas”.
+
+Dito de outro modo, as contribuições sociais, incidentes sobre a receita ou 
+faturamento (inciso I, “b”), ou do importador de bens ou serviços (inciso IV), 
+são  totalmente  disciplinadas  por  lei  ordinária.  Dessa  forma,  segundo  André 
+Moreira, “o legislador não está adstrito a seguir o comando constitucional, ape-
+nas pode fazê-lo, se assim desejar”13.
+
+Ademais,  a  liberdade  conferida  ao  legislador  infraconstitucional  propiciou 
+restrições ao conceito de insumo, aumentando o contencioso para as empresas 
+que optaram pela aplicabilidade do regime não cumulativo nas contribuições 
+para o PIS e para a Cofins.
+
+Seguindo a análise dos tributos que atualmente incidem sobre o consumo de 
+bens, direitos e serviços, a Constituição não prescreve a não cumulatividade para 
+o Imposto sobre Serviços de Qualquer Natureza – ISS –, de competência dos Mu-
+nicípios e do Distrito Federal, o que faz esse imposto ser cumulativo por natureza.
+Sua base de cálculo é o preço do serviço, sem qualquer possibilidade de to-
+mada de crédito, motivo pelo qual o ISS é um imposto cumulativo simples de ser 
+calculado: basta multiplicar a alíquota sobre o preço do serviço para se calcular 
+o imposto – pelas normas gerais da LC 116/2003, admite-se apenas a exclusão, da 
+base de cálculo, do valor de materiais fornecidos pelo prestador dos serviços de 
+engenharia, previstos nos itens 7.02 e 7.05 da lista anexa à mencionada lei.
+
+Por fim, quanto ao ICMS, apesar de a quase totalidade da doutrina classificá-
+-lo como não cumulativo, uma vez que o imposto é cobrado sobre si (o imposto 
+integra a sua própria base de cálculo) e em cascata (excepcionalmente, admite-
+-se o crédito financeiro, sendo vedado, por exemplo, o crédito imediato na aquisi-
+ção de bens do ativo permanente, bem como há vedações em relação à energia e 
+à comunicação), é uma impropriedade considerá-lo plenamente não cumulativo.
+
+13.  MOREIRA, André Mendes. A não cumulatividade dos tributos. São Paulo: Noeses, 2020. p. 247.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 247
+
+A  rigor,  o  ICMS  é  um  imposto  parcialmente  cumulativo  (incide  sobre  si  e 
+o crédito é físico), mas isso não o torna inconstitucional, diante das exceções 
+implícitas e explícitas do texto constitucional, inclusive a exceção prevista na 
+alínea “i” do inciso XII do § 2º do art. 155 da Constituição, inserida por EC consi-
+derada constitucional pelo STF14. 
+
+Por sua vez, o direito ao crédito relativo às aquisições para o ativo permanen-
+te só pode ser efetuado em 48 meses. Pior é a previsão do art. 33 da LC 87/1996 
+(“somente darão direito de crédito as mercadorias destinadas ao uso ou consu-
+mo do estabelecimento nele entradas a partir de 1º de janeiro de 2033”), que se 
+constituirá em um direito inalcançável, já que o ICMS será extinto, conforme a 
+PEC 45/2019, em 31.12.2032.
+
+É razoável a defesa de que a não cumulatividade do ICMS é um princípio 
+com exceções previstas na própria Constituição – como ocorre no princípio da 
+anterioridade – motivo pelo qual, de acordo com o atual sistema constitucional 
+brasileiro,  o  ICMS  é  um  imposto  parcialmente  cumulativo,  com  a  adoção  da 
+técnica de apuração híbrida, baseada no cálculo do imposto sobre o imposto15, 
+sendo: crédito financeiro, a exemplo do direito ao crédito do ICMS em relação 
+às aquisições para o ativo permanente, energia, comunicação, uso e consumo; 
+e crédito físico, em relação às demais aquisições.
+
+Ademais, a não cumulatividade do ICMS é frustrada pela não devolução dos 
+créditos acumulados, que sequer são atualizados, com a complacência do STF. 
+Por outro lado, como a alíquota do ICMS é por dentro, dificulta para quem paga 
+saber o valor do imposto. Felizmente, essa falta de transparência não está inse-
+rida na PEC 45/2019, na qual a alíquota é exigida por fora, facilitando a visualização, 
+pelo consumidor, do real montante cobrado. 
+
+14.  ALCOFORADO, Antônio Guedes. A não cumulatividade do ICMS nas operações com diferi-
+mento (substituição tributária para trás). In: SOUZA, Priscilla de (org.); CARVALHO, Paulo 
+de Barros (coord.). Racionalização do sistema tributário. São Paulo: Noeses: IBET, 2017. Dis-
+ponível  em:  https://www.ibet.com.br/a-nao-cumulatividade-do-icms-nas-operacoes-com-
+-diferimento-substituicao-tributaria-para-tras-por-antonio-machado-guedes-alcoforado/. 
+Acesso em: 30 set. 2023.
+
+15.  Ex vi da prescrição constitucional, que prevê a compensação do imposto devido na operação 
+anterior, a opção foi pela técnica do imposto-contra-imposto (MOREIRA, André Mendes. A 
+não cumulatividade dos tributos. São Paulo: Noeses, 2020. p. 153). O mestre Roque Carrazza 
+denomina a técnica como “método indireto subtrativo”, que consiste na “aplicação da di-
+ferença entre a alíquota aplicada sobre as saídas e a alíquota correspondente às entradas” 
+(CARRAZZA, Roque Antonio. ICMS. São Paulo: Malheiros, 2022. p. 437).
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024248 • Antônio MAchAdo Guedes AlcoforAdo
+
+Resta  demonstrada,  portanto,  a  veracidade  da  proposição  afirmativa:  os 
+atuais  tributos  que  incidem  sobre  o  consumo  de  bens,  direitos  e  serviços  ou 
+são parcialmente cumulativos, no caso do ICMS, PIS, Cofins e IPI, ou é tributo 
+cumulativo (ISS).
+
+3 a não cumulaTividade na pec 45/2019
+
+Eurico de Santi, um dos diretores do CCiF, no artigo em que defende a im-
+plantação de um imposto nacional sobre o valor agregado – IVA (Value Added 
+Tax – VAT), propõe que a não cumulatividade no Brasil seja a regra: “não será 
+admitida qualquer dupla tributação (cumulatividade) ao longo de toda cadeia 
+plurissetorial de importação-produção-distribuição-consumidor16. 
+
+De fato, na proposta inicial da PEC 45/2019, elaborada no CCiF e protocola-
+da pelo Deputado Baleia Rossi, não se vislumbra qualquer óbice constitucional 
+para  a  efetivação  da  não  cumulatividade,  conforme  o  inciso  III  do  art.  152-A: 
+“será não cumulativo, compensando-se  o imposto devido em cada operação 
+com aquele incidente nas etapas anteriores”, sem a necessidade de que a refe-
+rida compensação seja efetuada nos termos de lei complementar. O inciso V do 
+mesmo artigo também assegura a desoneração da exportação com manuten-
+ção dos créditos, sem que o texto constitucional preveja que lei complementar 
+deva seja observada17.
+
+A não cumulatividade ideal, também denominada “plena”, consiste, princi-
+palmente, no direito de o contribuinte deduzir, do IVA a pagar, todo o exigido 
+nas suas operações e prestações anteriores, de modo que, independentemente 
+do tamanho da cadeia de circulação do bem ou da prestação do serviço, o tribu-
+to seja transferido economicamente entre as empresas, não as onerando e, por 
+conseguinte, não implicando que o ônus do tributo suportado pelo consumidor 
+final seja contaminado pelo efeito cascata provocado pela cumulatividade.
+
+16.  SANTI, Eurico Marcos Diniz de. Em defesa de um IVA nacional versão 3.0 e modelo mundial. 
+Jota, 3 maio 2015. Disponível em: https://www.jota.info/opiniao-e-analise/artigos/em-defe-
+sa-de-um-iva-nacional-versao-3-0-e-modelo-mundial-03052015. Acesso em: 15 jul. 2019.
+17.  BRASIL. Câmara dos Deputados. Proposta de Emenda Constitucional n., de 2019 (Do Sr. Ba-
+leia Rossi e outros). Altera o Sistema Tributário Nacional e dá outras providências. Disponível 
+em:  https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=1728369&-
+filename=PEC-45-2019. Acesso em: 2 out. 2023.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 249
+
+Dessa forma, a não cumulatividade plena pressupõe crédito financeiro com 
+a possibilidade de crédito de todo o imposto exigido na aquisição do ativo per-
+manente e nas despesas com uso e consumo, necessários para a atividade em-
+presarial, além da rápida devolução de eventuais saldos credores.
+
+Diferentemente do texto inicial da PEC 45/2019, que previa a não cumulati-
+vidade plena, na versão do texto com as alterações aprovadas na Câmara dos 
+Deputados (PEC 45-A), não se vislumbra a não cumulatividade plena, mas com 
+eficácia limitada, seja pela necessidade de observância dos termos previstos em 
+lei complementar, seja pela possibilidade de exigência do efetivo pagamento do 
+tributo, na etapa anterior, para que seja possível o respectivo creditamento. Tais 
+limites foram mantidos no Substitutivo do Senado à PEC 45-A.
+
+Antes, porém, faz-se necessário explicar que o inciso IV do art. 149-B, que 
+será inserido na Constituição por meio da PEC 45/2019, estabelece que a CBS, 
+que substituirá as contribuições PIS e Cofins, e o IBS, que substituirá o ICMS e 
+o ISS, têm as mesmas regras de não cumulatividade e creditamento. Por conse-
+guinte, serão examinados os dois tributos conjuntamente (IVA-dual).
+
+3.1 A não cumulatividade do IVA-dual (CBS e IBS)
+
+A terminologia do imposto sobre valor agregado ou adicionado é imprópria, 
+porque se presume que a alíquota só incide sobre o valor adicionado, sem ne-
+cessitar de averiguar o crédito da operação anterior. Em rigor, como a base de 
+cálculo do IVA é o total da venda ou da prestação do serviço, é mais adequada 
+a terminologia “Imposto sobre Bens e Serviços – IBS”. 
+
+Reportando-se ao antigo Imposto sobre Operações de Circulação de Merca-
+dorias – ICM –, esclarecendo que o referido imposto não se tratava de tributo 
+sobre valor agregado ou adicionado, o jurista pernambucano José Souto Maior 
+Borges18 observou que o elemento financeiro não se configura essencial à inte-
+gração da hipótese de incidência tributária, do contrário, “numa venda de mer-
+cadoria abaixo do custo, o contribuinte não teria nem mesmo que debitar-se so-
+bre o valor da saída, porque faltar-lhe-ia o elemento financeiro do fato gerador”.
+Mais adequada, portanto, em vez de valor adicionado ou agregado, a utiliza-
+
+ção dos termos “bens” e “serviços”, utilizados na PEC 45/2019.
+
+18.  BORGES, José Souto Maior. Lei complementar tributária. São Paulo: RT, 1975. p. 161.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024250 • Antônio MAchAdo Guedes AlcoforAdo
+
+Eis a proposta de enunciado prescritivo da não cumulatividade do IVA-dual 
+
+(IBS e CBS), previsto no inciso VIII do art. 156-A da PEC 45-A:
+
+[...] com vistas a observar o princípio da neutralidade, será não cumulativo, compen-
+sando-se o imposto devido pelo contribuinte com o montante cobrado sobre todas 
+as operações nas quais seja adquirente de bem, material ou imaterial, inclusive direi-
+to, ou serviço, excetuadas exclusivamente as consideradas de uso ou consumo pes-
+soal, nos termos da lei complementar, e as hipóteses previstas nesta Constituição19.
+
+O Senado Federal, por meio do Substitutivo à PEC 45-A, praticamente man-
+teve as prescrições da não cumulatividade aprovadas na Câmara dos Deputa-
+dos – apenas retirou o princípio da neutralidade, inicialmente previsto no inciso 
+VIII, e o inseriu no § 1º do art. 156-A, ressaltando que o imposto será informado 
+pelo princípio da neutralidade.
+
+Portanto, o cerne da proposta de reforma tributária, que prescreve os prin-
+cípios da neutralidade e da não cumulatividade, já foi aprovado em dois turnos 
+na Câmara dos Deputados e no Senado Federal, motivo pelo qual, mesmo se a 
+PEC 45/2019 for fatiada, como sugeriu o Deputado Arthur Lira – o que seria uma 
+temeridade porque aumentaria a insegurança jurídica, visto que existem diver-
+sos artigos que se interligam e se complementam em um mesmo contexto – a 
+fatia da não cumulatividade poderia ser promulgada. 
+
+3.1.1 Princípio da neutralidade
+
+O princípio da neutralidade, que pressupõe a mínima interferência do tribu-
+to no mercado, foi inserido expressamente na Constituição sob a égide da não 
+cumulatividade. Ponto positivo para o início do enunciado, que poderá acabar 
+com a velha discussão se a não cumulatividade é regra ou princípio.
+
+Como  é  parte  indissociável  do  princípio  da  neutralidade,  a  não  cumulati-
+vidade  foi  alçada  expressamente  ao  status  de  princípio,  motivo  pelo  qual  se 
+corrobora  o  argumento  da  não  possibilidade  de  ser  contrariado  por  normas 
+infraconstitucionais.
+
+19.  BRASIL. Senado Federal. Proposta de Emenda à Constituição n. 45, de 2019. Atividade Legisla-
+tiva. Disponível em: https://www25.senado.leg.br/web/atividade/materias/-/materia/158930. 
+Acesso em: 10 out. 2023.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 251
+
+Por sua vez, o inciso IX do art. 156-A, previsto no Substitutivo do Senado 
+e na PEC 45-A, prescreve que o IVA-dual não integrará sua própria base de 
+cálculo nem do Imposto Seletivo, do ICMS e do ISS. Evita-se, assim, a tributação 
+sobreposta, a incidência de tributo sobre tributo, um dos males da tributação 
+cumulativa.
+
+O princípio da neutralidade também ampara a máxima de que, para o bem da 
+balança comercial, não se deve exportar tributos. O inciso III do § 1º do art. 156-A, 
+previsto na PEC 45-A, prescreve que o IVA-dual não incidirá sobre as exportações, 
+assegurada ao exportador a manutenção dos créditos relativos às operações nas 
+quais seja adquirente de bem, material ou imaterial, ou de serviço.
+
+Essa  desoneração  total  da  exportação,  com  possibilidade  de  manutenção 
+dos créditos, já está prevista para o ICMS, desde a LC 87/1996, inclusive para 
+produtos primários, o que gera créditos acumulados.
+
+A forma e o prazo para ressarcimento de créditos acumulados pelo contri-
+buinte do IVA-dual serão estabelecidos por lei complementar (art. 156-A, § 5º, 
+III). O Substitutivo à PEC 45-A dispõe também que o Comitê Gestor, compos-
+to  por  representantes  dos  Estados,  DF  e  Municípios,  terá  competência  para 
+efetuar as compensações, nos limites estabelecidos na Constituição e em lei 
+complementar (156-B, II). 
+
+Se esse prazo não for razoável, as empresas poderão ser impactadas nega-
+tivamente e o princípio da neutralidade não será alcançado. De qualquer sorte, 
+diferentemente do ICMS, os eventuais saldos credores do IBS e da CBS serão 
+atualizados pelo Índice Nacional de Preços ao Consumidor Amplo – IPCA –, ou 
+por outro índice que venha a substituí-lo.
+
+A propósito, além dos exportadores, eventualmente o contribuinte, em de-
+terminado mês de apuração, pode possuir mais créditos que débitos, acumu-
+lando-os para utilizar nos períodos seguintes. Isso acontece com o ICMS e po-
+derá ocorrer com o IVA-dual.
+
+Um  dos  grandes  problemas  do  ICMS  é  a  demora  de  as  empresas  conse-
+guirem  absorver  créditos  acumulados,  que  não  podem  ser  transferidos  para 
+terceiros e sequer são atualizados, conforme entendimento pacificado no STF.
+
+Para diminuir a resistência dos Estados e do DF, já que muitos têm grande 
+estoque  de  créditos  acumulados  do  ICMS  para  devolver  aos  contribuintes,  o 
+Substitutivo  do  Senado  à  PEC  45-A  prevê  que  os  créditos  acumulados  rema-
+nescentes do ICMS, a partir da sua extinção (31.12.2032), exceto os relativos ao 
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024252 • Antônio MAchAdo Guedes AlcoforAdo
+
+ativo permanente (prazo máximo de dois anos), serão compensados com o IBS 
+em 240 parcelas mensais, com atualização pelo IPCA, conforme sugestão para 
+o art. 134 do ADCT.
+
+3.1.2 Crítica à terminologia “cobrado”
+
+Prosseguindo na construção interpretativa da prescrição não cumulativa do 
+Substitutivo do Senado à PEC 45-A, no trecho, “compensando-se o imposto de-
+vido pelo contribuinte com o montante cobrado”, os legisladores da Congresso 
+Nacional não foram muito felizes em substituir a terminologia prevista no texto 
+da  PEC  45/2019  original,  “incidente”,  para  “cobrado”,  nos  termos  da  redação 
+aprovada nas duas Casas legislativas.
+
+Ao longo de décadas, esse assunto foi alvo de muita polêmica na doutrina 
+e  na  jurisprudência,  porque  no  princípio  da  não  cumulatividade,  inerente  ao 
+ICMS, também é utilizada a terminologia “cobrado”, conforme o art. 155, § 2º, I, 
+da atual Constituição20. 
+
+Na interpretação do princípio da não cumulatividade, segundo a doutrina 
+
+dominante, seria mais adequado utilizar “montante devido”21.
+
+Como  prevaleceu  academicamente  a  terminologia  do  “montante  devido”, 
+construiu-se o raciocínio praticamente unânime na doutrina: se o imposto in-
+cide, consequentemente, é devido e gera crédito para a operação subsequente.
+
+Contudo, nem sempre o que é devido é exigido.
+Mesmo quando há incidência, a lógica não é tão simplória, já que, mesmo o 
+imposto sendo devido pelo contribuinte, em determinadas situações, como no 
+diferimento, não é possível sua cobrança pelo fisco em razão do adiamento da 
+sua exigência para a fase subsequente da cadeia produtiva.
+
+Ou seja, por opção do legislador, o recolhimento do imposto pode ser exi-
+gido na fase seguinte da cadeia produtiva, por exemplo, quando faz a opção 
+de que a exigibilidade não ocorra na saída do produtor, mas na saída da ope-
+ração subsequente, não surge a incidência da regra-matriz do crédito nas aqui-
+sições  do  produtor,  cuja  operação  está  submetida  ao  regime  de  substituição 
+
+20.  Art. 155, § 2º, I, da CR/1988: “I – será não cumulativo, compensando-se o que for devido em 
+cada operação relativa à circulação de mercadorias ou prestação de serviços com o montan-
+te cobrado nas anteriores pelo mesmo ou outro Estado ou pelo Distrito Federal [...]”.
+
+21.  COSTA, Alcides Jorge. ICMS na Constituição e na lei complementar. São Paulo: Resenha Tribu-
+tária, 1977. p. 47; CARRAZZA, Roque Antonio. ICMS. São Paulo: Malheiros, 2020. p. 422.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 253
+
+tributária  para trás. O mesmo fenômeno tributário pode ocorrer na hipótese 
+de  regime  monofásico  com  concentração  do  fato  jurídico  tributário  a  partir 
+da  segunda  etapa  de  circulação  de  mercadorias.  Ambas  as  hipóteses  pode-
+rão  continuar  ocorrendo,  porque  a  PEC  45/2019  não  revogou  as  previsões  de 
+substituição tributária e impôs um regime monofásico específico de tributação 
+para combustíveis e lubrificantes. Trata-se de exceções implícitas22 ao princípio 
+da não cumulatividade.
+
+Ressalte-se que, no processo de positivação do Direito Tributário, a termino-
+logia mais adequada para tratar de crédito tributário é “exigido”, pois, tudo gira 
+em torno da exigibilidade do crédito. Por exemplo, após a intimação, o crédito 
+objeto do lançamento torna-se exigível. No percurso até́  a extinção do crédito 
+tributário, seja na seara administrativa, seja na judicial, a exigibilidade sempre é 
+discutida, inclusive em face das hipóteses do art. 151 do CTN. Dessa forma, não 
+seria razoável que o termo fosse diferente quando se trata do crédito do contri-
+buinte e débito do fisco23.
+
+Por conseguinte, a sintaxe da linguagem da não cumulatividade contida no 
+Substitutivo da PEC 45-A prevê a compensação com o montante “cobrado” nas 
+operações ou prestações anteriores. Mas, a análise semântica e pragmática do 
+fenômeno da positivação do Direito indica, considerando as exceções implíci-
+tas da não cumulatividade, que a acepção mais adequada para a terminologia 
+seja “exigido”. 
+
+Utilizando-se da ferramenta metodológica da RMIT, visualizando a estrutura 
+lógica da norma jurídica (regra-matriz do crédito do IVA-dual sobre operações 
+com mercadorias), tem-se, no antecedente: se adquirir mercadoria (critério ma-
+terial), cujo imposto pôde ser exigido durante o período da mencionada opera-
+ção (critério temporal), no Brasil (espacial), inexoravelmente surgirá, no conse-
+
+22.  Só as normas jurídicas que não afrontem a Constituição são válidas e, consequentemente, as 
+exceções previstas ao princípio da não cumulatividade devem, implícita ou expressamente, 
+estar  contidas  no  texto  constitucional  (ALCOFORADO,  Antônio  Guedes.  Regra-matriz  de 
+responsabilidade e regra-matriz de substituição tributária no ICMS. 2017. Tese [Doutorado em 
+Direito] – Pontifícia Universidade Católica de São Paulo, São Paulo, 2017. p. 213).
+
+23.  Eurico de Santi ressaltou que no CTN encontram-se poucas informações sobre a constitui-
+ção do débito do fisco, a contrario sensu do cuidado com o crédito tributário (SANTI, Eurico 
+Marcos  Diniz  de.  ICMS  –  mercadorias:  direito  ao  crédito  –  importação.  In:  SANTI,  Eurico 
+Marcos Diniz de [coord.]. Curso de especialização em direito tributário: estudos analíticos em 
+homenagem a Paulo de Barros Carvalho. Rio de Janeiro: Forense, 2005. p. 538).
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024254 • Antônio MAchAdo Guedes AlcoforAdo
+
+quente, uma relação jurídica, que tem no seu critério pessoal (sujeito ativo o 
+adquirente, e sujeito passivo a União ou os Municípios, os Estados ou o DF); 
+e no critério quantitativo (a alíquota e base de cálculo da operação anterior)24.
+
+De  acordo  com  a  Teoria  Geral  do  Direito,  no  antecedente  normativo  de 
+qualquer norma jurídica, são identificados dados da realidade social de possí-
+veis ocorrências. Como é impossível a exigência pelo fisco do crédito tributário 
+em determinadas operações, como em determinada fase da cadeia do regime 
+monofásico e na substituição tributária para trás (diferimento), regimes que 
+continuarão existindo após a PEC 45/2019, é conveniente repetir que a termi-
+nologia mais adequada para o enunciado da não cumulatividade do IVA-dual 
+deveria prescrever a compensação do tributo devido pelo contribuinte com o 
+montante “exigido”.
+
+3.1.3 Compensação em relação a todas as operações de aquisição de bens, 
+serviços e direitos
+
+Outro aspecto positivo do enunciado da não cumulatividade do Substitu-
+tivo à PEC 45-A é a possibilidade de o contribuinte utilizar crédito do imposto 
+inerente a todas as operações, nas quais seja adquirente de bem, corpóreo ou 
+incorpóreo, serviço e direito.
+
+Por  conseguinte,  o  imposto  cobrado  em  todas  as  aquisições  necessárias 
+para  a  manutenção  da  atividade  empresarial,  seja  na  tomada  de  serviços  de 
+qualquer natureza, seja na aquisição de bens: materiais do ativo imobilizado 
+(imóveis, instalações, maquinário, móveis, veículos etc.); bens intangíveis (mar-
+ca, softwares etc.); e direitos.
+
+Excetuam-se,  como  não  poderia  deixar  de  ser,  considerando  o  padrão  do 
+IVA internacional, exclusivamente as aquisições consideradas de uso ou consu-
+mo pessoal, nos termos da lei complementar.
+
+É correta a referida exceção, haja vista que aquisições para o uso ou consu-
+mo pessoal não fazem parte da atividade empresarial, devendo a lei comple-
+mentar regulamentar o assunto sem afrontar o texto constitucional.
+
+24.  CARVALHO, Paulo de Barros. Derivação e positivação no direito tributário. São Paulo: Noeses, 
+
+2013. v. 2, p. 132.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 255
+
+Já as exceções previstas na Constituição dizem respeito aos regimes espe-
+cíficos, como o regime de aproveitamento de crédito das etapas anteriores das 
+sociedades cooperativas e as regras de creditamento dos serviços financeiros.
+Se essas exceções não constam no princípio da não cumulatividade dos tri-
+butos que serão extintos, e estão sendo inseridas na Constituição, na mesma 
+PEC que cria a competência para a instituição da CBS e do IBS, elas não contra-
+riam o mencionado princípio da não cumulatividade.
+
+A PEC 45/2019 também exterioriza a preocupação do legislador com a forma 
+como poderá ser reduzido o impacto do IVA-dual sobre a aquisição de bens de 
+capital pelo contribuinte, assunto que será regulamentado por lei complemen-
+tar (art. 165-A, § 5º, V), mas que tem repercussão na não cumulatividade.
+
+3.2 Norma de eficácia limitada: crédito fica condicionado à verificação do 
+efetivo recolhimento do IVA-dual
+
+Além  da  inserção  do  enunciado  “cobrado”  na  prescrição  da  não  cumula-
+tividade,  na  tramitação  da  PEC  45/2019,  os  deputados  e  senadores  inovaram 
+ao  permitir  que  lei  complementar  crie  uma  condição  para  o  contribuinte  ad-
+quirente utilizar os créditos, que depende de terceiros (fornecedores de bens, 
+mercadorias e direitos). Tal restrição não existe nos países que adotam o IVA. 
+
+Conforme o art. 156-A, § 5º, II, que será inserido na Constituição por meio da 
+
+PEC 45/2019, lei complementar disporá sobre:
+
+II – o regime de compensação, podendo estabelecer hipóteses em que o aprovei-
+tamento do crédito ficará condicionado  à verificação do efetivo recolhimento do 
+imposto incidente sobre a operação, desde que:
+a) o adquirente possa efetuar o recolhimento do imposto incidente nas suas aqui-
+sições de bens ou serviços; ou
+b) o recolhimento do imposto ocorra na liquidação financeira da operação;
+
+Se a terminologia “cobrado” não pareceu adequada no âmbito doutrinário, 
+pior foi possibilitar a criação, mediante lei complementar, dessa condição para 
+aproveitamento do crédito: a verificação do efetivo recolhimento do imposto.
+
+Essa  condição  não  é  razoável,  porque  se  um  contribuinte  de  boa-fé  praticar 
+uma operação de aquisição necessária para a sua atividade empresarial, seja bem, 
+direito ou serviço, cujo tributo seja exigível e destacado no documento fiscal, se a 
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024256 • Antônio MAchAdo Guedes AlcoforAdo
+
+referida operação ocorreu licitamente, em face dos princípios da neutralidade 
+e  não  cumulatividade,  o  contribuinte  adquirente  pode  exercer  o  seu  legítimo 
+direito de tomar o crédito destacado na operação anterior.
+
+A efetiva cobrança do IVA-dual na etapa anterior escapa do domínio do co-
+nhecimento do tomador do serviço ou do adquirente de bem ou direito. O ônus 
+de verificar o efetivo recolhimento do tributo é do fisco, principalmente de uma 
+operação, da qual o contribuinte não participou do fato gerador.
+
+Ao condicionar o crédito do IVA-dual ao efetivo recolhimento, a não cumula-
+
+tividade passa a ter eficácia limitada.
+
+Por outro lado, se o contribuinte adquirente, para tomar o crédito, precisar 
+efetuar o recolhimento do imposto incidente nas suas aquisições de bens ou 
+serviços, a não cumulatividade deixará de ser um direito para ser um ônus se-
+melhante à cumulatividade.
+
+Poder-se-ia argumentar que o contribuinte adquirente, que pagar o tributo 
+cujo ônus é do vendedor ou prestador (II, “a”), teria a vantagem de se creditar 
+e ainda poderia entrar com uma ação regressiva contra o fornecedor do bem, 
+do direito ou do serviço. Tal hipótese contraria o princípio da neutralidade. A 
+vantagem, na realidade, é da Fazenda Pública, que não precisaria exercer suas 
+prerrogativas para exigir o tributo, seja na seara administrativa, seja na judicial.
+A  alínea  “b”  do  inciso  II  também  prescreve  uma  norma  jurídica  contrá-
+ria  ao  interesse  do  contribuinte  que  pretenda  se  creditar:  na  hipótese  de  o 
+recolhimento do IVA-dual ocorrer na liquidação financeira da operação; em 
+consequência, o aproveitamento do crédito ficará condicionado à verificação 
+do efetivo recolhimento do tributo.
+
+Ao contribuinte, entretanto, não é dado o poder de interferir na forma como 
+o futuro IVA-dual será recolhido pelo seu fornecedor de bens, direitos ou servi-
+ços. Tal prerrogativa é do fisco, que precisará integrar seus sistemas fazendários 
+aos das instituições financeiras.
+
+Ademais, a apuração do crédito pelo adquirente pode ocorrer antes da li-
+quidação financeira da venda do fornecedor, que inclusive pode ser parcelada, 
+o que inviabiliza o princípio da não cumulatividade, mesmo se houver a adim-
+plência do pagamento do IVA-dual.
+
+É necessário que lei complementar discipline o princípio da não cumulati-
+vidade – os detalhes dos procedimentos dos créditos e débitos não precisam 
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 257
+
+estar contidos na Constituição – mas a regulamentação precisa respeitar os li-
+mites do mencionado princípio.
+
+Apesar de o Substitutivo do Senado à PEC 45-A prescrever a possibilidade de 
+lei complementar impor condições, como a que o crédito fique condicionado à 
+verificação do efetivo recolhimento do IVA-dual, tal previsão é inconstitucional, 
+porque faz da não cumulatividade uma norma de eficácia limitada, contrarian-
+do cláusula pétrea (art. 60, § 4º, IV), porque nos tributos que serão substituídos 
+pelo IVA-dual, mesmo não havendo a não cumulatividade plena, não há essa 
+condição,  que  mitiga  direito  e  garantia  individual  do  contribuinte  contido  na 
+norma da não cumulatividade da Constituição promulgada em 1988.
+
+No arquétipo25 da competência tributária do IPI e do ICMS subjaz implícita 
+a regra-matriz de incidência possível, na qual o princípio da não cumulativida-
+de não está condicionado à verificação do efetivo recolhimento do imposto na 
+fase  anterior  da  cadeia  econômica.  O  legislador  que  instituir  o  IVA-dual,  em 
+substituição aos mencionados impostos, poderá ampliar as hipóteses de apro-
+veitamento de crédito, mas jamais restringir o direito que os contribuintes do 
+IPI e do ICMS tinham, antes da reforma tributária, sob pena de mitigar direito 
+constitucional individual do contribuinte. 
+
+3.3 Não cumulatividade na isenção e na imunidade
+
+O § 7º do art. 156-A da Constituição, advindo da possível promulgação do 
+Substitutivo  da  PEC45-A,  prescreve  exceções  explícitas  ao  princípio  da  não 
+cumulatividade, quais sejam, a isenção e a imunidade que:
+
+I – não implicarão crédito para compensação com o montante devido nas opera-
+ções seguintes; e 
+
+25.  Conforme Roque Antonio Carrazza, “a Constituição, ao discriminar as competências tribu-
+tárias, estabeleceu – ainda que, por vezes, de modo implícito e com uma certa margem de 
+liberdade para o legislador – a norma-padrão de incidência (o arquétipo, a regra matriz) de 
+cada exação. Noutros termos, ela apontou a hipótese de incidência possível, o sujeito ativo 
+possível, o sujeito passivo possível a base de cálculo possível e a alíquota possível, das vá-
+rias espécies e subespécies de tributos. Em síntese, o legislador, ao exercitar a competência 
+tributária,  deverá  ser  fiel  à  norma-padrão  de  incidência  do  tributo,  pré-traçada  na  Cons-
+tituição” (CARRAZZA, Roque Antonio. Curso de direito constitucional tributário. São Paulo: 
+Malheiros, 2015. p. 606).
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024258 • Antônio MAchAdo Guedes AlcoforAdo
+
+II – acarretarão a anulação do  crédito relativo às operações anteriores,  salvo, na 
+hipótese da imunidade, inclusive em relação ao inciso XI do § 1º, quando determi-
+nado em contrário em lei complementar.
+
+O enunciado prescritivo da não cumulatividade do IVA-dual, nas hipóteses 
+de não tributação, assemelha-se ao do ICMS. Todavia, diferentemente do ICMS, 
+como  o  legislador  da  PEC  45/2019  optou  por  vedar  que  os  entes  federativos 
+concedam  quaisquer  incentivos  e  benefícios  fiscais,  excetuadas  as  hipóteses 
+previstas  na  Constituição,  no  IVA-dual  (§  7º),  em  vez  da  não  incidência  (que 
+pode ser concedida por normas infraconstitucionais) foi inserida a imunidade 
+nas exceções expressas ao princípio da não cumulatividade.
+
+Dessa forma, conforme o inciso I do § 7º, a isenção e a imunidade não impli-
+carão  crédito  para  compensação  nas  operações  seguintes,  sem  possibilidade 
+de algum ente federativo dispor de forma contrária em suas legislações.
+
+Um dos objetivos do princípio da neutralidade é equilibrar a relação fisco-
+-contribuinte. Se for concedida isenção ou imunidade em determinada fase da 
+cadeia econômica, então não deve implicar crédito para a operação subsequen-
+te, sob pena de desequilibrar a relação, que ficaria favorável ao contribuinte em 
+detrimento do Estado. Isso porque, além de o ente federativo não ter possibili-
+dade de exigir o imposto na etapa anterior, ainda teria de conceder um crédito, 
+não advindo do pagamento do IVA-dual, ao contribuinte na etapa subsequente 
+da cadeia econômica.
+
+É correto o argumento de que a concessão de isenções apenas em uma eta-
+pa da cadeia econômica pode inviabilizar a neutralidade do tributo – um dado 
+interessante foi a propositura de uma ADI por parte da Federação dos Planta-
+dores de Cana, fornecedores das usinas de Pernambuco, contra uma isenção26. 
+Como o IVA-dual e o ICMS são geralmente plurifásicos, ou seja, incidem nas 
+diversas cadeias da economia (saídas da indústria, do atacado, do varejo, até o 
+consumidor final), a concessão de uma isenção, a título de exemplo, aumenta 
+
+26.  Dispositivo do Decreto n. 21.755/1999, do Estado de Pernambuco, que concedeu isenção do 
+ICMS para cana-de-açúcar destinada à industrialização de açúcar, está sendo questionado 
+no Supremo Tribunal Federal (STF). Esse é o objetivo da Ação Direta de Inconstituciona-
+lidade (ADI) 3.911, ajuizada pela Federação dos Plantadores de Cana do Brasil (Feplana) 
+(TRIBUTÁRIO. Decreto que concede isenção tributária para cana de açúcar em Pernambuco 
+é  questionado.  Disponível  em:  https://tributario.com.br/a/decreto-que-concede-isencao-
+-tributaria-para-cana-de-acucar-em-pernambuco-e-questionado/. Acesso em: 13 set. 2023).
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 259
+
+a carga tributária para uns em detrimento de outros (quem recebe uma merca-
+doria com isenção não terá o direito de se creditar, acumulando o imposto na 
+sua saída posterior). 
+
+Por isso, muitos autores criticam essa exceção ao princípio da não cumulati-
+
+vidade, mas não a consideram inconstitucional27. 
+
+Realmente, a concessão de incentivos apenas em uma etapa da cadeia eco-
+nômica dificulta a neutralidade fiscal, interferindo na divisão da carga tributária 
+na mesma cadeia produtiva, já que seus partícipes não terão tratamento tribu-
+tário  uniforme.  Entretanto,  não  há  dúvidas  em  relação  à  constitucionalidade 
+das exceções ao princípio da não cumulatividade previstas expressamente na 
+Constituição originária de 1988.
+
+Ademais, se o contribuinte tem a sua saída desonerada, poderá realizar suas 
+operações com bens, serviços e direitos com preços mais acessíveis para o ad-
+quirente. Se além da vantagem competitiva de vender mais barato, ainda gerar 
+crédito para as operações subsequentes, operações com isenção e imunidade 
+poderiam contrariar o princípio da neutralidade.
+
+De  acordo  com  o  art.  156-A,  §  7º,  em  relação  ao  contribuinte  que  prestar 
+serviço ou comercializar bem ou direito com isenção ou imunidade, além de a 
+transação não gerar crédito para a operação subsequente (I), acarretará a anu-
+lação do crédito relativo às suas operações anteriores (II), salvo, na hipótese da 
+imunidade, inclusive nas prestações de serviços de comunicação nas modali-
+dades de radiodifusão de recepção livre e gratuita (inciso XI do § 1º), quando 
+determinado em contrário em lei complementar.
+
+Como o IVA-dual deve ser informado pelo princípio da neutralidade, a de-
+soneração também deve acarretar a anulação do crédito relativo às operações 
+anteriores. Mas a prescrição constitucional possibilita, exclusivamente em se tra-
+tando de imunidade, que lei complementar possar permitir a apuração do crédi-
+to, ou seja, permite-se a tomada de um crédito sem que haja pagamento, motivo 
+pelo qual é denominado pela doutrina como “crédito prêmio” ou “presumido”.
+
+Uma  exceção,  inserida  na  própria  Constituição  pelo  Substitutivo  à  PEC 
+45-A  (art.  156-A,  III),  é  a  desoneração  total  da  exportação,  com  possibilida-
+de de manutenção dos créditos, que está prevista para o ICMS, desde a LC 
+
+27.  FERRAZ JUNIOR, Tercio Sampaio. ICMS: não cumulatividade e suas exceções constitucio-
+
+nais. RDTributário, n. 48, p. 20.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024260 • Antônio MAchAdo Guedes AlcoforAdo
+
+87/1996,  inclusive  para  produtos  primários,  e  continuará  no  IVA-dual,  o  que 
+gera créditos acumulados para os contribuintes exportadores.
+
+A  regra  geral  constitucional,  entretanto,  prescreve  que  o  contribuinte  que 
+praticar operação com isenção e imunidade do IVA-dual, além de não ter direito 
+ao crédito das operações anteriores, não poderá gerar crédito para as opera-
+ções subsequentes, restrições que propiciam o equilíbrio da relação fisco-con-
+tribuinte, que deve ser pautada pelo princípio da neutralidade. 
+
+3.4 Não cumulatividade em relação às empresas optantes do regime único 
+(Simples Nacional)
+
+A atual Constituição dispõe que cabe à lei complementar (art. 146, III, “d”) 
+estabelecer normas gerais em matéria de legislação tributária, especialmente 
+sobre o tratamento diferenciado e favorecido para as microempresas e para 
+as  empresas  de  pequeno  porte,  optantes  do  regime  único  de  arrecadação 
+(Simples  Nacional).  Tal  previsão  foi  preservada  para  o  IVA-dual,  mas  com  o 
+princípio da não cumulatividade mitigado.
+
+Para as empresas que optarem em recolher a CBS e o IBS pelo regime único, 
+conforme o § 3º do art. 146 da Constituição, com a alteração do Substitutivo da 
+PEC 45-A, não será permitida a apropriação de créditos dos referidos tributos. 
+Como tal restrição já existe em relação aos tributos que serão extintos com a 
+reforma tributária, não há afronta ao direito do contribuinte.
+
+As não optantes, que adquirirem mercadorias ou tomarem serviços de em-
+presas do Simples Nacional, poderão se apropriar tão somente dos créditos do 
+IBS e da CBS, equivalentes ao cobrado por meio do regime único, que é muito 
+inferior em comparação ao crédito permitido se adquirirem bens, direitos e ser-
+viços de não optantes.
+
+Para fugirem de tais restrições à não cumulatividade, os contribuintes optan-
+tes do regime único poderão (art. 146, § 2º) recolher separadamente o IVA-dual, 
+nos termos estabelecidos pela lei complementar para o IBS e a CBS, hipótese em 
+que esses tributos não serão cobrados pelo regime único do Simples Nacional.
+
+Dessa forma, para manter a competitividade, os contribuintes optantes que 
+realizarem operações com bens, direitos e serviços para empresas que preci-
+sem  de  crédito  para  pagar  menos  IVA-dual,  terão  que  abandonar  o  Simples 
+Nacional ou recolher a CBS e o IBS na sistemática normal. Nesse caso, deverá 
+haver aumento da carga tributária, porque o recolhimento unificado abrangeria 
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 261
+
+apenas os seguintes tributos: IRPJ, CSLL, Pasep e a Contribuição para a Seguri-
+dade Social destinada à Previdência Social a cargo da pessoa jurídica.
+
+Por outro lado, não haverá alteração de carga tributária para as empresas 
+optantes do Simples Nacional que prestarem serviços ou venderem bens e di-
+reitos a pessoas físicas ou jurídicas que não precisem de crédito.
+
+4 conclusões
+
+Foi comprovada a tese da proposição afirmativa de que os atuais tributos 
+que incidem sobre o consumo de bens, direitos e serviços ou são parcialmente 
+cumulativos, no caso do ICMS, PIS, Cofins e IPI, ou, em se tratando do ISS, to-
+talmente cumulativo.
+
+O texto da proposta original da PEC 45/2019, elaborada no CCiF, previa uma 
+não cumulatividade plena, de acordo com o melhor padrão internacional, que 
+traria mais neutralidade para os tributos que incidem sobre o consumo.
+
+Após as alterações feitas no Congresso Nacional, o novo texto (Substitutivo 
+do Senado à PEC 45-A) trouxe alguns aspectos positivos relacionados com a não 
+cumulatividade, como: o direito ao crédito nas aquisições de bens do ativo imo-
+bilizado, bem como aos créditos relativos a bens, direitos e serviços para uso ou 
+consumo, excluídos os inerentes ao consumo pessoal; o cálculo do IVA-dual por 
+fora; a possibilidade de utilização dos créditos acumulados mais rapidamente; 
+e a inserção expressa do princípio da neutralidade. Como esse princípio é parte 
+indissociável  da  não  cumulatividade,  esta  foi  alçada  expressamente  ao status 
+de princípio, motivo pelo qual se corrobora o argumento de que não poderá ser 
+contrariado por normas infraconstitucionais.
+
+Todavia, o Substitutivo à PEC 45-A prescreve a possibilidade de lei comple-
+mentar impor, para permitir a tomada de créditos, a condição de verificação do 
+efetivo recolhimento do IVA-dual na operação anterior. Tal previsão é incons-
+titucional, porque torna a prescrição de não cumulatividade do imposto uma 
+norma de eficácia limitada, contrariando cláusula pétrea (art. 60, § 4º, IV), pois, 
+nos impostos que serão substituídos (ICMS e IPI), não há essa condição, que 
+mitiga direito e garantia individual do contribuinte, assegurados na norma da 
+não cumulatividade estabelecida na Constituição promulgada em 1988.
+
+Se  a  lei  complementar  impuser  a  mencionada  restrição,  os  contribuintes 
+
+sentirão saudades da não cumulatividade atualmente prevista para o ICMS.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024262 • Antônio MAchAdo Guedes AlcoforAdo
+
+5 referências
+
+ALCOFORADO,  Antônio  Guedes.  A  não  cumulatividade  do  ICMS  nas  operações 
+com diferimento (substituição tributária para trás). In: SOUZA, Priscilla de (org.); 
+CARVALHO, Paulo de Barros (coord.). Racionalização do sistema tributário. São Pau-
+lo: Noeses: IBET, 2017. Disponível em: https://www.ibet.com.br/a-nao-cumulativi-
+dade-do-icms-nas-operacoes-com-diferimento-substituicao-tributaria-para-tras-
+-por-antonio-machado-guedes-alcoforado/. Acesso em: 30 set. 2023.
+
+ALCOFORADO, Antônio Guedes. Regra-matriz de responsabilidade e regra-matriz de 
+substituição tributária no ICMS. 2017. Tese [Doutorado em Direito] – Pontifícia Uni-
+versidade Católica de São Paulo, São Paulo, 2017. 
+
+BORGES, José Souto Maior. Lei complementar tributária. São Paulo: RT, 1975.
+
+BRASIL. Câmara dos Deputados. Proposta de Emenda Constitucional n., de 2019 
+(Do Sr. Baleia Rossi e outros). Altera o Sistema Tributário Nacional e dá outras pro-
+vidências.  Disponível  em:  https://www.camara.leg.br/proposicoesWeb/prop_mos-
+trarintegra?codteor=1728369&filename=PEC-45-2019. Acesso em: 2 out. 2023.
+
+BRASIL. Senado Federal. Proposta de Emenda Constitucional n., de 2019 (Do Sr. Ba-
+leia Rossi e outros). Altera o Sistema Tributário Nacional e dá outras providências. 
+Disponível em: https://legis.senado.leg.br/sdleg-getter/documento?dm=9503608&-
+ts=1700000382499&disposition=inline&_gl=1*gvfh96*_ga*Nzk4MTk3MDk5LjE2O-
+DE4OTMxNzk.*_ga_CW3ZH25XMK*MTcwMDgzNzg4NS41My4xLjE3MDA4Mzc4O-
+TAuMC4wLjA. Acesso em: 20 nov. 2023.
+
+CARRAZZA, Roque Antonio. Curso de direito constitucional tributário. São Paulo: Ma-
+lheiros, 2015.
+
+CARRAZZA, Roque Antonio. ICMS. São Paulo: Malheiros, 2022.
+
+CARVALHO, Paulo de Barros. Derivação e positivação no direito tributário. São Paulo: 
+Noeses, 2013. v. 2.
+
+CITADOR. Rudyard Kipling. Disponível em: http://www.citador.pt/frases/imagens/
+frases-tenho-seis-regras-que-me-ensinaram-tudo-o-que-sei-rudyard-kipling-3416.
+jpg. Acesso em: 1 maio 2023.
+
+COSTA, Alcides Jorge. ICMS na Constituição e na lei complementar. São Paulo: Rese-
+nha Tributária, 1977.
+
+FERRAZ JUNIOR, Tercio Sampaio. ICMS: não cumulatividade e suas exceções cons-
+titucionais. RDTributário, 2015.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024A não cuMulAtividAde do ivA-duAl (cbs e ibs) previstA nA propostA de reforMA tributáriA • 263
+
+DE LA FERIA, Rita; KREVER, Richard. Ending VAT exemptions: towards a post-mo-
+dern VAT. In: DE LA FERIA, Rita (org.). VAT exemptions: consequences and design 
+alternatives. Alphen aan den Rinj: Wolters Kluwer, 2013.
+
+LINS, Robson Maia. Curso de direito tributário brasileiro. São Paulo: Noeses, 2019.
+
+MOREIRA,  André  Mendes.  A  não  cumulatividade  dos  tributos.  São  Paulo:  Noeses, 
+2020.
+
+MOREIRA, André Mendes. Neutralidade, valor acrescido e tributação. Belo Horizonte: 
+Fórum, 2020.
+
+ROSENBLATT, Paulo; SOTERO, Ana Carolina. A dupla incidência do IPI nas opera-
+ções de importação e revenda de produtos industrializados: reflexões sobre o arti-
+go 46 do Código Tributário Nacional, oscilações jurisprudenciais e a segurança ju-
+rídica. In: OLIVEIRA, José André Wanderley Dantas de; ROSENBLATT, Paulo (org.). 
+Direito tributário: comemoração dos 50 anos do Código Tributário Nacional (estudos 
+em homenagem a Souto Maior Borges). Recife: Editora Nossa Livraria, 2016.
+
+SANTI, Eurico Marcos Diniz de. ICMS – mercadorias: direito ao crédito – importa-
+ção. In: SANTI, Eurico Marcos Diniz de (coord.). Curso de especialização em direito 
+tributário: estudos analíticos em homenagem a Paulo de Barros Carvalho. Rio de 
+Janeiro: Forense, 2005. p. 535-552.
+
+SANTI, Eurico Marcos Diniz de. Em defesa de um IVA nacional versão 3.0 e modelo 
+mundial. Jota, 3 maio 2015. Disponível em: https://www.jota.info/opiniao-e-analise/
+artigos/em-defesa-de-um-iva-nacional-versao-3-0-e-modelo-mundial-03052015. 
+Acesso em: 15 jul. 2019.
+
+SCHOUERI, Luís Eduardo. Direito tributário. São Paulo: Saraiva Educação, 2018.
+
+TRIBUTÁRIO. Decreto que concede isenção tributária para cana de açúcar em Per-
+nambuco  é  questionado.  Disponível  em:  https://tributario.com.br/a/decreto-que-
+-concede-isencao-tributaria-para-cana-de-acucar-em-pernambuco-e-questionado/. 
+Acesso em: 13 set. 2023.
+
+revista de direito tributário da apet • são paulo • número 49 • out. 2023/mar. 2024

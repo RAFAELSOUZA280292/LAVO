@@ -1,0 +1,785 @@
+Aqui está o conteúdo completo do arquivo PDF, extraído fielmente para texto, mantendo a organização original, conforme solicitado:
+
+```
+Firefox
+
+1 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+To Split or not to Split: o Split Payment como Mecanismo de Recolhimento de IVA e seus Potenciais
+Impactos no Brasil
+To Split or not to Split: Split Payment as a Vat Collection Mechanism and its Potential Impacts in Brazil
+Alexandre Alkmim Teixeira
+Doutor em Direito Tributário pela USP. Mestre em Direito Tributário pela UFMG. Pós-doutor pela
+Universidade de Santiago de Compostela. Professor dos cursos de pós-graduação da PUC-Minas,
+Faculdade de Direito da USP Ribeirão Preto e Faculdades Milton Campos. Foi Conselheiro do Conselho
+Administrativo de Recursos Fiscais do Ministério da Economia. Advogado. E-mail:
+alexandre@jba.adv.br.
+Recebido em: 16-3-2022
+Aprovado em: 23-3-2022
+Resumo
+O Split Payment consiste em uma sistemática a partir da qual, quando do pagamento pela aquisição do
+bem ou serviço, o valor referente ao tributo é financeiramente destinado à liquidação da obrigação
+tributária, não sendo entregue ao fornecedor do bem ou serviço (contribuinte) que realiza o respectivo fato
+gerador. Sua previsão consta das principais propostas de emenda constitucional de reforma tributária, mas
+a experiência internacional demanda cautelas para sua implantação. Em especial, deverão ser observados
+o impacto no fluxo de caixa das empresas e a adoção de mecanismos eficazes de restituição dos valores
+pagos a maior.
+Palavras-chave: tributário, Imposto sobre Valor Agregado – IVA, Imposto sobre Bens e Serviços – IBS,
+Contribuição sobre Bens e Serviços – CBS, reforma tributária, split payment, pagamento segregado.
+Abstract
+Split Payment consists of a system of collecting taxes that, when paying for the acquisition of the good or
+service, the amount related to the tax is financially allocated to the settlement of the tax obligation, not
+being delivered to the supplier of the good or service (taxpayer). The prevision is included in the main tax
+reform constitutional amendment proposals, but international experience demands caution in its
+reform constitutional amendment proposals, but international experience demands caution in its
+implementation. In particular, the impact on the cash flow of companies and the adoption of effective
+mechanisms for refunding must be observed.
+Keywords: tax, Value Added Tax – VAT, Tax on Goods and Services, Tax Reform, split payment.
+1. Introdução
+Não é segredo para ninguém a falência do sistema de tributação indireta no Brasil. As guerras fiscais entre
+os Estados no que toca ao ICMS, e entre os Municípios quanto ao ISSQN1, geram dois efeitos
+anacrônicos: (i) insegurança jurídica por parte dos contribuintes, segregando os mercados produtores e
+consumidores, na ante lógica de neutralidade fiscal2 e (ii) perda arrecadatória dos entes federados parciais,
+nas suas principais bases constitucionais de tributação3.
+Mas, a nosso sentir, a principal causa que vicia a lisura da tributação indireta no Brasil é originária da
+própria Constituição da República, como decorrência da segregação das bases tributárias entre União,
+Estados e Municípios4: o IPI – imposto sobre produtos industrializados e as contribuições Cofins e PIS –
+de competência federal, o ICMS – imposto sobre operações de circulação de mercadorias e serviços de
+transporte interestadual, intermunicipal e de comunicações – de competência estadual, e o ISSQN –
+20/09/24, 13:45
+Firefox
+
+2 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+imposto sobre serviços de qualquer natureza – de competência municipal, incidem conjuntamente e
+acabam por criar um sistema perverso, prejudicando a economia nacional.
+De fato, o setor industrial está sujeito à tributação pelo IPI e pelo ICMS, mas não compartilha créditos
+entre tais impostos, além de não se apropriar do crédito de ISSQN dos serviços que toma de terceiros. Da
+mesma forma, o setor de comércio não se apropria dos créditos de IPI e de ISSQN dos produtos
+industrializados e serviços que adquire. E, por fim, o setor de serviços, além de não se apropriar dos
+créditos de IPI e de ICMS dos produtos que adquire, não se apropria dos créditos de ISSQN dos serviços
+intermediários que toma de terceiros, uma vez que o regime do imposto municipal é cumulativo. Acresçase a isso a tributação pelas contribuições PIS/Cofins, que funciona parte em regime cumulativo, parte em
+regime não cumulativo, com créditos restritos aos insumos no segundo caso. Em conclusão, o sistema é
+cumulativo, oneroso e complexo.
+Não menos importante, o extenso conflito de competências entre os Entes Federados geram inúmeros
+debates e discussões, provocando insegurança jurídica e risco fiscal aos contribuintes5.
+É nesse contexto que, desde a promulgação da Constituição de 1988, fala-se em reforma tributária. Já
+foram inúmeros os projetos apresentados perante as Casas Legislativas6, sendo que, mais recentemente,
+duas propostas tramitam em paralelo no Congresso Nacional: a PEC n. 45, em curso perante a Câmara dos
+Deputados, e a PEC n. 110, em curso perante o Senado Federal.
+A Proposta de Emenda Constitucional n. 45/2019, apresentada pelo Deputado Federal Baleia Rossi7 e em
+curso perante a Câmara dos Deputados, tem origem em estudo elaborado pelo CCiF – Centro de
+Cidadania Fiscal, ligado à Fundação Getulio Vargas de São Paulo, pretende a criação de um imposto sobre
+bens e serviços – IBS no formato de IVA – imposto sobre valor agregado, com a extinção do IPI, PIS,
+bens e serviços – IBS no formato de IVA – imposto sobre valor agregado, com a extinção do IPI, PIS,
+Cofins, ICMS e ISSQN.
+Já a Proposta de Emenda Constitucional – PEC n. 1108, de 2019, apresentada pelo então Presidente do
+Senado Federal, David Acolumbre, tem origem na proposta de emenda constitucional de autoria do
+Deputado Federal Luiz Carlos Hauly, levada ao plenário da Câmara dos Deputados em dezembro de 2018
+e que, apesar de aprovada, foi arquivada pelo encerramento da legislatura.
+Na sua versão mais recente9, apurada a partir do relatório substitutivo do Senador Roberto Rocha10, a
+PEC n. 110 absorve as características principais da PEC n. 45, mas pretende a criação do chamado IVA
+Dual, sendo a CBS – Contribuição sobre Bens e Serviços decorrente da unificação do PIS e da Cofins,
+com receita destinada à União, e o IBS – Imposto sobre Bens e Serviços como um tributo subnacional, em
+substituição aos atuais ICMS e ISSQN, cuja receita será destinada aos Estados e Municípios11.
+substituição aos atuais ICMS e ISSQN, cuja receita será destinada aos Estados e Municípios11.
+Tanto o IBS quanto a CBS pretendem ser tributos integralmente não cumulativos, de forma a que os
+créditos dos tributos possam ser integralmente absorvidos pelo adquirente. Ficaria extinto, assim, o
+conceito de crédito vinculado ao insumo. Todo e qualquer bem ou serviço adquirido pela empresa12,
+ainda que não diretamente relacionado ao produto, bem ou serviço produzido ou comercializado, irá gerar
+crédito, inclusive os de uso e consumo. E, o mais importante, os tributos não incidirão sobre sua própria
+base, assumindo o formato plus tax, ou seja, acrescido ao valor da operação que lhe dá causa.
+Chama-nos a atenção, no entanto, em referidas propostas, a forma de apuração e pagamento do novo IVA,
+seja pelo IBS, seja pela CBS, com a adoção da sistemática internacionalmente conhecida como Split
+Payment, ou pagamento segregado.
+Payment, ou pagamento segregado.
+O Split Payment é amplamente utilizado nos Estados Unidos da América. Isso porque, em referido país, a
+tributação sobre consumo não segue o regime de não cumulatividade do modelo IVA, incidindo apenas na
+venda do bem ou serviço para consumidor final, ou seja, na etapa final de circulação ao consumidor.
+Assim, quando uma pessoa adquire um bem ou serviço como consumidor final, ela paga o preço, sobre o
+qual é acrescido o tributo, na sistemática chamada plus tax. Nesse sentido, o Split Payment norte-
+20/09/24, 13:45
+Firefox
+
+3 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+americano não gera preocupações na sistemática de débitos e créditos, típica dos tributos sobre valor
+agregado, uma vez que não há apuração de não cumulatividade.
+Todavia, quando aplicado ao modelo IVA, em que o montante do tributo somente é definido após a
+apuração entre débitos e créditos, o Split Payment assume a característica de antecipação do imposto pelo
+contribuinte. Isso porque, primeiro se antecipa o montante total do tributo para, na sequência, contrapô-lo
+aos créditos decorrentes das aquisições feitas pelo contribuinte, que deverão ser restituídos.
+Apesar de o Split Payment constar de mera proposta de emenda à Constituição, e ainda sem base
+normativa de regulamentação devidamente definida, o objeto do presente estudo é lançar luz sobre
+referida sistemática, apontando a experiência internacional e os potenciais entraves à sua efetiva adoção
+no direito brasileiro.
+No entanto, antes de adentrarmos na análise dessa nova sistemática de pagamento dos tributos, iremos
+identificar os mecanismos vigentes na ordem jurídica de antecipação de tributos para posterior restituição,
+alinhando o contexto em que o Split Payment poderá ser eventualmente introduzido no Brasil.
+2. A antecipação do tributo como mecanismo de praticabilidade tributária – a odiosa doutrina solve et
+repete
+Nos tributos sujeitos ao lançamento por homologação, aplicável como regra na grande maioria dos
+tributos existentes no sistema tributário brasileiro13, compete ao contribuinte identificar a ocorrência do
+fato gerador da obrigação tributária, apurar o montante do tributo devido e promover o seu recolhimento.
+A Fazenda Pública tem cinco anos contados da data de ocorrência do fato gerador14 para apurar eventual
+recolhimento a menor, competindo-lhe, por meio do devido procedimento de fiscalização, o ônus da prova
+quanto à falta do contribuinte, formalizando o crédito tributário por meio do lançamento direto.
+quanto à falta do contribuinte, formalizando o crédito tributário por meio do lançamento direto.
+Não é nova, contudo, no direito brasileiro, a exigência de antecipação do tributo que sequer se sabe
+devido, para posterior restituição ao contribuinte mediante a comprovação, por parte deste, de que o valor
+antecipado fora indevido ou a maior. Trata-se da doutrina conhecida como solve et repete.
+Em geral, o solve et repete refere-se à exigência de pagamento para que o contribuinte possa questionar a
+exigência tributária que lhe é feita pelo Fisco, como ocorre em casos de apreensão de mercadoria ou como
+condicionante da prática de atos perante a administração tributária. Segundo explica Aliomar Baleeiro:
+“Em muitos países, as leis não facultam ao contribuinte um meio energético de opor-se à arbitrária e legal
+exigência de tributo, como o nosso MS ou o ‘amparo’, obrigando-o a recolher previamente a quantia
+reclamada e depois pedir a restituição.
+reclamada e depois pedir a restituição.
+É a garantia fiscal designada como solve et repete que a legislação ditatorial de 1937 a 1946 introduziu em
+nosso país, pelos Decretos-Leis nº 5, de 13.11.1937, nº 42, de 06.11.1937, nº 3.336, de 10.06.1941 e
+outros diplomas que, depois da Constituição de 1946, vem recebendo repulsa do Supremo Tribunal
+Federal em dezenas de julgados, a despeito da insistência das repartições arrecadatórias.”
+No entanto, a exigência de antecipação para posterior apuração do quanto debeatur assume a mesma
+lógica: primeiro exige-se o pagamento do tributo para, em momento posterior, apurar-se se o montante
+recolhido era, de fato, devido, diante do fato gerador in concreto.
+É inegável que tal mecanismo tem grandes vantagens para o Fisco, uma vez que limita substancialmente a
+possibilidade de perda fiscal. Isso porque, como ocorre a antecipação do recolhimento do tributo para
+posterior apuração e restituição, restringe-se a possibilidade de perda de receitas fiscais, seja em
+decorrência de fraudes e sonegações, seja pela realização de planejamentos tributários.
+Demais disso, ante o reclame para a restituição dos tributos pagos a maior ou indevidamente, o ônus de
+provar o direito de crédito sempre recai sobre o próprio contribuinte15. Ou seja, cabe ao contribuinte, no
+20/09/24, 13:45
+Firefox
+
+4 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+curso da apuração e eventual procedimento administrativo próprio, provar que o montante do tributo
+antecipado excedeu o montante do tributo devido.
+Diante dessa medida de praticabilidade fiscal16, o ordenamento jurídico brasileiro passou a ser recheado
+de mecanismos de antecipação tributária para posterior restituição, fundados na supremacia do interesse
+público sobre o privado17: primeiro se garante a receita pública, depois se apura se o valor recolhido é
+devido.
+E isso se faz por meio de dois instrumentos: retenção do tributo na fonte, aplicável na contratação de
+serviços em geral; e substituição tributária progressiva, aplicável nas operações com bens ou mercadorias.
+A retenção do tributo pela fonte pagadora na contratação de serviços é utilizada, observados os casos
+previstos nas legislações específicas, no Imposto de Renda das Pessoas Físicas e Jurídicas – IRPJ, na
+Contribuição Social sobre o Lucro Líquido – CSLL, nas contribuições para o PIS e para a Cofins, nas
+Contribuição Social sobre o Lucro Líquido – CSLL, nas contribuições para o PIS e para a Cofins, nas
+contribuições previdenciárias18 e no ISSQN. Nessa modalidade, a lei determina que a fonte pagadora pela
+contratação de serviços retenha percentuais (alíquotas fictícias) do tributo, que posteriormente é
+confrontado no ajuste e compensado com os valores efetivamente devidos. Assim, quando da apuração do
+tributo a pagar, o contribuinte deverá promover a dedução dos valores de crédito19, podendo o saldo
+positivo remanescente ser objeto de pedido de restituição20.
+A substituição tributária progressiva, por sua vez, aplicável aos tributos indiretos não cumulativos21
+incidentes sobre a venda de mercadorias, refere-se à possibilidade de a lei determinar que haja o
+recolhimento antecipado do tributo devido pelo restante da cadeia, mediante a presunção de um valor final
+de venda da mercadoria22. Caso o valor a partir do qual a substituição tributária foi realizada não se
+confirme, a Constituição da República determina que o imposto recolhido a maior seja restituído ao
+contribuinte23.
+Por fim, numa terceira sistemática aplicável na apuração do IRPJ e da CSLL pelo regime do lucro real
+anual, o contribuinte optante deve promover a apuração e o recolhimento mensal das estimativas, sob uma
+base presumida de lucro tributável24, como antecipação do tributo cuja apuração será feita após o
+encerramento do ano calendário. Nessa hipótese, caso tenha havido pagamento a maior, expresso por meio
+do saldo negativo, o mesmo poderá ser objeto de restituição por meio do sistema PER/DCOMP.
+Nenhuma dessas hipóteses refere-se ao Split Payment, cuja implantação é pretendida pelas propostas de
+reforma tributária em curso.
+3. Split Payment
+Conceitualmente, o Split Payment consiste em uma sistemática a partir da qual, quando do pagamento
+pela aquisição do bem ou serviço, o valor referente ao tributo é financeiramente destinado à liquidação da
+obrigação tributária, não sendo entregue ao fornecedor do bem ou serviço (contribuinte) que realiza o
+respectivo fato gerador. O alienante, nesse caso, recebe de seu cliente o valor líquido, sendo que o valor
+do tributo não passa financeiramente pela conta do contribuinte.
+No caso dos tributos da modalidade IVA, compete ao fornecedor, que é o contribuinte do tributo, apurar os
+créditos que detém a partir das aquisições que tiver realizado, postulando sua restituição. Nesse sentido, o
+Split Payment pode ser adotado, basicamente, sob dois formatos.
+O primeiro consiste na segregação do pagamento feito pelo tomador em dois: um diretamente ao
+fornecedor, referente ao preço do bem ou serviço e outro ao Fisco, referente ao IVA. Cabe, assim, ao
+adquirente de bens ou serviços promover dois pagamentos: o do imposto, diretamente ao Fisco, e o do
+fornecedor, sendo que este se credita do tributo para posterior apuração e eventual restituição. Essa
+modalidade é factível para as operações entre contribuintes do IVA – B2B25, mas de difícil utilização nas
+operações diretas a consumidor final, em especial pessoas físicas – B2C.
+20/09/24, 13:45
+Firefox
+
+5 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+Alkmim01.jpg
+O segundo modelo, mais tecnológico, consiste no pagamento unificado por meio eletrônico, atribuindo-se
+à instituição financeira a responsabilidade de promover as devidas destinações: o preço é destinado ao
+fornecedor do bem ou serviço, e o IVA é destinado ao Fisco. Ou seja, o adquirente realiza um único
+pagamento, e a instituição financeira faz a repartição dos valores entre o fornecedor e o Fisco.
+Alkmim02.jpg
+A mesma lógica pode ser adotada nos pagamentos em cartão de crédito, podendo ser utilizada tanto nas
+operações B2B como nas operações B2C. No entanto, essa modalidade exclui a possibilidade de Split
+Payment nos pagamentos realizados em dinheiro ou fora da rede bancária.
+A partir dessas duas modalidades, Melina Rocha26 identifica que podem ser encontradas variações: em
+uma delas, os valores recebidos a título de IVA são primeiramente direcionados a uma conta bloqueada
+sendo que, apenas após a apuração do IVA pelo contribuinte, os recursos são destinados (i) ao Fisco, como
+pagamento do imposto efetivamente devido e (ii) ao contribuinte, em restituição aos valores de crédito
+que lhe devem ser restituídos.
+Em outra variação, o Split Payment não é fixado na integralidade da alíquota do imposto, mitigando os
+efeitos de antecipação do IVA e, por consequência, dos valores a serem restituídos. Assim, por exemplo,
+se o preço da mercadoria é $100,00 e a alíquota do IVA é de 20%, pode-se determinar que apenas 10%
+esteja sujeito ao Split Payment. Com isso, o comprador irá pagar $110,00 ao vendedor e $10,00 ao Fisco.
+No entanto, na apuração de IVA, o vendedor deverá utilizar a alíquota de 20% e poderá deduzir de sua
+apuração os $10,00 já antecipados.
+Qualquer que seja a forma de implantação, o Split Payment fundamenta-se na antecipação dos valores de
+IVA, para posterior restituição ao contribuinte do que tiver sido pago a maior, o que provoca dois
+IVA, para posterior restituição ao contribuinte do que tiver sido pago a maior, o que provoca dois
+questionamentos fundamentais: a adoção do solve et repete como regra de tributação e os critérios, formas
+e prazos de restituição.
+Na sistemática pretendida pela PEC n. 110, o Split Payment está previsto nos seguintes termos27:
+“Art. 156-A.
+[...]
+§ 6º Lei complementar poderá estabelecer, como regra geral ou para hipóteses específicas:
+I – que o aproveitamento de créditos do imposto ficará condicionado ao recolhimento do imposto devido
+na etapa anterior, assegurada ao adquirente, nesse caso, a opção de efetuar o recolhimento do imposto
+incidente nas suas aquisições de bens ou serviços;
+II – a exigência de recolhimento parcial ou total do imposto no momento da liquidação financeira ou do
+pagamento da operação ou prestação.”
+“Art. 195.
+(...)
+§ 19. A lei poderá estabelecer, em relação à contribuição prevista no inciso V do caput deste artigo, como
+regra geral ou para hipóteses específicas:
+regra geral ou para hipóteses específicas:
+I – que o aproveitamento de créditos da contribuição ficará condicionado ao recolhimento da contribuição
+devida na etapa anterior, assegurada ao adquirente, nesse caso, a opção de efetuar o recolhimento da
+contribuição incidente nas suas aquisições de bens ou serviços;
+20/09/24, 13:45
+Firefox
+
+6 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+II – a exigência de recolhimento parcial ou total da contribuição no momento da liquidação financeira ou
+do pagamento da operação ou prestação.”
+Como dito acima, ainda não temos uma visão clara sobre como o Split Payment seria, de fato introduzido,
+tendo em vista a ausência de normativa regulamentadora. Mas já se extrai, da sistemática constitucional
+proposta, que poderá ser exigido o “recolhimento parcial ou total do tributo, no momento da liquidação
+financeira da operação ou prestação”, e que “o aproveitamento de créditos ‘do tributo’ (pelo adquirente)
+ficará condicionado ao recolhimento ‘do tributo’ devido na etapa anterior”. Pretende-se, assim, a
+implantação do Split Payment acompanhado da inversão do ônus da prova para o aproveitamento e
+registro do crédito do tributo. Alternativamente, o adquirente poderá optar por “efetuar o recolhimento ‘do
+tributo’ incidente nas aquisições de bens ou serviços”, colocando o mesmo como responsável direto pelo
+pagamento do tributo devido pelo vendedor/prestador.
+Sob a ótica do alienante de bens e serviços, os valores deverão ser recebidos total ou parcialmente sem o
+IBS/CBS, cabendo ao contribuinte apurar posteriormente eventuais créditos a que tem direito; e sob a
+ótica do adquirente de bens e serviços, este deverá processar o pagamento em separado do fornecedor e do
+IBS/CBS, sendo que somente poderá se apropriar do crédito mediante a comprovação de que efetivara o
+recolhimento dos respectivos tributos devidos pelo alienante.
+3.1. Experiência internacional
+Segundo estudo publicado em 2016 no âmbito da União Europeia, com base em dados de 2014, estimouse uma perda arrecadatória decorrente de fraudes e planejamentos tributários no IVA de cerca de EUR$
+159,5 bilhões por ano, representando 14% do total arrecadado28.
+Assim, de olho nas vantagens arrecadatórias do Split Payment29, o VAT Commitee da União Europeia
+Assim, de olho nas vantagens arrecadatórias do Split Payment29, o VAT Commitee da União Europeia
+estabeleceu um grupo de estudos para sua implantação em 2017. No entanto, a conclusão final de referido
+levantamento, a partir de dados exaustivamente coletados e processados, foi surpreendente: os custos e
+efeitos provocados na administração tributária e nos contribuintes com a utilização do Split Payment são
+potencialmente mais onerosos do que os benefícios. Segundo o Relatório Final:
+“A análise realizada ilustrou os potenciais benefícios, bem como os desafios significativos relacionados
+com a utilização do split payment como método alternativo de cobrança do IVA. Embora o split payment
+tenha um elevado potencial para reduzir o défice do IVA (especialmente a fraude e o incumprimento do
+MTIC[30]), se aplicado de forma ampla em toda a UE, o seu custo devido ao aumento da complexidade
+do sistema do IVA, os elevados encargos administrativos e o impacto significativo no fluxo de caixa das
+empresas pode facilmente superar os benefícios. Portanto, é provável que a ampla aplicação do split
+payment seja uma ferramenta de política pouco atraente, dado o aumento significativo dos custos para
+empresas e autoridades. No entanto, possui características muito eficazes na redução de certos tipos de
+fraude e, portanto, pode ser adequada como medida direcionada e de alcance limitado.”31
+Friso: medida direcionada e de alcance restrito. A despeito de referida conclusão, o Split Payment foi
+adotado na República Tcheca, na Itália, na Polônia, na Bulgária e na Romênia32.
+Em 2011, a República Tcheca adotou um sistema de Split Payment opcional agregado à responsabilidade
+tributária do adquirente caso não promova o recolhimento “voluntário”33. Nesse sentido, o adquirente de
+bem ou serviço pode optar por (i) promover o Split Payment, segregando o pagamento duplo, da operação
+e do IVA, tomando crédito para fins de apuração futura ou (ii) promover o pagamento integral ao
+e do IVA, tomando crédito para fins de apuração futura ou (ii) promover o pagamento integral ao
+fornecedor, hipótese em que figurará como corresponsável tributário caso o fornecedor não promova o
+devido recolhimento do IVA34.
+Na Itália35, a scissione dei pagamenti vem sendo paulatinamente implantada com sucesso desde 2015,
+funcionando como exceção ao recolhimento do IVA, aplicável apenas nas aquisições realizadas por
+determinadas pessoas específicas36. O resultado tem sido progressivamente positivo, apesar de que o
+20/09/24, 13:45
+Firefox
+
+7 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+estorno dos créditos tem apontado algumas dificuldades quanto ao tempo de processamento, em torno de
+quatro meses37.
+Já na Polônia, a inserção do Split Payment se fez no modelo eletrônico: cabe à instituição financeira
+promover a segregação dos valores pagos pelo adquirente de bens e serviços, destinando a parcela do IVA
+a uma conta vinculada38 e a parcela de pagamento ao alienante/prestador. De acordo com estudo
+publicado no Polish Economic Institute39:
+“O mecanismo de Split Payment da Polônia entrou em vigor em 1º de julho de 2018. Ao comprar um
+produto, o comprador transfere apenas o valor líquido para a conta do vendedor. O valor igual ao IVA vai
+diretamente para a subconta de IVA do sujeito passivo, que o empresário utiliza para pagar o valor do IVA
+devido aos seus fornecedores e liquidar as contas com a administração fiscal. Isso tornou a fraude
+carrossel muito menos viável. Dentro de alguns anos, poderia eliminar completamente os reembolsos
+carrossel muito menos viável. Dentro de alguns anos, poderia eliminar completamente os reembolsos
+fiscais fraudulentos através de transações intracomunitárias fictícias. O Ministério das Finanças estima que
+a nova medida pode economizar 80 bilhões de PLN[40] ao longo de dez anos. A solução é voluntária. O
+empresário comprador do bem ou serviço pode optar por pagar ao contratante da forma usual ou
+segregada, o que o protege da desonestidade de um parceiro comercial. Transferindo-o para a conta de
+IVA, o contribuinte não estará sujeito a responsabilidade solidária pelas dívidas fiscais do seu contratante,
+pela sanção do IVA ou pela taxa de juro mais elevada por atraso. O mecanismo de pagamento fracionado
+também beneficia o vendedor: os reembolsos do IVA são processados em apenas 25 dias (em vez dos
+60).”
+Cumpre registrar o insucesso na adoção do Split Payment na Bulgária e na Romênia. A sistemática foi
+Cumpre registrar o insucesso na adoção do Split Payment na Bulgária e na Romênia. A sistemática foi
+estabelecida em 2003 pelo Fisco búlgaro, com o objetivo de contornar uma fraude fiscal recorrente no
+IVA europeu conhecida como “fraude carrossel”41. No entanto, o modelo mostrou-se insuficiente ao fim
+pretendido, além de criar complexidades funcionais na apuração do IVA, pelo que acabou sendo
+abandonado42.
+Já na Romênia, houve rejeição por parte da Comissão Europeia quanto ao formato pretendido, pelo que o
+projeto foi – temporariamente – abortado43 desde 2020. Segundo a Comissão Europeia:
+“A Comissão decidiu hoje enviar uma carta de notificação para cumprir à Roménia por aplicar um
+mecanismo de pagamento fracionado do IVA. Desde 1º de janeiro de 2018, a Roménia aplica este
+mecanismo alternativo de cobrança do IVA quando o IVA é pago a uma conta bloqueada separada,
+causando um grande encargo administrativo para as empresas honestas que ali fazem negócios. Este
+causando um grande encargo administrativo para as empresas honestas que ali fazem negócios. Este
+acordo é obrigatório para certas empresas que são obrigadas a abrir uma conta bancária separada de IVA
+bloqueada. Seus clientes devem segregar o pagamento da fatura pagando o IVA separadamente na conta
+de IVA do fornecedor. O contribuinte só pode utilizar o valor cobrado na conta de IVA dedicada para
+pagar o IVA ao Tesouro e aos seus fornecedores[44]. As medidas vão contra as regras do IVA da UE
+(Diretiva 2006/112/CE do Conselho) e a livre prestação de serviços (artigo 56º do TFUE).”
+De referidas experiências europeias, chamamos a atenção que os modelos de Split Payment considerados
+compatíveis com as diretivas europeias (i) são voluntários ou (ii) aplicáveis a apenas algumas transações
+ou pessoas e (iii) devem assegurar a restituição dos valores recolhidos a maior após a apuração do
+contribuinte. Talvez seja cedo e superficial tomar conclusões definitivas sobre a necessidade de
+contribuinte. Talvez seja cedo e superficial tomar conclusões definitivas sobre a necessidade de
+observação de referidos requisitos, mas a decisão da Comissão Europeia, ao rejeitar a proposta romena,
+segue justamente nesse sentido.
+4. To split or not to split: conveniência e oportunidade vs. constitucionalidade pragmática
+Acreditamos que a adoção do Split Payment, a contrapor-se às vantagens arrecadatórias já explanadas,
+deve levar em consideração dois pontos essenciais: o impacto de referido mecanismo no fluxo de caixa
+das empresas e a efetividade dos mecanismos de restituição do IBS e da CBS antecipados pelos
+contribuintes.
+20/09/24, 13:45
+Firefox
+
+8 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+Na sistemática ordinária de apuração do IVA, cumpre ao contribuinte registrar o crédito do imposto das
+aquisições de mercadorias e serviços que adquire; conjugado com o débito decorrente das vendas
+tributadas. Assim é que o montante do imposto devido a cada período é apurado através da composição
+dos créditos e débitos em determinado período, para depois promover-se o respectivo pagamento45.
+45
+Ao se utilizar do Split Payment, no entanto, o valor do tributo é antecipado quando do recebimento da
+operação. A apuração do tributo, com a composição de créditos e débitos serve para, ao se identificar o
+quantum efetivamente devido, permitir a restituição dos valores antecipados a maior.
+Necessário, assim, ponderar qual o efeito que a antecipação do IBS/CBS terá, numa perspectiva direta, no
+fluxo de caixa das empresas, e numa perspectiva indireta, na economia nacional.
+Isso porque, nas práticas comerciais e negociais, a disponibilidade de dinheiro em caixa tem custo46. E
+esse ponto é da maior relevância, como chama a atenção estudo publicado no Brazilian Journal of
+Development:
+“A discussão sobre retenção de caixa é um dos aspectos relevantes em finanças corporativas e tem sido o
+foco de diversas pesquisas acadêmicas. Um dos fatos estilizados mais comumente aceito na literatura é
+um crescimento do nível de caixa nas empresas abertas nos EUA durante os anos 2000, em relação a
+décadas anteriores (Bates et al., 2009). O motivo precaucional (evitar perder oportunidades de
+investimento) é o mais utilizado na explicação. Estudos de Almeida et al. (2004) e Harford et al. (2014)
+são consistentes com essa explicação. O primeiro verifica que as firmas mitigam os efeitos adversos da
+restrição financeira adotando políticas de maior retenção de caixa. Já o segundo, mostra que o nível de
+caixa é determinado pelo risco de refinanciamento das empresas, com o objetivo de prevenir problemas de
+subinvestimento. Em países emergentes o tema torna-se ainda mais relevante, uma vez que em mercados
+menos desenvolvidos, há tendência de maiores fricções financeiras, o que torna ainda mais difícil o acesso
+às fontes de financiamento, aumentando a propensão a uma restrição financeira das firmas. Não bastasse
+isso, o Brasil nos últimos anos tem apresentado histórico de recessões econômicas com reflexos
+diretamente nas finanças corporativas e, de modo particular, na liquidez das empresas. De acordo com o
+Comitê de Datação de Ciclos Econômicos (CODACE), da Fundação Getúlio Vargas, desde 1980 o Brasil
+passou por nove períodos de recessão econômica, sendo o último e mais severo, entre 2014 e 2016.”47
+Temos que, no caso da PEC n. 110, não identificamos qualquer estudo de impacto na adoção do Split
+Payment para as empresas que eventualmente estarão sujeitas ao regime – talvez, até mesmo, pela
+prematuridade da matéria, ainda em fase de previsão constitucional e sem definição precisa dos seus
+prematuridade da matéria, ainda em fase de previsão constitucional e sem definição precisa dos seus
+moldes de regulamentação e funcionamento.
+Necessário alertar, no entanto, desde já, que referidos impactos deverão ser estudados e previstos antes de
+sua regulamentação e implantação, de forma a evitar modelos que possam refletir negativamente na
+solvabilidade das empresas brasileiras.
+No que toca à possibilidade constitucional do Split Payment, não acredito que se possa dizer ser a
+sistemática de per si inconstitucional. Apesar da antecipação do tributo sem se conhecer o quantum
+debeatur seguir na linha do solve et repete, não será a primeira vez, como já salientamos, que será
+utilizado um mecanismo de pagamento de tributos para posterior apuração e restituição.
+A questão, no meu sentir, toca mais à chamada constitucionalidade pragmática do que a
+constitucionalidade material48. Isso porque, se a lei e a administração tributária instituírem mecanismos
+efetivos e eficazes de restituição dos valores antecipados a título de IBS/CBS, estaremos diante de uma
+sistemática constitucional; ao passo que, se a restituição dos tributos se der de forma onerosa,
+intempestiva, ou simplesmente não ocorrer, estaremos diante de um mecanismo inconstitucional.
+Oportuna, nesse sentido, a observação de José Eduardo Soares de Melo, para quem “alinhando o princípio
+20/09/24, 13:45
+Firefox
+
+9 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+da proibição do efeito confiscatório dos tributos com o princípio da não cumulatividade, pode-se observar
+que os mesmos se tocam e se complementam”49.
+A eventual adoção do Split Payment sem garantia de efetiva e oportuna restituição dos tributos
+antecipados, tornará a sistemática inconstitucional por equiparação ao confisco. E o problema não é de
+pequena monta. Isso porque o retrospecto brasileiro em matéria de restituição de tributos é absolutamente
+desfavorável, principalmente quanto ao precedente da substituição tributária progressiva. Veja-se que,
+naquele caso, apesar de a Constituição da República garantir a “imediata e preferencial restituição da
+quantia paga, caso não se realize o fato gerador presumido”50, foram necessários mais de 20 anos até que
+o Supremo Tribunal Federal51 declarasse inconstitucionais as leis estaduais que não asseguravam referida
+restituição.
+Necessário, assim que, ao se pensar na adoção do Split Payment como sistemática de arrecadação do IBS
+e da CBS, sejam os sistemas jurídico e operacional das fazendas públicas dotados de instrumentos e
+mecanismos capazes de promover o regular processamento e pagamento das devoluções em dinheiro e no
+menor tempo possível52.
+5. Conclusão
+O Split Payment tem-se firmado como mecanismo central de novas técnicas de arrecadação dos impostos
+na modalidade IVA no mundo, e sua introdução no Brasil consta das principais propostas de emenda
+constitucional em discussão perante o Congresso Nacional.
+A eventual adoção do pagamento segregado mudará a sistemática de apuração e pagamento dos tributos
+indiretos, sendo certo que seu estabelecimento trará benefícios para a administração tributária, como
+mecanismo de combate a perda arrecadatória decorrente de fraudes e planejamentos tributários.
+Por outro lado, a experiência internacional demanda atenção aos impactos que o Split Payment poderá
+provocar no fluxo de caixa das empresas, com efeitos diretos na saúde econômica de referidas entidades.
+Por fim, apesar de fundada da odiosa doutrina do solve et repete, não entendemos ser a medida, de per si,
+inconstitucional, vindo a somar-se a outros mecanismos de antecipação tributária já existentes na ordem
+jurídica brasileira. Necessário, todavia, que o Split Payment venha acompanhado de mecanismos
+eficientes de restituição dos créditos dos tributos pagos a maior, sob pena de ofender a regra constitucional
+de vedação ao confisco.
+6. Bibliografia
+AFONSO, José Roberto Rodrigues et al. Guerra Fiscal do ICMS: organizar o desembarque. Revista de
+Direito Internacional Econômico e Tributário – RDIET v. 12, n. 1. Brasília, 2017.
+BOCCATO, Esdras. Modulçao dos efeitos temporais da declaração de inconstitucionalidade. Ponderação,
+subsunção e dosimetria. São Paulo: Universidade de São Paulo, 2013. Disponível em: https://
+www.teses.usp.br/teses/disponiveis/2/2134/tde-06092016-152356/publico/
+Dissertacao_mestrado_completa_EsdrasBoccato.pdf. Acesso em: 11 mar. 2022.
+Dissertacao_mestrado_completa_EsdrasBoccato.pdf. Acesso em: 11 mar. 2022.
+BRASIL. CÂMARA DOS DEPUTADOS. Proposta de Emenda à Constituição n. 45/2019. Disponível
+em: https://www.camara.leg.br/proposicoesWeb/
+prop_mostrarintegra;jsessionid=node0c40d3p2hzzdk19qnlpoch41wq53298670.node0?
+codteor=1728369&filename=Tramitacao-PEC+45/2019. Acesso em: 14 mar. 2022.
+BRASIL. SENADO FEDERAL. Relatório Legislativo de 16/03/2022. Senador Roberto Rocha.
+Disponível em: https://legis.senado.leg.br/sdleg-getter/documento?
+dm=9089001&ts=1647435715239&disposition=inline. Acesso em: 16 mar. 2022.
+20/09/24, 13:45
+Firefox
+
+10 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+BRASIL. SENADO FEDERAL. Proposta de Emenda à Constituição n. 110/2019. https://
+www25.senado.leg.br/web/atividade/materias/-/materia/137699. Acesso em: 14 mar. 2022.
+CARRAZZA, Roque Antonio. Imposto sobre a Renda. 3. ed. São Paulo: Malheiros, 2009.
+COCCIA, Sara. Split payment: la scissione dei pagamenti contro l’evasione dellIVA. Disponível em:
+https://tesi.luiss.it/18603/1/107353_COCCIA_SARA.pdf. Acesso em: 11 mar. 2022.
+COSTA, Regina Helena. Praticabilidade e justiça tributária: exequibilidade de lei tributária e direitos do
+contribuinte. São Paulo: Malheiros, 2007.
+DERZI, Misabel. Atualizações em BALEEIRO, Aliomar. Direito tributário brasileiro. Rio de Janeiro:
+Forense, 2013.
+DERZI, Misabel Abreu Machado. Legalidade material. Modo de pensar “tipificante” e praticidade no
+direito tributário. I Congresso Internacional de Direito Tributário do IBET. São Paulo: Max Limonad,
+1998.
+EUROPEAN COMISSION. Analysis of the impact of the split payment mechanism as an alternative VAT
+EUROPEAN COMISSION. Analysis of the impact of the split payment mechanism as an alternative VAT
+collection method. Bruxelas: Delloite, 2017.
+EUROPEAN COMISSION. Disponível em: https://ec.europa.eu/commission/presscorner/detail/en/
+MEMO_18_6247. Acesso em: 11 mar. 2022.
+EUROPEAN PARLIAMENT. Disponível em: https://www.europarl.europa.eu/doceo/document/
+P-8-2015-008981_IT.html.
+FERNANDES, André Eduardo da Silva; WANDERLEI, Nélio Lacerda. A questão da guerra fiscal: uma
+breve resenha. Disponível em: https://www2.senado.leg.br/bdsf/bitstream/handle/id/626/r148-01.pdf?
+sequence=4. Acesso em: 23 fev. 2022.
+ITALIA. DIPARTIMENTO DELE FINANZE. Disponível em: https://www1.finanze.gov.it/finanze/
+split_payment/public/#/%23testata.
+JABOUR, Marcelo. A regra mundial de tributação do consumo. Fio da meada. Decifrando as leis e os
+tributos do país. São Paulo: Hub Editora e Soluções Educacionais, 2019.
+tributos do país. São Paulo: Hub Editora e Soluções Educacionais, 2019.
+JORNAL INFORMAZIONE FISCALE. Disponível em: https://www.informazionefiscale.it/pubblicaamministrazione-ritardi-pagamenti-imprese-europa-cgia-mestre. Acesso em: 11 mar. 2022.
+MARTINS, Ives Gandra da Silva; MENDES, Gilmar Ferreira. Controle concentrado de
+constitucionalidade: comentários à Lei nº 9.868, de 10-11-1999. São Paulo: Saraiva, 2011.
+MELO, José Eduardo Soares de. ICMS. Teoria e prática. 12. ed. São Paulo: Dialética, 2012.
+ROCHA, Melina. Modelos internacionais de split payment. Palestra. Disponível em: https://ccif.com.br/
+modelos-internacionais-de-split-payment/. Acesso em: 14 mar. 2022.
+SANTOS, Tiago André Tavares dos. Como funciona a fraude carrossel em sede de IVA – metodologia e
+impacto em Portugal e na EU. Universidade de Lisboa. Disponível em: http://
+hdl.handle.net/10400.5/2795. Acesso em: 11 mar. 2022.
+SARNOWSKI, Jan; SELERA, Pawel. Reducing the VAT gap: lessons from Poland. Polish Economic
+SARNOWSKI, Jan; SELERA, Pawel. Reducing the VAT gap: lessons from Poland. Polish Economic
+Institute, 2019. Disponível em: https://pie.net.pl/wp-content/uploads/2021/12/Raport-LUKA-VAT-EN.pdf.
+Acesso em: 11 mar. 2022.
+20/09/24, 13:45
+Firefox
+
+11 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+STATHIS, Dionisios. Compatibility of anti-treaty shopping policies with basic international trade
+imperatives: relevance of fiscal equity and neutrality in the international trade regime and lessons for
+international tax lawyers. Manchester International Economy Journal v. 1, n. 2, 2004.
+TRATKIEWICZ, Tomasz. Model podzielonej płatności – remedium na oszustwa w VAT? Universitatis
+Maria Curie v. LI, 6, seção H. Polônia, Lublin, 2017. Disponível em: https://journals.umcs.pl/h/article/
+download/5329/4743#:~:text=21%5D.,konto%20nadzorowane%20przez%20organ%20podatkowy.
+Acesso em: 11 mar. 2022.
+UNITED KINGDOM. Alternative method of VAT collection summary of responses. Disponível em:
+https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/754209/
+Alternative_method_of_VAT_collection_summary_of_responses.pdf. Acesso em: 14 mar. 2022.
+WANDERLEI, Nélio Lacerda. A questão da guerra fiscal: uma breve resenha. Disponível em: https://
+WANDERLEI, Nélio Lacerda. A questão da guerra fiscal: uma breve resenha. Disponível em: https://
+www2.senado.leg.br/bdsf/bitstream/handle/id/626/r148-01.pdf?sequence=4. Acesso em: 23 fev. 2022.
+ZANI, Thobias et al. Comportamento da estocagem de liquidez: um estudo comparativo entre empresas
+brasileiras domésticas e multinacionais. Brazilian Journal of Development, 2021. Disponível em: https://
+www.academia.edu/73158046/
+Comportamento_da_estocagem_de_liquidez_um_estudo_comparativo_entre_empresas_brasileiras_dom%C3%A9s
+Acesso em: 11 mar. 2022.
+1 Sobre o histórico da guerra fiscal no Brasil, ver melhor em FERNANDES, André Eduardo da Silva;
+WANDERLEI, Nélio Lacerda. A questão da guerra fiscal: uma breve resenha. Disponível em: https://
+www2.senado.leg.br/bdsf/bitstream/handle/id/626/r148-01.pdf?sequence=4. Acesso em: 23 fev. 2022.
+2 Segundo STATHIS, Dionisios, “o conceito de neutralidade é baseado na presunção de que a
+produtividade será mais alta quando os fatores de produção da renda forem distribuídos pelos mecanismos
+de mercado sem interferência governamental No original: “The concept of neutrality is based on the
+de mercado sem interferência governamental No original: “The concept of neutrality is based on the
+assumption that productivity will be highest when income-producing factors are distributed by market
+mechanism without public interference.” (STATHIS, Dionisios. Compatibility of anti-treaty shopping
+policies with basic international trade imperatives: relevance of fiscal equity and neutrality in the
+international trade regime and lessons for international tax lawyers. Manchester International Economy
+Journal v. 1, n. 2, 2004, p. 24)
+3 Sobre os efeitos econômicos da guerra fiscal dos estados, ver AFONSO, José Roberto Rodrigues et al.
+Guerra Fiscal do ICMS: organizar o desembarque. Revista de Direito Internacional Econômico e
+Tributário – RDIET v. 12, n. 1. Brasília, 2017, p. 416-443.
+4 Segundo Marcelo Jabour, “o compartilhamento de competência legislativa resultou, ainda em normas
+contraditórias, herméticas, abusivas, que ofendem dois princípios básicos de qualquer ordenamento
+contraditórias, herméticas, abusivas, que ofendem dois princípios básicos de qualquer ordenamento
+jurídico-tributário: o respeito à isonomia e à capacidade contributiva” (JABOUR, Marcelo. A regra
+mundial de tributação do consumo. Fio da meada. Decifrando as leis e os tributos do país. São Paulo: Hub
+Editora e Soluções Educacionais, 2019, p. 393).
+5 Vale citar, a título de exemplo, a eterna discordância acerca da tributação de softwares, ora tratado como
+mercadoria, ora tratado como serviço. É certo que o Supremo Tribunal Federal, em sede de repercussão
+geral, no julgamento do RE n. 688.223, definiu a constitucionalidade da incidência do ISSQN. No entanto,
+os Estados mantêm suas pretensões de tributação pelo ICMS. Adicionalmente, a União dá tratamento aos
+referidos pagamentos na forma de cessão de direitos, com exigência de IRRF, com o no caso da SC
+COSIT n. 43/2021. Outro exemplo refere-se à industrialiação por encomenda, cujas análises
+COSIT n. 43/2021. Outro exemplo refere-se à industrialiação por encomenda, cujas análises
+repetidamente esbarram na divergência entre a incidência do IPI e do ISSQN, a ser definida no julgamento
+do Tema n. 816 de repercussão geral perante o Supremo Tribunal Federal.
+6 Vale ressaltar a PEC n. 175/1995, a PEC n. 293/2004, a PEC n. 31/2007 etc., dentre outras.
+20/09/24, 13:45
+Firefox
+
+12 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+
+7 BRASIL. CÂMARA DOS DEPUTADOS. Proposta de Emenda à Constituição n. 45/2019. Disponível
+em: https://www.camara.leg.br/proposicoesWeb/
+prop_mostrarintegra;jsessionid=node0c40d3p2hzzdk19qnlpoch41wq53298670.node0?
+codteor=1728369&filename=Tramitacao-PEC+45/2019. Acesso em: 14 mar. 2022.
+8 Ambas as proposta preveem a criação de um imposto seletivo, cumulativo com o IBS, incidente sobre
+produtos específicos, em especial petróleo e derivados, combustíveis, lubrificantes, cigarro, energia
+elétrica e serviços de telecomunicações (BRASIL. SENADO FEDERAL. Proposta de Emenda à
+Constituição n. 110/2019. Disponível em: https://www25.senado.leg.br/web/atividade/materias/-/
+materia/137699).
+9 Foi constituída uma Comissão Mista do Congresso Nacional, para análise conjunta da PEC n. 45 e da
+PEC n. 110, ainda, a análise do PL n. 38872020, com relatório apresentado pelo Deputado Aguinaldo
+Ribeiro. Os resultados de referido relatório foram amplamente utilizados no relatório final da PEC n. 110.
+Disponível em: file:///C:/Users/alexandre/Downloads/
+ARQUIVO_PORTAL_CMREFORMATRIBUTRIA_6334ComissaoESPComissaoCMREFORMATRIBUTRIA202
+Acesso em: 22 fev. 2022.
+10 BRASIL. SENADO FEDERAL. Relatório Legislativo de 16/03/2022. Senador Roberto Rocha.
+Disponível em: https://legis.senado.leg.br/sdleg-getter/documento?
+dm=9089001&ts=1647435715239&disposition=inline. Acesso em: 16.3.2022.
+11 O IPI seria, nos termos dessa versão mais recente da proposta, paulatinamente substituído pelo imposto
+seletivo.
+12 Com exceção daqueles relacionados ao consumo pessoal de sócios, diretores etc., tratado nas
+discussões como o “o whisky dos sócios”.
+discussões como o “o whisky dos sócios”.
+13 Com exceção do IPTU, do IPVA, do ITBI em alguns municípios, do ITCMD em alguns estados e de
+algumas taxas.
+14 Nos termos do § 4º do art. 150 do CTN, salvo nas hipóteses de ausência de pagamento e fraude ou
+dolo, em que o prazo é contado na forma do art. 171 CTN.
+15 STJ, AgRg no AREsp n. 278.445, DJe 9.5.2013, Rel. Min. Napoleão Nunes Maia; AgRg. no REsp n.
+165.387, DJe 24.8.2012, Rel. Min. Herman Benjamin; REsp n. 1.099.031, DJe 27.2.2009, Rel. Min Eliana
+Calmon; dentre inúmeros outros.
+16 Segundo Misabel Derzi, “a praticidade é um princípio real e difuso, que não encontra formulação
+escrita nem no ordenamento jurídico alemão, nem no nacional. Mas está implícito, sem dúvida, por detrás
+das normas constitucionais.” (DERZI, Misabel Abreu Machado. Legalidade material. Modo de pensar
+“tipificante” e praticidade no direito tributário. I Congresso Internacional de Direito Tirbutário do IBET.
+São Paulo: Max Limonad, 1998, p. 639.
+São Paulo: Max Limonad, 1998, p. 639.
+17 Ver COSTA, Regina Helena. Praticabilidade e justiça tributária: exequibilidade de lei tributária e
+direitos do contribuinte. São Paulo: Malheiros, 2007, p. 53-54.
+18 A retenção na fonte também é utilizada no Imposto sobre Serviço de Qualquer Natureza – ISSQN, mas
+sem direito a apuração e restituição, por se tratar de tributo cumulativo.
+19 No caso do imposto de renda das pessoas físicas, a própria Receita Federal do Brasil providencia a
+restituição mediante depósito em conta corrente indicada pelo contribuinte quando do ajuste anual na
+Declaração de Imposto de Renda.
+20 No âmbito dos tributos administrados pela Receita Federal do Brasil, a restituição é processada pelo
+20/09/24, 13:45
+Firefox
+
+13 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+sistema PER/DCOMP. As contribuições previdenciárias, por sua vez, têm seus créditos apurados pelo eSocial. Por fim, cada Município possui seus instrumentos de restituição do ISSQN. Mas como se trata de
+tributo cumulativo, não há, como regra, direito à restituição, tornando a retenção definitiva para fins de
+apuração do imposto municipal.
+21 Não consideramos a monofasia como uma forma de antecipação de tributo relevante para os fins do
+presente trabalho. Isso porque, na tributação monofásica, apesar de haver a concentração do tributo que
+seria devido na cadeia subsequente de circulação do bem/serviço, o tributo antecipado não passa pela
+verificação da correção do quantum antecipado ante a ocorrência do fato imponível, de forma a gerar
+eventual direito de restituição.
+22 Constituição da República, art. 150, § 7º: “A lei poderá atribuir a sujeito passivo de obrigação
+tributária a condição de responsável pelo pagamento de imposto ou contribuição, cujo fato gerador deva
+ocorrer posteriormente, assegurada a imediata e preferencial restituição da quantia paga, caso não se
+realize o fato gerador presumido.”
+23 Ver o teor da decisão proferida pelo STF no RE n. 593.849/MG, que determina a restituição ao
+contriuinte substituído, os valores de ICMS cobrados em substituição tributária, quando a mercadoria é
+vendida ao consumidor final por valor inferior àquele considerado na apuração original do tributo.
+24 A apuração das estimativas pode se dar por dois formatos: (i) aplicação do percentual de lucro
+presumido sobre a receita do mês ou (ii) mediante o levantamento de balancetes de suspensão/redução.
+Ainda, cumpre ressaltar que o regime de lucro real anual é optativo, sendo o regime legal de apuração do
+imposto de renda, o lucro real trimestral, em que não é demanda a antecipação do imposto. Ver em
+CARRAZZA, Roque Antonio. Imposto sobre a Renda. 3. ed. São Paulo: Malheiros, 2009.
+CARRAZZA, Roque Antonio. Imposto sobre a Renda. 3. ed. São Paulo: Malheiros, 2009.
+25 A experiência internacional também aponta a sistemática nas operações B2G, ou seja, de vendas aos
+órgãos governamentais.
+26 ROCHA, Melina. Modelos interrnacionais de split payment. Palestra. Disponível em: https://
+ccif.com.br/modelos-internacionais-de-split-payment/. Acesso em: 14 mar. 2022.
+27 BRASIL. SENADO FEDERAL. Relatório Legislativo de 16/03/2022. Senador Roberto Rocha.
+Disponível em: https://legis.senado.leg.br/sdleg-getter/documento?
+dm=9089001&ts=1647435715239&disposition=inline. Acesso em: 16 mar. 2022.
+28 EUROPEAN COMISSION. Disponível em: https://ec.europa.eu/taxation_customs/sites/taxation/
+files/2016-09_vat-gap-report_final.pdf. Acesso em: 22 jan. 2022.
+29 COCCIA, Sara. Split payment: la scissione dei pagamenti contro l’evasione dell’IVA. Disponível em:
+https://tesi.luiss.it/18603/1/107353_COCCIA_SARA.pdf. Acesso em: 11 mar. 2022.
+30 Missing Trade Intra Community Fraud.
+30 Missing Trade Intra Community Fraud.
+31 Tradução livre de “The analysis carried out illustrated the potential benefits as well as significant
+challenges related to the use of split payment as an alternative VAT collection method. Although split
+payment has high potential to reduce the VAT gap (especially MTIC fraud and non-compliance), if
+applied broadly across the EU, the cost of it through increased complexity of the VAT system, high
+administrative burden and significant impact on business’ cash flow may easily outweigh the benefits.
+Therefore, broad application of split payment is likely to be an unattractive policy tool, given significant
+rise in costs for business and authorities. However, it has characteristics that are very effective in reducing
+certain types of fraud and therefore may be suited as a targeted measure with limited scope.”
+(EUROPEAN COMISSION. Analysis of the impact of the split payment mechanism as an alternative
+(EUROPEAN COMISSION. Analysis of the impact of the split payment mechanism as an alternative
+VAT collection method. Bruxelas: Delloite, 2017)
+20/09/24, 13:45
+Firefox
+
+14 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+32 Existem estados avançados para adoção do Split Payment pelo Reino Unido. Ver em UNITED
+KINGDOM. Alternative method of VAT collection summary of responses. Disponível em: https://
+assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/754209/
+Alternative_method_of_VAT_collection_summary_of_responses.pdf. Acesso em: 14 mar. 2022.
+33 Modelo próximo ao que previsto no último substitutivo da PEC n. 110, como visto acima.
+34 TRATKIEWICZ, Tomasz. Model podzielonej płatności – remedium na oszustwa w VAT? Universitatis
+Maria Curie v. LI, 6, seção H. Polônia, Lublin, 2017. Disponível em: https://journals.umcs.pl/h/article/
+download/5329/4743#:~:text=21%5D.,konto%20nadzorowane%20przez%20organ%20podatkowy.
+Acesso em: 11 mar. 2022.
+35 O Parlamento Europeu autorizou a implantação do sistema sob supervisão, com prazo extendido até
+2023. Disponível em: https://www.europarl.europa.eu/doceo/document/P-8-2015-008981_IT.html. Acesso
+em: 11 mar. 2022.
+em: 11 mar. 2022.
+36 (i) Estado italiano e administração pública nacionais, regionais e locais; (ii) fundações públicas; (iii)
+consórcios constituídos por órgãos públicos; (iv) empresas públicas ou controladas, total ou parcialmente,
+pela administração publica; e (v) empresas com ações na bolsa (Ftse Mib) (DIPARTIMENTO DELE
+FINANZE – Italia. Disponível em: https://www1.finanze.gov.it/finanze/split_payment/public/#/
+%23testata. Acesso em: 11 mar. 2022).
+37 Disponível em: https://www.informazionefiscale.it/pubblica-amministrazione-ritardi-pagamentiimprese-europa-cgia-mestre.
+38 Na subvariação apontada por Melina Rocha (ROCHA, Melina. Modelos internacionais de split
+payment. Palestra. Disponível em: https://ccif.com.br/modelos-internacionais-de-split-payment/. Acesso
+em: 14 mar. 2022).
+39 SARNOWSKI, Jan; SELERA, Pawel. Reducing the VAT gap: lessons from Poland. Polish Economic
+Institute, 2019. Tradução livre de “Poland’s split payment mechanism entered force on 1 July 2018. When
+buying a product, a buyer only transfers the net amount to the seller’s account. The amount equal to VAT
+goes directly to the taxable person’s VAT subaccount, which the entrepreneur uses to pay amount of VAT
+due to its suppliers and settles accounts with the tax office. This has made carousel fraud much less viable.
+Within a few years, it could completely wipe out fraudulent tax refunds using fictitious intra-Community
+transactions. The Ministry of Finance estimates the new measure could save the budget PLN 80bn over
+ten years. The solution is voluntary. The entrepreneur buying the good or service can choose whether to
+pay the contractor the usual way or as a split payment, which protects him from a business partner’s
+dishonesty. Transferring it to the VAT account, the taxpayer will not be subject to joint and several
+liability for his contractor’s tax debts, the VAT sanction or the higher interest rate for delays. The split
+payment mechanism also benefits the seller: VAT refunds are processed within just 25 days (rather than
+the 60).” Disponível em: https://pie.net.pl/wp-content/uploads/2021/12/Raport-LUKA-VAT-EN.pdf.
+Acesso em: 11 mar. 2022.
+40 Zloty polonês, unidade monetária polonesa.
+41 Através de uma sucessão de negócios entre empresas reais e fictícias localizadas em países diversos
+dentro da União Europeia, criam-se créditos irreais de IVA. Como as operações são localizadas em
+estados diferentes, sujeitas a jurisdições de controle diversas, não se tem um controle efetivo sobre o
+mecanismo, com graves perdas em arrecadação do imposto. Ver melhor em SANTOS, Tiago André
+Tavares dos. Como funciona a fraude carrossel em sede de IVA – metodologia e impacto em Portugal e na
+EU. Universidade de Lisboa. Disponível em: http://hdl.handle.net/10400.5/2795. Acesso em: 11 mar.
+2022.
+42 TRATKIEWICZ, Tomasz. Model podzielonej płatności – remedium na oszustwa w VAT? Universitatis
+20/09/24, 13:45
+Firefox
+
+15 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+Maria Curie v. LI, 6, seção H. Polônia, Lublin, 2017. Disponível em: https://journals.umcs.pl/h/article/
+download/5329/4743#:~:text=21%5D.,konto%20nadzorowane%20przez%20organ%20podatkowy.
+Acesso em: 11 mar. 2022.
+43 COMISSÃO EUROPEIA. Tradução livre de “The Commission decided today to send a letter of formal
+notice to Romania for applying a split payment mechanism for VAT. Since 1 January 2018, Romania
+applies this alternative VAT collection mechanism where VAT is paid to a separate blocked account,
+causing a major administrative burden for honest companies doing business there. This arrangement is
+mandatory for certain businesses which are required to open a separate blocked VAT bank account. Their
+customers must split the payment of the invoice by paying the VAT separately to the VAT account of the
+supplier. The taxpayer may only use the amount collected on the dedicated VAT account to pay VAT to the
+Treasury and to its suppliers. The measures run against both EU VAT rules (Council Directive 2006/112/
+EC) and the freedom to provide services (Article 56 of TFEU).” (Disponível em: https://ec.europa.eu/
+commission/presscorner/detail/en/MEMO_18_6247. Acesso em: 11 mar. 2022)
+44 Ou seja, não prevê a restituição financeira.
+45 Segundo Misabel Derzi, “o reconhecimento dos créditos, relativos ao imposto que onerou as compras
+do contribuinte, compensáveis com os débitos gerados pelas saídas, passou a ser uma técnica
+contemporânea, atual. Os impostos sobre o consumo, plurifásicos e não cumulativos, são então
+considerados os tributos de mercado, ideais e neutros, por não deformarem os preços, nem provocarem
+falseamentos da concorrência.” (DERZI, Misabel. Atualizações em BALEEIRO, Aliomar. Direito
+tributário brasileiro. Rio de Janeiro: Forense, 2013, p. 610)
+46 No Brasil, a prática de postergação no pagamento de recebíveis é tão relevante que levou à criação de
+um fundo específico, o FDIC – Fundos de Investimento em Direitos Creditórios, nos termos da Instrução
+CVM n. 356, de 17 de dezembro de 2001.
+47 ZANI, Thobias et al. Comportamento da estocagem de liquidez: um estudo comparativo entre
+empresas brasileiras domésticas e multinacionais. Brazilian Journal of Development, 2021. Disponível
+em: https://www.academia.edu/73158046/
+Comportamento_da_estocagem_de_liquidez_um_estudo_comparativo_entre_empresas_brasileiras_dom%C3%A9s
+Acesso em: 11 mar. 2022.
+48 Não iremos, neste estudo, enfrentar o espinhoso tema da constitucionalidade pragmática. Não
+desconhecemos, todavia, as inúmeras posições contrárias, valendo ressaltar Ives Gandra da Silva Martins,
+Álvaro Ricardo de Souza Cruz e Humberto Ávila, citados por BOCCATO, Esdras. Modulação dos efeitos
+temporais da declaração de inconstitucionalidade. Ponderação, subsunção e dosimetria. São Paulo:
+Universaidade de São Paulo, 2013. Disponível em: https://www.teses.usp.br/teses/disponiveis/2/2134/
+tde-06092016-152356/publico/Dissertacao_mestrado_completa_EsdrasBoccato.pdf. Acesso em: 11 mar.
+tde-06092016-152356/publico/Dissertacao_mestrado_completa_EsdrasBoccato.pdf. Acesso em: 11 mar.
+2022. Ressalto neste ponto, a posição de Ives Gandra da Silva Martins, para quem “o sistema
+constitucional brasileiro não comporta, a meu ver, a experiência constitucional alemã. A norma
+inconstitucional o é desde seu nascedouro, não podendo ser a ‘inconstitucionalidade real’ transformada
+em ‘constitucionalidade pragmática’ por decisão da Suprema Corte, convalidando os atos contra a lei
+praticados anteriormente.” (MARTINS, Ives Gandra da Silva; MENDES, Gilmar Ferreira. Controle
+concentrado de constitucionalidade: comentários à Lei nº 9.868, de 10-11-1999. São Paulo: Saraiva, 2011,
+p. 205-206). No entanto, o Supremo Tribunal Federal tem adotado cada vez mais a lógica da
+constitucionalidade pragmática em matéria tributária, seja para modulação dos efeitos de suas decisões,
+seja para verificação da inconstitucionalidade a partir dos efeitos das normas nos casos individuais e
+concretos. Como exemplo, vale citar os julgamentos referentes à substituição tirbutária progressiva.
+Inicialmente, o Supremo Tribunal Federal se posicionou pela definitividade do valor presumido de
+incidência do ICMS-ST, nos termos da ADI n. 1.851. No entanto, mais recentemente, fixou o Tema n.
+201, para entender pela necessidade de se restituir os valores antecipados a maior, caso o valor de
+presunção da MVA ou PMPF seja superior ao efetivamente praticado.
+20/09/24, 13:45
+Firefox
+
+16 of 16
+
+https://revista.ibdt.org.br/index.php/RDTA/article/download/2139/19...
+
+49 MELO, José Eduardo Soares de. ICMS. Teoria e prática. 12. ed. São Paulo: Dialética, 2012, p. 294.
+50 § 7º do art. 150 da Constituição da República, instituído pela EC n. 3, de 1993.
+51 Tema n. 201 de repercussão geral: “É devida a restituição da diferença do Imposto sobre Circulação de
+Mercadorias e Serviços – ICMS pago a mais no regime de substituição tributária para frente se a base de
+cálculo efetiva da operação for inferior à presumida.” (J. 19.10.2016)
+
+20/09/24, 13:45
+```
