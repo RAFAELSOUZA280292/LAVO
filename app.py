@@ -1,8 +1,5 @@
 # app.py
-# LAVO - Especialista em Reforma Tributária (RAG com inteligência completa + base como reforço)
-# - Recuperação híbrida (FAISS + BM25) com reforço lexical, prioridade a nomes e force-find
-# - Modelo SEMPRE responde: usa a base se houver; sem base, responde geral, SEM inventar leis/datas
-# - Sem expander, sem exemplo automático. Sanitização. Regra determinística para "quantos dias".
+# LAVO - RAG básico estilo NotebookLM (FAISS + BM25 + síntese + citações em rodapé)
 
 import os
 import re
@@ -22,9 +19,9 @@ try:
 except Exception:
     raise RuntimeError("Instale: pip install openai>=1.40.0")
 
-# ----------------------------------------------------------------------
-# 🔧 HOTFIX para deserializar faiss_meta.pkl legado (classe Meta ausente)
-# ----------------------------------------------------------------------
+# --------------------------------------------------------
+# HOTFIX para pkl legado (classe Meta ausente no unpickle)
+# --------------------------------------------------------
 try:
     from dataclasses import dataclass
     @dataclass
@@ -61,9 +58,9 @@ if not OPENAI_API_KEY:
     st.error("OPENAI_API_KEY não encontrado nos Secrets.")
     st.stop()
 
-CHAT_MODEL = _get_secret("CHAT_MODEL", "gpt-4o-mini")
+CHAT_MODEL  = _get_secret("CHAT_MODEL", "gpt-4o-mini")
 TEMPERATURE = _to_float(_get_secret("TEMPERATURE", "0.2"), 0.2)
-MAX_TOKENS = _to_int(_get_secret("MAX_TOKENS", "1200"), 1200)
+MAX_TOKENS  = _to_int(_get_secret("MAX_TOKENS", "1100"), 1100)
 
 USERS: Dict[str, str] = {}
 u1 = _get_secret("APP_USER_RAF", "").strip()
@@ -78,25 +75,24 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 # -----------------------------
 # Arquivos do índice
 # -----------------------------
-INDEX_DIR = "index"
+INDEX_DIR  = "index"
 FAISS_FILE = os.path.join(INDEX_DIR, "faiss.index")
-META_PKL   = os.path.join(INDEX_DIR, "faiss_meta.pkl")     # legado
-META_JSONL = os.path.join(INDEX_DIR, "metas.jsonl")        # novo estável
+META_PKL   = os.path.join(INDEX_DIR, "faiss_meta.pkl")   # legado
+META_JSONL = os.path.join(INDEX_DIR, "metas.jsonl")      # novo estável
 MANIFEST   = os.path.join(INDEX_DIR, "manifest.json")
 
 # -----------------------------
-# Prompt (inteligência completa + base como reforço)
+# Prompt (estilo NotebookLM)
 # -----------------------------
 SYSTEM_PROMPT = (
     "Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.\n"
-    "POLÍTICA DE RESPOSTA:\n"
-    "1) Use o <contexto> (se houver) como base preferencial para fatos específicos (leis, artigos, datas, nomes).\n"
-    "2) SEMPRE responda em linguagem clara e direta. Se o contexto for insuficiente, use conhecimento geral, mas:\n"
-    "   • NÃO invente números de lei, artigos, datas, percentuais ou nomes que não estejam no <contexto>.\n"
-    "   • Quando faltar base jurídica específica, responda de forma geral sem citar números/atos normativos.\n"
-    "3) Só traga exemplo numérico se o usuário pedir. Quando houver, use notação brasileira (R$ 1.234,56 e 12%).\n"
-    "4) Nunca mencione arquivos internos (.txt, .pdf) nem o índice. Não copie blocos longos; sintetize com suas palavras.\n"
-    "5) Não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e sem espaços entre dígitos.\n"
+    "INSTRUÇÕES DE RESPOSTA:\n"
+    "• Use o <contexto> como base para fatos (leis, artigos, datas, nomes, números). Se não houver contexto suficiente, responda de forma geral.\n"
+    "• NÃO invente números de lei, artigos ou datas; só cite se aparecerem no <contexto>.\n"
+    "• Seja direto, em 1–3 parágrafos. Sem listas desnecessárias.\n"
+    "• Só traga exemplo numérico se o usuário pedir explicitamente. Quando houver, use notação brasileira (R$ 1.234,56 e 12%).\n"
+    "• Não mencione arquivos internos nem o índice. Não copie blocos longos; sintetize em tom humano.\n"
+    "• Não quebre valores monetários em linhas; mantenha 'R$' colado (ex.: R$ 1.000,00).\n"
 )
 
 # -----------------------------
@@ -164,20 +160,20 @@ def _wants_example(question: str) -> bool:
 def _clean_output(s: str) -> str:
     if not s: return s
     s = s.replace("\r\n", "\n").replace("\u200b", " ")
-    s = re.sub(r'(?<!\n)\n(?!\n)', ' ', s)           # quebra simples -> espaço
-    s = re.sub(r'(?<=\d)\s+(?=\d)', '', s)           # 1 000 -> 1000
-    s = re.sub(r'R\s*\$', 'R$', s)                   # R $ -> R$
-    s = re.sub(r'R\$(\s+)(?=\d)', 'R$', s)           # R$  1 -> R$1
-    s = re.sub(r'\s+%', '%', s)                      # 12 % -> 12%
-    s = re.sub(r'[ \t]{2,}', ' ', s)                 # múltiplos espaços
-    s = re.sub(r'\n{3,}', '\n\n', s)                 # quebras em excesso
+    s = re.sub(r'(?<!\n)\n(?!\n)', ' ', s)
+    s = re.sub(r'(?<=\d)\s+(?=\d)', '', s)
+    s = re.sub(r'R\s*\$', 'R$', s)
+    s = re.sub(r'R\$(\s+)(?=\d)', 'R$', s)
+    s = re.sub(r'\s+%', '%', s)
+    s = re.sub(r'[ \t]{2,}', ' ', s)
+    s = re.sub(r'\n{3,}', '\n\n', s)
     return s.strip()
 
 def _strip_example_if_unwanted(text: str, question: str) -> str:
     return text if _wants_example(question) else _EXAMPLE_TAG_RE.sub('', text).strip()
 
 # -----------------------------
-# Datas & contagens (determinístico para “quantos dias”)
+# Datas & contagens ("quantos dias")
 # -----------------------------
 BR_DATE_RE     = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{4})')
 CTX_TODAY_RE   = re.compile(r'(?i)\bhoje\s+é\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
@@ -282,7 +278,6 @@ SYNONYMS = {
     "cbs": ["cbs", "contribuição sobre bens e serviços"],
 }
 
-# === Detecção de nomes próprios na pergunta (sequências de 2+ palavras com inicial maiúscula)
 NAME_SEQ_RE = re.compile(r'((?:[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-zà-ú]+(?:\s+|$)){2,})')
 
 def _name_queries(question: str) -> List[str]:
@@ -301,24 +296,16 @@ def _name_queries(question: str) -> List[str]:
 def _keywords_from_question(q: str) -> List[str]:
     ql = (q or "").lower()
     keys = set()
-
-    # sinônimos
     for k, syns in SYNONYMS.items():
-        if k in ql:
-            keys.update(syns)
-
-    # nomes próprios detectados
+        if k in ql: keys.update(syns)
     for name in _name_queries(q):
         keys.add(name.lower())
-
-    # n-grams simples da pergunta (reforço geral)
     toks = [t for t in re.split(r'[^a-zà-ú0-9]+', ql) if t]
     for n in range(4, 0, -1):
         for i in range(len(toks)-n+1):
             phrase = " ".join(toks[i:i+n]).strip()
             if len(phrase) >= 4:
                 keys.add(phrase)
-
     return list(keys)[:32]
 
 def _hybrid_rank(question: str, index, metas: List[Dict[str, Any]],
@@ -334,7 +321,6 @@ def _hybrid_rank(question: str, index, metas: List[Dict[str, Any]],
     bm25_scores = bm25.get_scores(question.lower().split())
     bm25_top = np.argsort(bm25_scores)[::-1][:k_bm25].tolist()
 
-    # reforço lexical: se o item contém palavras-chave, ganha bônus
     keys = _keywords_from_question(question)
     bonus = {}
     if keys:
@@ -363,7 +349,7 @@ def _hybrid_rank(question: str, index, metas: List[Dict[str, Any]],
     return [i for i, _ in reranked[:top_k]]
 
 # -----------------------------
-# Construção de contexto (parágrafos relevantes + force-find para nomes)
+# Contexto + citações
 # -----------------------------
 PARA_SPLIT_RE = re.compile(r'\n\s*\n')
 
@@ -373,75 +359,77 @@ def _extract_paragraph_hits(text: str, keywords: List[str], question: str = "") 
     paras = [p.strip() for p in PARA_SPLIT_RE.split(text) if p.strip()]
     if not paras:
         return []
-
-    # 1) Prioriza parágrafos com NOME(S) detectado(s)
-    name_qs = [n.strip() for n in _name_queries(question) if n.strip()]
-    if name_qs:
-        name_hits = []
-        low_names = [n.lower() for n in name_qs]
-        for p in paras:
-            pl = p.lower()
-            if any(n in pl for n in low_names):
-                name_hits.append(p)
+    names = [n.strip() for n in _name_queries(question) if n.strip()]
+    if names:
+        L = [n.lower() for n in names]
+        name_hits = [p for p in paras if any(n in p.lower() for n in L)]
         if name_hits:
-            return name_hits[:2]  # até 2 parágrafos com o nome
-
-    # 2) Caso não haja nome, ranqueia por keywords
+            return name_hits[:2]
     if keywords:
         scored = []
         for p in paras:
             pl = p.lower()
             score = sum(1 for kw in keywords if kw in pl)
-            if score:
-                scored.append((score, p))
+            if score: scored.append((score, p))
         if scored:
             scored.sort(key=lambda x: x[0], reverse=True)
             return [p for _, p in scored[:3]]
-
-    # 3) Fallback: primeiros parágrafos curtos
     return paras[:2]
 
-def _force_find_name_context(metas: List[Dict[str, Any]], question: str, max_chars=2200) -> str:
-    """Se a pergunta tiver nome próprio e o contexto vier vazio, faz uma varredura direta por esse nome."""
-    names = [n.lower() for n in _name_queries(question)]
-    if not names: 
-        return ""
-    parts, total = [], 0
-    for m in metas:
-        raw = str(m.get("text") or m.get("text_preview") or "")
-        title = str(m.get("title") or "")
-        low = (raw + "\n" + title).lower()
-        if any(n in low for n in names):
-            # recorta parágrafos onde o nome aparece
-            hits = _extract_paragraph_hits(raw, [], question)
-            block = (f"{title}\n" if title else "") + "\n\n".join(hits)
-            if block.strip():
-                parts.append(block); total += len(block)
-                if total >= max_chars:
-                    break
-    return ("\n\n---\n\n").join(parts).strip()[:max_chars]
+def _nice_title(m: Dict[str, Any]) -> str:
+    t = (m.get("title") or "").strip()
+    if t: return t[:120]
+    src = (m.get("source") or m.get("path") or "").replace("\\", "/")
+    return os.path.basename(src)[:120] if src else "Documento"
 
-def _build_context(metas: List[Dict[str, Any]], idxs: List[int], question: str,
-                   max_chars=4800) -> str:
+def _build_context_and_citations(metas: List[Dict[str, Any]], idxs: List[int], question: str,
+                                 max_chars=4400) -> Tuple[str, List[Tuple[int, str]]]:
     keys = _keywords_from_question(question)
     parts, total = [], 0
+    cites: List[Tuple[int, str]] = []  # [(id, title)]
+    cid = 1
     for i in idxs:
         if i < 0 or i >= len(metas): continue
         m = metas[i] or {}
         raw = str(m.get("text") or m.get("text_preview") or "").replace("\u200b", " ")
-        title = str(m.get("title", ""))[:160]
         hits = _extract_paragraph_hits(raw, keys, question)
         if not hits: continue
-        block = (f"{title}\n" if title else "") + "\n\n".join(hits)
-        parts.append(block); total += len(block)
+        title = _nice_title(m)
+        block = f"[{cid}] {title}\n" + "\n\n".join(hits)
+        parts.append(block); cites.append((cid, title))
+        total += len(block); cid += 1
         if total >= max_chars: break
     if not parts and idxs:
         i = idxs[0]; m = metas[i] or {}
-        parts = [str(m.get("text") or m.get("text_preview") or "")]
-    return ("\n\n---\n\n").join(parts).strip()[:max_chars]
+        title = _nice_title(m)
+        raw = str(m.get("text") or m.get("text_preview") or "")
+        parts = [f"[1] {title}\n{raw[:1800]}"]
+        cites = [(1, title)]
+    return ("\n\n---\n\n").join(parts).strip(), cites
+
+def _force_find_name_context(metas: List[Dict[str, Any]], question: str, max_chars=2000) -> Tuple[str, List[Tuple[int,str]]]:
+    names = [n.lower() for n in _name_queries(question)]
+    if not names: 
+        return "", []
+    parts, total = [], 0
+    cites: List[Tuple[int,str]] = []
+    cid = 1
+    for m in metas:
+        raw = str(m.get("text") or m.get("text_preview") or "")
+        title = _nice_title(m)
+        low = (raw + "\n" + title).lower()
+        if any(n in low for n in names):
+            hits = _extract_paragraph_hits(raw, [], question)
+            block = f"[{cid}] {title}\n" + "\n\n".join(hits)
+            if block.strip():
+                parts.append(block); cites.append((cid, title))
+                total += len(block); cid += 1
+                if total >= max_chars:
+                    break
+    return ("\n\n---\n\n").join(parts).strip(), cites
 
 # -----------------------------
-# Resposta (modelo SEMPRE responde) + atalho “quantos dias”
+# Resposta + "quantos dias"
 # -----------------------------
 DAYS_INTENT_RE = re.compile(
     r'(?i)(faltam\s+quantos\s+dias|quantos\s+dias\s+faltam|quantos\s+dias|dias\s+faltam|quanto\s+tempo).*?(reforma|ibs|cbs|in[ií]cio)',
@@ -454,24 +442,24 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=10) -> st
         context_text = ""
         if index is not None and metas:
             idxs = _hybrid_rank(question, index, metas, top_k=top_k)
-            context_text = _build_context(metas, idxs, question, max_chars=3000)
+            context_text, _ = _build_context_and_citations(metas, idxs, question, max_chars=3000)
         para = _best_candidate_snippet(context_text) if context_text else ""
         fixed = _recompute_days_paragraph(para, question)
         if fixed: return _clean_output(fixed)
 
-    # 1) Monta contexto a partir do índice
-    context_text = ""
+    # 1) Contexto via índice
+    context_text, citations = "", []
     if index is not None and metas:
         idxs = _hybrid_rank(question, index, metas, top_k=top_k)
-        context_text = _build_context(metas, idxs, question, max_chars=4800)
+        context_text, citations = _build_context_and_citations(metas, idxs, question, max_chars=4400)
 
-    # 2) Se não veio nada e a pergunta tem NOME(S), tenta force-find
+    # 2) Se vazio e houver nome, force-find
     if not context_text and metas:
-        forced = _force_find_name_context(metas, question, max_chars=2200)
+        forced, cites2 = _force_find_name_context(metas, question, max_chars=2000)
         if forced:
-            context_text = forced
+            context_text, citations = forced, cites2
 
-    # 3) Sempre responder: com ou sem contexto
+    # 3) Sempre responder (com ou sem contexto)
     user_content = (
         f"Usuário: {user_name}\n"
         + (f"<contexto>\n{context_text}\n</contexto>\n" if context_text else "")
@@ -492,7 +480,14 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=10) -> st
     )
     text = resp.choices[0].message.content.strip()
     text = _strip_example_if_unwanted(text, question)
-    return _clean_output(text)
+    text = _clean_output(text)
+
+    # 4) Rodapé de fontes (sem expander; sem caminhos internos)
+    if citations:
+        fontes = "  \n".join([f"[{cid}] {title}" for cid, title in citations[:5]])
+        text = f"{text}\n\n---\n**Fontes**:  \n{fontes}"
+
+    return text
 
 # -----------------------------
 # App
