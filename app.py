@@ -1,5 +1,5 @@
 # app.py
-import os, json, pickle
+import os, json, pickle, re
 from typing import List, Tuple
 import numpy as np
 import faiss
@@ -20,8 +20,8 @@ st.title("🧑‍🏫 LAVO - Especialista em Reforma Tributária")
 
 # ===================== CONFIG =====================
 EMBED_MODEL  = "text-embedding-3-small"
-CHAT_MODEL   = os.getenv("CHAT_MODEL", "gpt-4o")       # mais preciso
-RERANK_MODEL = os.getenv("RERANK_MODEL", "gpt-4o")     # re-ranking com LLM
+CHAT_MODEL   = os.getenv("CHAT_MODEL", "gpt-4o")       # modelo principal
+RERANK_MODEL = os.getenv("RERANK_MODEL", "gpt-4o")     # re-ranking
 
 OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", "")).strip()
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -60,9 +60,35 @@ FORMATAÇÃO
   2) Detalhamento prático (bullets com regras, prazos, cálculos e exemplos).
   3) Referências normativas (ex.: EC 132/2023; PLP 68/2024).
 - Valores: use vírgula (R$ 1.000,00) e mostre a conta: 18% de R$ 1.000,00 → R$ 180,00.
+- **NUNCA quebre números, moedas (ex.: R$ 1.000,00), percentuais (ex.: 18%) ou siglas (ex.: IBS/CBS) com quebras de linha ou espaços no meio. Mantenha-os em linha única e contínua.**
 """
 
-# ===================== HELPERS =====================
+# ===================== SANITIZADOR DE FORMATAÇÃO =====================
+def tidy_text(s: str) -> str:
+    if not s:
+        return s
+
+    # Normalizar "R $", "R  $", "R\n$" -> "R$"
+    s = re.sub(r'R\s*\$\s*', 'R$', s)
+
+    # Remover quebras/espaços entre dígitos, pontos, vírgulas e % (ex.: "1  . 000 , 00" -> "1.000,00")
+    s = re.sub(r'(?<=\d)[\s\u00A0]+(?=[\d\.,%])', '', s)
+    s = re.sub(r'(?<=[\d\.,])[\s\u00A0]+(?=\d)', '', s)
+
+    # Garantir espaço após "R$" quando seguido de número (ex.: "R$1000" -> "R$ 1000")
+    s = re.sub(r'R\$(?=\d)', r'R$ ', s)
+
+    # Colar siglas quebradas por espaços/linhas: I B S -> IBS, C B S -> CBS, etc.
+    def join_acronyms(m):
+        return m.group(0).replace(' ', '').replace('\n', '')
+    s = re.sub(r'\b(?:[A-Z]\s+){1,}[A-Z]\b', join_acronyms, s)
+
+    # Remover espaços extras ao redor de "/" em siglas compostas (IBS / CBS -> IBS/CBS)
+    s = re.sub(r'\s*/\s*', '/', s)
+
+    return s
+
+# ===================== HELPERS DE BUSCA =====================
 def load_faiss_index(index_path=INDEX_PATH, meta_path=META_PATH):
     if not (os.path.exists(index_path) and os.path.exists(meta_path)):
         return None, []
@@ -77,7 +103,6 @@ def embed_query(q: str) -> np.ndarray:
     faiss.normalize_L2(v.reshape(1, -1))
     return v
 
-# Busca densa (FAISS) + reorder lexical simples
 def retrieve_candidates(index, metas, query: str, top_k: int = 30):
     if index is None: return []
     q = embed_query(query).reshape(1, -1)
@@ -93,64 +118,42 @@ def retrieve_candidates(index, metas, query: str, top_k: int = 30):
         if idx < 0 or idx >= len(metas): continue
         m = metas[idx]
         hits.append((pos, float(score), m.get("text_preview", "")))
-    # reorder por palavras-chave locais
     hits.sort(key=lambda h: kw_score(h[2]), reverse=True)
-    return hits[:10]  # 10 candidatos vão para o reranker LLM
+    return hits[:10]
 
 def llm_rerank(question: str, candidates: List[Tuple[int, float, str]]):
-    """
-    Re-ranqueia com LLM e devolve os 5 melhores (id na posição original 'rank' e score 0..5).
-    """
     if not candidates:
         return []
-
-    # Monta um pacote compacto de candidatos
-    # Cada item: {"id": rank, "text": "trecho..."}
     bundle = [{"id": rid, "text": txt[:1600]} for rid, _, txt in candidates]
-
     prompt = (
         "Você é um reranker de trechos. Dada a PERGUNTA e uma lista numerada de CANDIDATOS, "
         "atribua uma nota de relevância de 0 a 5 (5 = responde diretamente). "
         "Retorne um JSON com a chave 'ranking' contendo uma lista ordenada por "
-        "nota decrescente, com objetos {\"id\": <id_do_candidato>, \"score\": <0..5>, "
-        "\"answer_hint\": \"uma frase CURTA com a informação central, se houver\"}.\n\n"
-        "Regras:\n"
+        "nota decrescente, com objetos {\"id\": <id>, \"score\": <0..5>, "
+        "\"answer_hint\": \"frase CURTA com a informação central, se houver\"}.\n"
         "- Use somente o texto dos candidatos.\n"
-        "- Seja estrito: se não responder, score baixo.\n"
-        "- Se a pergunta começar com 'quem', privilegie nomes próprios claros.\n"
+        "- Se a pergunta começar com 'quem', privilegie nomes próprios claros."
     )
-
-    content = {
-        "pergunta": question,
-        "candidatos": bundle
-    }
-
-    messages = [
-        {"role": "system", "content": "Você é preciso, conciso e sempre retorna JSON válido."},
-        {"role": "user", "content": prompt + "\n\n" + json.dumps(content, ensure_ascii=False)}
-    ]
+    content = {"pergunta": question, "candidatos": bundle}
     resp = client.chat.completions.create(
         model=RERANK_MODEL,
-        messages=messages,
+        messages=[
+            {"role": "system", "content": "Você é preciso, conciso e sempre retorna JSON válido."},
+            {"role": "user", "content": prompt + "\n\n" + json.dumps(content, ensure_ascii=False)},
+        ],
         temperature=0.0,
         max_tokens=800,
         response_format={"type": "json_object"},
     )
-
     try:
         data = json.loads(resp.choices[0].message.content)
         ranking = data.get("ranking", [])
-        # filtra top 5 com score >= 3
         ranking.sort(key=lambda x: float(x.get("score", 0)), reverse=True)
         return ranking[:5]
     except Exception:
-        # fallback simples: devolve os 5 primeiros candidatos originais
         return [{"id": rid, "score": 0} for rid, _, _ in candidates[:5]]
 
 def build_context_from_ranking(candidates, ranking):
-    """
-    Junta os top-3 reranqueados em um único contexto.
-    """
     id_to_text = {rid: txt for rid, _, txt in candidates}
     picked = []
     for item in ranking[:3]:
@@ -164,34 +167,28 @@ def answer_with_context(question: str, index, metas, nome: str) -> str:
     ranking = llm_rerank(question, candidates)
     contexto = build_context_from_ranking(candidates, ranking)
 
-    # modo específico para "Quem ...?"
     quem_mode = question.strip().lower().startswith("quem ")
-
     instr_quem = (
         "Se a pergunta for 'Quem ...?', responda de forma direta com o NOME encontrado no contexto, "
         "em uma linha, e finalize. Se não houver nome no contexto, diga: "
         "'Ainda estou estudando, mas logo aprendo e voltamos a falar.'"
     )
-
     user_instruction = (
         f"Inicie a resposta cumprimentando a pessoa pelo nome exatamente assim: 'Olá, {nome}!'. "
         "Em seguida responda conforme o estilo e regras do sistema. "
         f"{instr_quem if quem_mode else ''} "
         "Use apenas o conteúdo abaixo como base e não invente normas que não estejam nele."
     )
-
-    # Se não veio contexto útil, responda o fallback honesto
     if not contexto.strip():
         return f"Olá, {nome}! Ainda estou estudando, mas logo aprendo e voltamos a falar."
 
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user",
-         "content": f"{user_instruction}\n\n<contexto>\n{contexto}\n</contexto>\n\nPergunta: {question}"},
-    ]
     resp = client.chat.completions.create(
         model=CHAT_MODEL,
-        messages=messages,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user",
+             "content": f"{user_instruction}\n\n<contexto>\n{contexto}\n</contexto>\n\nPergunta: {question}"},
+        ],
         temperature=0.0,
         max_tokens=700,
     )
@@ -270,6 +267,7 @@ if q:
     else:
         with st.chat_message("assistant"):
             with st.spinner("Consultando…"):
-                ans = answer_with_context(q, index, metas, nome)
-                st.markdown(ans)
-                st.session_state.history.append(("assistant", ans))
+                raw = answer_with_context(q, index, metas, nome)
+                fixed = tidy_text(raw)  # <<<<<< CORREÇÃO DE FORMATAÇÃO AQUI
+                st.markdown(fixed)
+                st.session_state.history.append(("assistant", fixed))
