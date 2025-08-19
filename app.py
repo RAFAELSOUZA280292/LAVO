@@ -1,217 +1,231 @@
-# app.py
 import os
 import re
 import json
 import pickle
+from dataclasses import dataclass
+from typing import List
 import numpy as np
 import faiss
 import streamlit as st
+
+# ------- OpenAI -------
 from openai import OpenAI
 
-# ------------------------------------------------------------
-# Configuração básica
-# ------------------------------------------------------------
-st.set_page_config(page_title="LAVO - Especialista em Reforma Tributária", page_icon="🧑‍🏫", layout="wide")
-
-OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", ""))
-if not OPENAI_API_KEY:
-    st.error("Faltou definir OPENAI_API_KEY nos Secrets do Streamlit.")
-    st.stop()
-
-client = OpenAI(api_key=OPENAI_API_KEY)
-
-# Usuários (nome de login -> senha)
-USERS = {
-    "Rafael Souza": st.secrets.get("APP_PASS_RAFASOUZA"),
-    "Alex Montu": st.secrets.get("APP_PASS_ALEXMONTU"),
-}
-
+# ========= CONFIG =========
 INDEX_DIR = "index"
 FAISS_PATH = os.path.join(INDEX_DIR, "faiss.index")
 META_PATH = os.path.join(INDEX_DIR, "faiss_meta.pkl")
+MANIFEST_PATH = os.path.join(INDEX_DIR, "manifest.json")
+EMB_MODEL = "text-embedding-3-small"
 
-SYSTEM_PROMPT = (
-    "Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group. "
-    "Regras de estilo IMPORTANTES:\n"
-    "1) Use sempre Markdown simples (títulos, listas, negritos). **Nunca** use LaTeX, "
-    "símbolos matemáticos tipo \\( \\) ou expressões formatadas.\n"
-    "2) Seja objetiva, clara e traga exemplos contábeis e fiscais práticos com números formatados como R$ 1.234,56 e 12%.\n"
-    "3) Cite somente leis, PECs, pareceres e nomes de professores/relatores. **Nunca** mencione arquivos, PDFs, anexos ou materiais de aula.\n"
-    "4) Se não souber, diga: “Ainda estou estudando, mas logo aprendo e voltamos a falar.”\n"
-    "5) Responda sempre em português do Brasil. Não use jargões desnecessários.\n"
-    "6) Ao falar de ‘Split Payment’, ‘IBS’, ‘CBS’ etc., explique com listas e passos práticos.\n"
-)
+SYSTEM_PROMPT = """
+Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.
+Regras:
+- Sempre cumprimente usando o NOME do usuário se disponível.
+- Responda SOMENTE com base no <CONTEXTO> fornecido. Não use conhecimento externo.
+- Cite leis/PECs/pareceres/pessoas apenas se aparecerem no CONTEXTO.
+- Traga exemplos contábeis e fiscais práticos quando fizer sentido.
+- Não mencione “PDF”, “arquivo”, “material” nem “chunk”.
+- Se o CONTEXTO não trouxer a informação pedida, diga: “Ainda estou estudando, mas logo aprendo e voltamos a falar.”
 
-# ------------------------------------------------------------
-# Helpers
-# ------------------------------------------------------------
-def load_index():
-    if not (os.path.exists(FAISS_PATH) and os.path.exists(META_PATH)):
-        return None, None
-    index = faiss.read_index(FAISS_PATH)
-    with open(META_PATH, "rb") as f:
-        metas = pickle.load(f)
-    return index, metas
+Formato:
+1) Saudação curta usando o nome
+2) Resposta objetiva em 3–8 linhas
+3) (se útil) bullets com passos ou números
+4) (se houver no contexto) Referências normativas citando número/ano/artigo
+"""
 
-def embed_query(text: str) -> np.ndarray:
-    resp = client.embeddings.create(model="text-embedding-3-small", input=[text])
-    vec = np.array(resp.data[0].embedding, dtype="float32")
-    faiss.normalize_L2(vec.reshape(1, -1))
-    return vec
+# ========= UTILS =========
+def escape_currency(text: str) -> str:
+    """Evita que Markdown interprete $ como LaTeX."""
+    return text.replace("R$", "R\\$")
 
-def retrieve(index, metas, query: str, k: int = 6):
-    q = embed_query(query).reshape(1, -1)
-    D, I = index.search(q, k)
-    hits = []
-    for idx, score in zip(I[0], D[0]):
-        if 0 <= idx < len(metas):
-            m = metas[idx]
-            hits.append({
-                "score": float(score),
-                "text": m.get("text_preview", m.get("text", ""))[:1200],
-                "source": m.get("source", ""),
-                "chunk": m.get("chunk_id", idx),
-            })
-    return hits
+def fmt_moeda(valor: float) -> str:
+    s = f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"R\\$ {s}"
 
-def build_context(hits):
-    parts = []
-    for i, h in enumerate(hits, start=1):
-        parts.append(f"[{i}] {h['text']}")
-    return "\n\n".join(parts)
+# ========= LOGIN =========
+def get_users_from_secrets():
+    users = {}
+    # defina seus usuários no Streamlit Secrets
+    # [secrets] -> APP_USER_RAF="Rafael Souza", APP_PASS_RAF="..."
+    for k in st.secrets:
+        if k.startswith("APP_USER_"):
+            suf = k.split("APP_USER_")[1]
+            user_name = st.secrets[k]
+            pass_key = f"APP_PASS_{suf}"
+            if pass_key in st.secrets:
+                users[user_name] = st.secrets[pass_key]
+    return users
 
-_num_fix_regexes = [
-    # Junta quebras dentro de números
-    (re.compile(r"R\$\s*\n\s*"), "R$ "),
-    (re.compile(r"(\d)\s*\n\s*(\d)"), r"\1\2"),
-    # Remove espaços errados em vírgula de moeda/percentual
-    (re.compile(r"(\d)\s*,\s*(\d{2})"), r"\1,\2"),
-    (re.compile(r"(\d)\s*%\b"), r"\1%"),
-    # Normaliza setas/bullets que quebram
-    (re.compile(r"\s*→\s*"), " → "),
-]
-
-def sanitize_numbers(text: str) -> str:
-    out = text
-    for rgx, repl in _num_fix_regexes:
-        out = rgx.sub(repl, out)
-    # Evita duplicações tipo "R 100,00" -> "R$ 100,00"
-    out = re.sub(r"\bR\s+(\d)", r"R$ \1", out)
-    return out
-
-def answer(question: str, user_name: str, index, metas):
-    # Recupera contexto
-    hits = retrieve(index, metas, question, k=6) if index is not None else []
-    contexto = build_context(hits) if hits else ""
-
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {
-            "role": "user",
-            "content": (
-                f"Usuário: {user_name}\n\n"
-                f"<contexto>\n{contexto}\n</contexto>\n\n"
-                "Regras de formatação da resposta:\n"
-                "- Cumprimente usando o nome do usuário.\n"
-                "- Use subtítulos (###), listas com bullets e destaques em **negrito**.\n"
-                "- Formate valores como R$ 1.000,00 e percentuais como 12%.\n"
-                "- Não use LaTeX, nem símbolos matemáticos estranhos.\n\n"
-                f"Pergunta: {question}"
-            ),
-        },
-    ]
-    resp = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=messages,
-        temperature=0.2,
-        max_tokens=900,
-    )
-    text = resp.choices[0].message.content
-    return sanitize_numbers(text)
-
-# ------------------------------------------------------------
-# UI: Login
-# ------------------------------------------------------------
-if "auth" not in st.session_state:
-    st.session_state.auth = False
-if "user_name" not in st.session_state:
-    st.session_state.user_name = ""
-
-if not st.session_state.auth:
+def login_screen() -> str:
     st.title("🔐 Login")
-    user = st.selectbox("Usuário", list(USERS.keys()))
-    pwd = st.text_input("Senha", type="password")
-    if st.button("Entrar"):
-        if USERS.get(user) and USERS[user] == pwd:
+    st.caption("Acesso restrito · LAVO")
+    user = st.text_input("Usuário (nome completo)", key="login_user")
+    pwd = st.text_input("Senha", type="password", key="login_pwd")
+    ok = st.button("Entrar")
+    if ok:
+        users = get_users_from_secrets()
+        if user in users and pwd == users[user]:
             st.session_state.auth = True
-            st.session_state.user_name = user
-            st.success(f"Bem-vindo, {user}!")
+            st.session_state.nome_usuario = user
+            st.success("Autenticado!")
             st.rerun()
         else:
             st.error("Usuário ou senha inválidos.")
     st.stop()
 
-# ------------------------------------------------------------
-# UI: App principal
-# ------------------------------------------------------------
-st.markdown(
-    f"# 🧑‍🏫 LAVO - Especialista em Reforma Tributária\n"
-    f"**Base carregada** • índice FAISS + textos • Usuário: **{st.session_state.user_name}**"
-)
+# ========= CARREGAR ÍNDICE =========
+@dataclass
+class Meta:
+    source: str
+    chunk_id: int
+    text_preview: str
 
-index, metas = load_index()
-if index is None:
-    st.warning(
-        "⚠️ Nenhum índice encontrado. Gere `index/faiss.index` e `index/faiss_meta.pkl` "
-        "(via GitHub Actions) a partir dos seus `.txt`. Depois atualize a página."
+def load_index():
+    if not (os.path.exists(FAISS_PATH) and os.path.exists(META_PATH)):
+        st.warning(
+            "⚠️ Nenhum índice encontrado. Gere `index/faiss.index` e `index/faiss_meta.pkl` via GitHub Actions a partir de `txts/`."
+        )
+        st.stop()
+
+    index = faiss.read_index(FAISS_PATH)
+    with open(META_PATH, "rb") as f:
+        metas: List[Meta] = pickle.load(f)
+
+    manifest = {}
+    if os.path.exists(MANIFEST_PATH):
+        with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
+            manifest = json.load(f)
+
+    return index, metas, manifest
+
+# ========= EMBEDDINGS =========
+def openai_client() -> OpenAI:
+    # pega da Cloud (Secrets) ou env
+    api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY"))
+    if not api_key:
+        st.error("OPENAI_API_KEY não configurada em Secrets/variáveis de ambiente.")
+        st.stop()
+    return OpenAI(api_key=api_key)
+
+def embed_query(client: OpenAI, text: str) -> np.ndarray:
+    resp = client.embeddings.create(model=EMB_MODEL, input=[text])
+    vec = np.array(resp.data[0].embedding, dtype="float32")
+    faiss.normalize_L2(vec.reshape(1, -1))
+    return vec
+
+# ========= BUSCA HÍBRIDA =========
+try:
+    from rank_bm25 import BM25Okapi
+    BM25_AVAILABLE = True
+except Exception:
+    BM25_AVAILABLE = False
+
+def prepare_bm25(metas: List[Meta]):
+    if not BM25_AVAILABLE:
+        return None, None
+    corpus = [m.text_preview for m in metas]
+    tokenized = [c.lower().split() for c in corpus]
+    return BM25Okapi(tokenized), corpus
+
+def rrf_fuse(lists: List[List[int]], k_rrf: int = 60, limit: int = 10) -> List[int]:
+    scores = {}
+    for lst in lists:
+        for rank, doc_id in enumerate(lst):
+            scores[doc_id] = scores.get(doc_id, 0) + 1.0 / (k_rrf + rank + 1)
+    ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    return [i for i, _ in ranked][:limit]
+
+def retrieve_hybrid(client: OpenAI, index, metas: List[Meta], bm25, corpus, query: str,
+                    k_faiss: int = 12, k_bm25: int = 20, k_final: int = 8) -> List[int]:
+    # FAISS
+    q = embed_query(client, query).reshape(1, -1)
+    _, I = index.search(q, k_faiss)
+    faiss_ids = I[0].tolist()
+
+    # BM25
+    if bm25 is not None:
+        tokens = query.lower().split()
+        scores = bm25.get_scores(tokens)
+        bm25_ranked = sorted(range(len(corpus)), key=lambda i: scores[i], reverse=True)[:k_bm25]
+    else:
+        bm25_ranked = []
+
+    fused = rrf_fuse([faiss_ids, bm25_ranked], limit=max(k_faiss, k_bm25))
+    return fused[:k_final]
+
+def build_context(metas: List[Meta], ids: List[int], max_chars: int = 4500) -> str:
+    parts = []
+    used = set()
+    total = 0
+    for idx in ids:
+        if idx in used:
+            continue
+        s = metas[idx].text_preview
+        if total + len(s) > max_chars:
+            break
+        parts.append(s)
+        total += len(s)
+        used.add(idx)
+    return "\n\n---\n\n".join(parts)
+
+def answer_with_context(client: OpenAI, question: str, user_name: str, index, metas, bm25, corpus) -> str:
+    doc_ids = retrieve_hybrid(client, index, metas, bm25, corpus, question, k_final=8)
+    contexto = build_context(metas, doc_ids, max_chars=4500)
+
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user",
+         "content": f"NOME: {user_name}\n\n<CONTEXTO>\n{contexto}\n</CONTEXTO>\n\nPERGUNTA: {question}"}
+    ]
+    resp = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=messages,
+        temperature=0.0,
+        max_tokens=800,
     )
-    st.stop()
+    text = resp.choices[0].message.content.strip()
+    text = escape_currency(text)
+    return text
 
-# Caixa de histórico do chat
+# ========= UI =========
+st.set_page_config(page_title="LAVO - Reforma Tributária", page_icon="📚", layout="centered")
+
+if "auth" not in st.session_state:
+    st.session_state.auth = False
+
+if not st.session_state.auth:
+    login_screen()
+
+# Carregar índice
+index, metas, manifest = load_index()
+bm25, corpus = prepare_bm25(metas)
+client = openai_client()
+
+# Header
+st.markdown("## 🧠 LAVO - Especialista em Reforma Tributária")
+st.caption(f"Base carregada • trechos: **{len(metas)}**")
+
+# Histórico
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# Mensagem de abertura (somente primeira vez)
-if not st.session_state.history:
-    welcome = sanitize_numbers(f"""
-👋 Olá, **{st.session_state.user_name}**!
-
-Sou a **LAVO**, especialista em Reforma Tributária da **Lavoratory Group**.
-Posso te ajudar com **IBS, CBS, Split Payment, créditos, regime de apuração, regras de não-cumulatividade** e muito mais.
-
-### Exemplos do que posso fazer
-- Explicar **Split Payment** com um exemplo simples.
-- Simular o cálculo de **IBS** e **CBS** para um valor (ex.: R$ 500,00) usando **listas e passos práticos**.
-- Citar leis/PECs e apontar **riscos e cuidados** sem juridiquês.
-
-Conte sua dúvida e vamos direto ao ponto. 🙂
-""")
-    st.session_state.history.append(("assistant", welcome))
-
-# Render do histórico
+# Render histórico
 for role, content in st.session_state.history:
-    with st.chat_message("assistant" if role == "assistant" else "user"):
+    with st.chat_message(role):
         st.markdown(content)
 
-# Entrada do usuário
-prompt = st.chat_input("Digite sua pergunta...")
-if prompt:
-    st.session_state.history.append(("user", prompt))
+# Entrada
+user_q = st.chat_input("Faça sua pergunta para a LAVO...")
+if user_q:
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.markdown(escape_currency(user_q))
+    st.session_state.history.append(("user", escape_currency(user_q)))
 
     with st.chat_message("assistant"):
-        with st.spinner("Consultando a base e preparando uma resposta…"):
-            try:
-                out = answer(prompt, st.session_state.user_name, index, metas)
-
-                # Se detetar pergunta típica de cálculo, reforça formato didático
-                if re.search(r"\b(calcul|cálcul|como calcular|IBS|CBS)\b", prompt, re.I):
-                    # apenas garante markdown ‘limpo’
-                    out = out.replace("## ", "### ")  # desce um nível para ficar uniforme
-
-                st.markdown(out)
-                st.session_state.history.append(("assistant", out))
-            except Exception as e:
-                st.error("Ocorreu um erro ao gerar a resposta.")
-                st.exception(e)
+        with st.spinner("Consultando a base..."):
+            nome = st.session_state.get("nome_usuario", "amigo")
+            ans = answer_with_context(client, user_q, nome, index, metas, bm25, corpus)
+            st.markdown(ans)
+            st.session_state.history.append(("assistant", ans))
