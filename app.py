@@ -21,38 +21,19 @@ MANIFEST_PATH = os.path.join(INDEX_DIR, "manifest.json")
 EMB_MODEL = "text-embedding-3-small"
 CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-4o-mini")
 
+# -------- Prompt leve (sem formatos fixos) --------
 SYSTEM_PROMPT = """
-Você é a **LAVO**, especialista em Reforma Tributária da Lavoratory Group.
-
-OBJETIVO
-- Entregar respostas didáticas, completas e aplicáveis ao dia a dia das empresas, SEM enrolação.
-- Sempre cumprir: saudação com o NOME do usuário; conteúdo objetivo + exemplos práticos + plano de ação + referências.
-
-ESCOPO
-- Responda SOMENTE com base no <CONTEXTO> fornecido. Não use conhecimento externo.
-- Cite apenas leis, ECs/PECs, PLPs/LCs, pareceres e nomes de professores/relatores que APARECEM no CONTEXTO.
-- Nunca mencione “PDF”, “arquivo”, “material”, “chunk” ou “base”.
-
-ESTILO (professora de cursinho, sem falar isso)
-- Linguagem simples, direta e segura.
-- Dê EXEMPLOS CONTÁBEIS/FISCAIS PRÁTICOS (com valores, contas e impactos de fluxo de caixa).
-- Use sempre Markdown simples (títulos ###, listas -, **negritos**). **Nunca** use LaTeX.
-
-FORMATAÇÃO OBRIGATÓRIA DA RESPOSTA
-1) Saudação: “Olá, {NOME}!”
-2) **Resumo rápido:** 2–4 linhas no máximo.
-3) **O que muda no dia a dia:** bullets com impactos operacionais (Financeiro, Fiscal, TI, Compras, Comercial).
-4) **Exemplos práticos:** pelo menos 2; use números (ex.: R$ 100.000,00; 12%; 30 dias) e explique a conta.
-5) **Próximos passos (plano de ação):** bullets curtos, priorizados (1–5).
-6) **Referências normativas:** só as que aparecerem no CONTEXTO (ex.: EC 132/2023; LC 214/2025; Art. 31).
-
-INCERTEZA
-- Se o CONTEXTO não trouxer a informação pedida, responda apenas:
-“Ainda estou estudando, mas logo aprendo e voltamos a falar.”
-
-REGRAS DE NÚMEROS
-- Formate moeda como “R$ 1.000,00” e percentuais como “12%”.
-- Nunca quebre números em linhas diferentes.
+Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.
+- Responda como uma consultora sênior: clara, direta, precisa e prática.
+- Adapte o tom e a estrutura à pergunta do usuário (nada de respostas engessadas).
+- Sempre use apenas o <CONTEXTO> fornecido; não traga conhecimento externo.
+- Cite leis/PECs/pareceres/pessoas apenas se aparecerem no CONTEXTO.
+- Traga exemplos contábeis/fiscais quando forem úteis para entender a resposta.
+- Nunca mencione “PDF”, “arquivo”, “material” ou “chunk”.
+- Se o CONTEXTO não trouxer a informação pedida, diga apenas:
+  “Ainda estou estudando, mas logo aprendo e voltamos a falar.”
+- Evite listas desnecessárias. Prefira texto natural com bullets somente quando ajudarem.
+- Formate moeda como “R$ 1.000,00” e percentuais como “12%”. Não quebre números.
 """
 
 # ===================== Helpers de Formatação =====================
@@ -214,24 +195,24 @@ def build_context(ids: List[int], max_chars: int = 4500) -> str:
         used.add(idx)
     return "\n\n---\n\n".join(parts)
 
-# ===================== Prompt do Usuário Guiado =====================
-def build_guided_user_instruction(question: str, nome: str, contexto: str) -> str:
+# ===================== Geração da Resposta =====================
+def make_user_message(question: str, nome: str, contexto: str) -> str:
     return (
         f"NOME: {nome}\n\n"
         f"<CONTEXTO>\n{contexto}\n</CONTEXTO>\n\n"
-        "Produza a resposta seguindo EXATAMENTE o formato obrigatório descrito no system prompt. "
-        "Use apenas informações presentes no CONTEXTO. Não invente. "
+        "Responda de forma natural, como uma consultora sênior. "
+        "Use SOMENTE o que está no CONTEXTO. "
+        "Traga exemplos práticos apenas se ajudarem a clarear a resposta. "
         "Se não houver base suficiente no CONTEXTO, responda com a frase padrão de incerteza.\n\n"
         f"PERGUNTA: {question}"
     )
 
-# ===================== Geração da Resposta =====================
 def answer_with_context(question: str, nome: str) -> str:
     try:
         doc_ids = retrieve_hybrid(question, k_final=8)
         contexto = build_context(doc_ids, max_chars=4500)
     except Exception:
-        # fallback simples, caso BM25 não esteja disponível
+        # fallback simples
         q = embed_query(question).reshape(1, -1)
         D, I = index.search(q, 6)
         texto_parts = []
@@ -243,16 +224,16 @@ def answer_with_context(question: str, nome: str) -> str:
     if not contexto.strip():
         return f"Olá, {nome}! Ainda estou estudando, mas logo aprendo e voltamos a falar."
 
-    user_instruction = build_guided_user_instruction(question, nome, contexto)
+    user_msg = make_user_message(question, nome, contexto)
 
     resp = client.chat.completions.create(
         model=CHAT_MODEL,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_instruction},
+            {"role": "user", "content": user_msg},
         ],
-        temperature=0.1,
-        max_tokens=1100,
+        temperature=0.2,   # liberdade para variar sem inventar
+        max_tokens=1200,
     )
     text = resp.choices[0].message.content.strip()
     text = sanitize_numbers(text)
@@ -266,21 +247,13 @@ st.caption(f"Base carregada • chunks: **{len(metas)}** • modelo: {CHAT_MODEL
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# Mensagem de abertura (uma vez)
+# Mensagem de abertura (simples e humana)
 if not st.session_state.history:
-    welcome = escape_currency(f"""
-👋 Olá, **{st.session_state.get('nome_usuario','amigo')}**!
-
-Sou a **LAVO**, especialista em Reforma Tributária da **Lavoratory Group**.
-Posso te ajudar com **IBS, CBS, Split Payment, regimes especiais/favorecidos, cashback, transição e apuração**.
-
-### Exemplos do que posso fazer
-- Explicar **Split Payment** com um exemplo de fluxo de caixa.
-- Simular cálculo de **IBS/CBS** em um caso simples (ex.: R$ 500,00; 12%/6%).
-- Sugerir **próximos passos** para adequar ERP, contratos e governança.
-
-Manda a sua dúvida e eu respondo no formato didático.
-""")
+    welcome = escape_currency(
+        f"Olá, **{st.session_state.get('nome_usuario','amigo')}**! "
+        "Sou a **LAVO**. Pergunte o que quiser sobre Reforma Tributária (IBS, CBS, Split Payment, regimes, transição etc.). "
+        "Quando fizer sentido, trago exemplos práticos com números."
+    )
     st.session_state.history.append(("assistant", welcome))
 
 # Render histórico
@@ -297,7 +270,7 @@ if user_q:
     st.session_state.history.append(("user", escape_currency(user_q)))
 
     with st.chat_message("assistant"):
-        with st.spinner("Consultando a base e montando a resposta…"):
+        with st.spinner("Consultando a base…"):
             try:
                 ans = answer_with_context(user_q, nome)
                 st.markdown(ans)
