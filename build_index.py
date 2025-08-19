@@ -1,5 +1,5 @@
 # build_index.py
-import os, time, pathlib
+import os, time, pathlib, json
 from typing import List, Dict
 import numpy as np
 import faiss, pickle
@@ -14,8 +14,10 @@ META_PATH  = OUT_DIR / "faiss_meta.pkl"
 MANIFEST   = OUT_DIR / "manifest.json"
 
 EMBED_MODEL = "text-embedding-3-small"
+
+# chunks maiores para aparecer nome/fato no contexto
 MAX_CHARS_PER_CHUNK = 1800
-CHUNK_OVERLAP = 150
+CHUNK_OVERLAP = 200
 
 def read_txts() -> List[Dict]:
     files = sorted(TXT_DIR.rglob("*.txt"))
@@ -32,7 +34,7 @@ def read_txts() -> List[Dict]:
         while i < n:
             j = min(i + MAX_CHARS_PER_CHUNK, n)
             chunk = content[i:j]
-            items.append({"file": p.name, "text": chunk, "text_preview": chunk[:240]})
+            items.append({"file": p.name, "text": chunk})
             if j == n: break
             i = max(0, j - CHUNK_OVERLAP)
     return items
@@ -53,7 +55,7 @@ def embed_texts(client: OpenAI, texts: List[str]) -> np.ndarray:
                     raise
         time.sleep(0.1)
     arr = np.asarray(vecs, dtype="float32")
-    faiss.normalize_L2(arr)  # para usar produto interno como cosseno
+    faiss.normalize_L2(arr)  # cos-sim via produto interno
     return arr
 
 def main():
@@ -64,7 +66,8 @@ def main():
 
     items = read_txts()
     texts = [it["text"] for it in items]
-    metas = [{"file": it["file"], "text_preview": it["text_preview"]} for it in items]
+    # GUARDE um preview LONGO (até 1600 chars) — é isso que vai para o LLM
+    metas = [{"file": it["file"], "text_preview": it["text"][:1600]} for it in items]
 
     emb = embed_texts(client, texts)
     index = faiss.IndexFlatIP(emb.shape[1])
@@ -74,14 +77,13 @@ def main():
     with open(META_PATH, "wb") as f:
         pickle.dump(metas, f)
 
-    # Manifesto simples
-    import json
-    manifest = {
+    MANIFEST.write_text(json.dumps({
         "num_chunks": len(texts),
         "embed_model": EMBED_MODEL,
         "dim": int(emb.shape[1]),
-    }
-    MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        "max_chars_per_chunk": MAX_CHARS_PER_CHUNK,
+        "chunk_overlap": CHUNK_OVERLAP,
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(f"✅ Index salvo em {INDEX_PATH} e {META_PATH}. Chunks: {len(texts)} | Dim: {emb.shape[1]}")
 
