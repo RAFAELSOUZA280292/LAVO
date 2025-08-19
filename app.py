@@ -4,7 +4,7 @@ import re
 import json
 import pickle
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List
 import numpy as np
 import faiss
 import streamlit as st
@@ -19,22 +19,59 @@ META_PATH = os.path.join(INDEX_DIR, "faiss_meta.pkl")
 MANIFEST_PATH = os.path.join(INDEX_DIR, "manifest.json")
 
 EMB_MODEL = "text-embedding-3-small"
-CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-4o-mini")
+CHAT_MODEL = st.secrets.get("CHAT_MODEL", os.getenv("CHAT_MODEL", "gpt-4o"))
+DEFAULT_TEMP = float(st.secrets.get("TEMPERATURE", os.getenv("TEMPERATURE", "0.3")))
+DEFAULT_MAXTOK = int(st.secrets.get("MAX_TOKENS", os.getenv("MAX_TOKENS", "1400")))
 
-# -------- Prompt leve (sem formatos fixos) --------
 SYSTEM_PROMPT = """
 Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.
 - Responda como uma consultora sênior: clara, direta, precisa e prática.
-- Adapte o tom e a estrutura à pergunta do usuário (nada de respostas engessadas).
-- Sempre use apenas o <CONTEXTO> fornecido; não traga conhecimento externo.
+- Adapte o tom e a estrutura à pergunta do usuário (sem respostas engessadas).
+- Use apenas o <CONTEXTO>; não traga conhecimento externo, a menos que o modo híbrido esteja LIGADO (instrução do usuário indicará isso).
 - Cite leis/PECs/pareceres/pessoas apenas se aparecerem no CONTEXTO.
-- Traga exemplos contábeis/fiscais quando forem úteis para entender a resposta.
+- Traga exemplos contábeis/fiscais quando forem úteis.
 - Nunca mencione “PDF”, “arquivo”, “material” ou “chunk”.
-- Se o CONTEXTO não trouxer a informação pedida, diga apenas:
+- Se não houver base suficiente no CONTEXTO e o modo híbrido estiver DESLIGADO, responda apenas:
   “Ainda estou estudando, mas logo aprendo e voltamos a falar.”
-- Evite listas desnecessárias. Prefira texto natural com bullets somente quando ajudarem.
-- Formate moeda como “R$ 1.000,00” e percentuais como “12%”. Não quebre números.
+- Formate moeda como “R$ 1.000,00” e percentuais como “12%”, sem quebras de linha.
+Nota: Para saudações simples (ex.: “oi”, “olá”, “bom dia”), responda com boas-vindas amigáveis sem necessidade de contexto.
 """
+
+# ===================== Sidebar: knobs de conversa =====================
+with st.sidebar:
+    st.header("⚙️ Ajustes da conversa")
+    tone = st.selectbox(
+        "Tom da resposta",
+        ["Natural", "Executivo (direto ao ponto)", "Professoral (exemplos)"],
+        index=0
+    )
+    depth = st.select_slider(
+        "Profundidade",
+        options=["Curta", "Média", "Detalhada"],
+        value="Média"
+    )
+    hybrid_mode = st.toggle("Modo híbrido (complementar além do CONTEXTO quando faltar)", value=False)
+
+def style_booster(tone: str, depth: str, hybrid: bool) -> str:
+    bits = []
+    if tone == "Executivo (direto ao ponto)":
+        bits.append("Seja concisa, focada em decisão e impacto prático. Evite prolixidade.")
+    elif tone == "Professoral (exemplos)":
+        bits.append("Inclua exemplos contábeis/fiscais claros com números quando ajudar a compreensão.")
+    else:
+        bits.append("Fale naturalmente como consultora sênior, ajustando detalhes à pergunta.")
+    if depth == "Curta":
+        bits.append("Responda em 5–8 linhas, sem detalhes desnecessários.")
+    elif depth == "Detalhada":
+        bits.append("Aprofunde com nuances práticas, mas sem enrolação.")
+    if hybrid:
+        bits.append(
+            "Se o CONTEXTO não cobrir totalmente, complemente com conhecimento geral consolidado "
+            "em trechos iniciados por 'Complemento geral:'."
+        )
+    else:
+        bits.append("Use exclusivamente o CONTEXTO; não extrapole além dele.")
+    return " ".join(bits)
 
 # ===================== Helpers de Formatação =====================
 _num_fix_regexes = [
@@ -53,22 +90,10 @@ def sanitize_numbers(text: str) -> str:
     return out
 
 def escape_currency(text: str) -> str:
-    # Evita que Markdown/LaTeX quebre "R$"
     return text.replace("R$", "R\\$")
-
-def fmt_moeda(valor: float) -> str:
-    s = f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-    return f"R\\$ {s}"
 
 # ===================== Login (via Secrets) =====================
 def get_users_from_secrets() -> dict:
-    """
-    Em Secrets (Streamlit Cloud), cadastre pares:
-      APP_USER_RAF="Rafael Souza"
-      APP_PASS_RAF="Ra@15062017"
-      APP_USER_ALEX="Alex Montu"
-      APP_PASS_ALEX="Lavoratory@753"
-    """
     users = {}
     for k in st.secrets:
         if k.startswith("APP_USER_"):
@@ -181,9 +206,7 @@ def retrieve_hybrid(query: str, k_faiss: int = 12, k_bm25: int = 20, k_final: in
     return fused[:k_final]
 
 def build_context(ids: List[int], max_chars: int = 4500) -> str:
-    parts = []
-    used = set()
-    total = 0
+    parts, used, total = [], set(), 0
     for idx in ids:
         if idx in used:
             continue
@@ -195,24 +218,27 @@ def build_context(ids: List[int], max_chars: int = 4500) -> str:
         used.add(idx)
     return "\n\n---\n\n".join(parts)
 
-# ===================== Geração da Resposta =====================
-def make_user_message(question: str, nome: str, contexto: str) -> str:
+# ===================== User message (com estilo da sidebar) =====================
+def make_user_message(question: str, nome: str, contexto: str, style_hint: str, hybrid: bool) -> str:
     return (
         f"NOME: {nome}\n\n"
         f"<CONTEXTO>\n{contexto}\n</CONTEXTO>\n\n"
-        "Responda de forma natural, como uma consultora sênior. "
-        "Use SOMENTE o que está no CONTEXTO. "
-        "Traga exemplos práticos apenas se ajudarem a clarear a resposta. "
-        "Se não houver base suficiente no CONTEXTO, responda com a frase padrão de incerteza.\n\n"
+        f"{style_hint}\n\n"
+        + (
+            "O modo híbrido está LIGADO: se o CONTEXTO não cobrir totalmente, complemente com conhecimento geral "
+            "somente em trechos iniciados por 'Complemento geral:'.\n\n"
+            if hybrid else
+            "O modo híbrido está DESLIGADO: use exclusivamente o CONTEXTO; se não houver base suficiente, use a frase padrão de incerteza.\n\n"
+        )
         f"PERGUNTA: {question}"
     )
 
-def answer_with_context(question: str, nome: str) -> str:
+# ===================== Geração da Resposta (RAG) =====================
+def answer_with_context(question: str, nome: str, tone: str, depth: str, hybrid: bool) -> str:
     try:
         doc_ids = retrieve_hybrid(question, k_final=8)
         contexto = build_context(doc_ids, max_chars=4500)
     except Exception:
-        # fallback simples
         q = embed_query(question).reshape(1, -1)
         D, I = index.search(q, 6)
         texto_parts = []
@@ -221,10 +247,15 @@ def answer_with_context(question: str, nome: str) -> str:
                 texto_parts.append(metas[idx].text_preview)
         contexto = "\n\n---\n\n".join(texto_parts)
 
-    if not contexto.strip():
+    if not contexto.strip() and not hybrid:
         return f"Olá, {nome}! Ainda estou estudando, mas logo aprendo e voltamos a falar."
 
-    user_msg = make_user_message(question, nome, contexto)
+    style_hint = style_booster(tone, depth, hybrid)
+    user_msg = make_user_message(question, nome, contexto, style_hint, hybrid)
+
+    # Ajuste fino conforme knobs
+    temperature = DEFAULT_TEMP + (0.1 if tone == "Professoral (exemplos)" else 0.0)
+    max_tokens = DEFAULT_MAXTOK + (400 if depth == "Detalhada" else (-300 if depth == "Curta" else 0))
 
     resp = client.chat.completions.create(
         model=CHAT_MODEL,
@@ -232,13 +263,42 @@ def answer_with_context(question: str, nome: str) -> str:
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_msg},
         ],
-        temperature=0.2,   # liberdade para variar sem inventar
-        max_tokens=1200,
+        temperature=temperature,
+        max_tokens=max_tokens,
     )
     text = resp.choices[0].message.content.strip()
     text = sanitize_numbers(text)
     text = escape_currency(text)
     return text
+
+# ===================== Small talk / Ajuda (bypass RAG) =====================
+SMALLTALK_RE = re.compile(r"\b(oi|olá|ola|e ?a[ií]|hello|hey|hi|bom dia|boa tarde|boa noite)\b", re.I)
+HELP_RE = re.compile(r"\b(ajuda|help|como usar|o que você faz|capacidade|exemplos?)\b", re.I)
+
+def is_greeting(q: str) -> bool:
+    return bool(SMALLTALK_RE.search(q.strip()))
+
+def is_help(q: str) -> bool:
+    return bool(HELP_RE.search(q.strip()))
+
+def is_empty_or_short(q: str) -> bool:
+    return len(q.strip()) < 2
+
+def reply_smalltalk(nome: str) -> str:
+    return escape_currency(
+        f"Olá, **{nome}**! Sou a **LAVO**. Posso ajudar com IBS, CBS, Split Payment, regimes, transição e apuração. "
+        "Manda sua dúvida ou peça um exemplo prático."
+    )
+
+def reply_help(nome: str) -> str:
+    return escape_currency(
+        f"Claro, **{nome}**! Exemplos do que posso responder:\n"
+        "- “Quais são as leis base da Reforma?”\n"
+        "- “Explique Split Payment com um exemplo de R$ 1.000,00.”\n"
+        "- “Como fica o crédito no novo sistema?”\n"
+        "- “Quais os riscos operacionais para varejo?”\n"
+        "Faça sua pergunta 🙂"
+    )
 
 # ===================== UI Principal =====================
 st.markdown("## 🧠 LAVO - Especialista em Reforma Tributária")
@@ -247,7 +307,6 @@ st.caption(f"Base carregada • chunks: **{len(metas)}** • modelo: {CHAT_MODEL
 if "history" not in st.session_state:
     st.session_state.history = []
 
-# Mensagem de abertura (simples e humana)
 if not st.session_state.history:
     welcome = escape_currency(
         f"Olá, **{st.session_state.get('nome_usuario','amigo')}**! "
@@ -272,7 +331,13 @@ if user_q:
     with st.chat_message("assistant"):
         with st.spinner("Consultando a base…"):
             try:
-                ans = answer_with_context(user_q, nome)
+                if is_empty_or_short(user_q) or is_greeting(user_q):
+                    ans = reply_smalltalk(nome)
+                elif is_help(user_q):
+                    ans = reply_help(nome)
+                else:
+                    ans = answer_with_context(user_q, nome, tone, depth, hybrid_mode)
+
                 st.markdown(ans)
                 st.session_state.history.append(("assistant", ans))
             except Exception as e:
