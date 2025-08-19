@@ -1,8 +1,8 @@
 # app.py
 # LAVO - Especialista em Reforma Tributária (RAG "como o ChatGPT": busca precisa + síntese)
-# - Recuperação híbrida (FAISS + BM25) com âncora por termos/sinônimos (parágrafos-alvo, não texto bruto)
+# - Recuperação híbrida (FAISS + BM25) com reforço lexical e prioridade a nomes próprios
 # - Modelo SEMPRE sintetiza em linguagem clara (nada de colar trechos crus)
-# - Foco em fatos da base: leis (EC/LC/artigos), datas, nomes (ex.: Miguel Abuhab), mecanismos (ex.: Split Payment)
+# - Foco em fatos da base: leis (EC/LC/artigos), datas, nomes (ex.: Miguel Abuhab, Alex Montu), mecanismos (ex.: Split Payment)
 # - Sem expander, sem exemplo automático. Sanitização de números. Regra determinística para "quantos dias".
 
 import os
@@ -254,7 +254,7 @@ def load_index() -> Tuple[Any, List[Dict[str, Any]], Dict[str, Any]]:
     return idx, metas, manifest
 
 # -----------------------------
-# Busca (FAISS + BM25) com reforço lexical
+# Busca (FAISS + BM25) com reforço lexical e prioridade a nomes próprios
 # -----------------------------
 def embed_query(text: str) -> np.ndarray:
     resp = client.embeddings.create(model="text-embedding-3-small", input=[text])
@@ -262,7 +262,7 @@ def embed_query(text: str) -> np.ndarray:
     faiss.normalize_L2(vec.reshape(1, -1))
     return vec
 
-def _faiss_search(index, query_vec: np.ndarray, k: int = 8):
+def _faiss_search(index, query_vec: np.ndarray, k: int = 12):
     D, I = index.search(query_vec.reshape(1, -1), k);  return D[0], I[0]
 
 @st.cache_resource(show_spinner=False)
@@ -282,18 +282,44 @@ SYNONYMS = {
     "cbs": ["cbs", "contribuição sobre bens e serviços"],
 }
 
+# === Detecção simples de nomes próprios na pergunta (sequências de 2+ palavras com inicial maiúscula)
+NAME_SEQ_RE = re.compile(r'((?:[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-zà-ú]+(?:\s+|$)){2,})')
+
+def _name_queries(question: str) -> List[str]:
+    if not question:
+        return []
+    seqs = [m.group(1).strip() for m in NAME_SEQ_RE.finditer(question)]
+    seqs += [s.lower() for s in seqs]
+    seen, out = set(), []
+    for s in seqs:
+        k = s.strip()
+        if k and k not in seen:
+            out.append(k)
+            seen.add(k)
+    return out
+
 def _keywords_from_question(q: str) -> List[str]:
     ql = (q or "").lower()
     keys = set()
+
+    # sinônimos
     for k, syns in SYNONYMS.items():
-        if k in ql: keys.update(syns)
-    # n-grams simples da pergunta
+        if k in ql:
+            keys.update(syns)
+
+    # nomes próprios detectados
+    for name in _name_queries(q):
+        keys.add(name.lower())
+
+    # n-grams simples da pergunta (reforço geral)
     toks = [t for t in re.split(r'[^a-zà-ú0-9]+', ql) if t]
     for n in range(4, 0, -1):
         for i in range(len(toks)-n+1):
             phrase = " ".join(toks[i:i+n]).strip()
-            if len(phrase) >= 4: keys.add(phrase)
-    return list(keys)[:24]
+            if len(phrase) >= 4:
+                keys.add(phrase)
+
+    return list(keys)[:32]
 
 def _hybrid_rank(question: str, index, metas: List[Dict[str, Any]],
                  k_faiss: int = 12, k_bm25: int = 24, top_k: int = 10) -> List[int]:
@@ -337,24 +363,43 @@ def _hybrid_rank(question: str, index, metas: List[Dict[str, Any]],
     return [i for i, _ in reranked[:top_k]]
 
 # -----------------------------
-# Construção de contexto: pega PARÁGRAFOS que batem com a pergunta
+# Construção de contexto: pega PARÁGRAFOS que batem com a pergunta (com prioridade a nomes)
 # -----------------------------
 PARA_SPLIT_RE = re.compile(r'\n\s*\n')
 
-def _extract_paragraph_hits(text: str, keywords: List[str]) -> List[str]:
-    if not text: return []
+def _extract_paragraph_hits(text: str, keywords: List[str], question: str = "") -> List[str]:
+    if not text:
+        return []
     paras = [p.strip() for p in PARA_SPLIT_RE.split(text) if p.strip()]
-    if not keywords: return paras[:2][:]  # fallback: 1-2 parágrafos
-    scored = []
-    low = text.lower()
-    for p in paras:
-        pl = p.lower()
-        score = sum(1 for kw in keywords if kw in pl)
-        if score: scored.append((score, p))
-    if not scored:  # se nada bate, devolve primeiros parágrafos curtos
-        return paras[:2]
-    scored.sort(key=lambda x: x[0], reverse=True)
-    return [p for _, p in scored[:3]]  # até 3 parágrafos mais relevantes
+    if not paras:
+        return []
+
+    # 1) Prioriza parágrafos que contenham NOME(S) detectado(s) na pergunta
+    name_qs = [n.strip() for n in _name_queries(question) if n.strip()]
+    if name_qs:
+        name_hits = []
+        low_names = [n.lower() for n in name_qs]
+        for p in paras:
+            pl = p.lower()
+            if any(n in pl for n in low_names):
+                name_hits.append(p)
+        if name_hits:
+            return name_hits[:2]  # até 2 parágrafos com o nome
+
+    # 2) Caso não haja nome, ranqueia por keywords
+    if keywords:
+        scored = []
+        for p in paras:
+            pl = p.lower()
+            score = sum(1 for kw in keywords if kw in pl)
+            if score:
+                scored.append((score, p))
+        if scored:
+            scored.sort(key=lambda x: x[0], reverse=True)
+            return [p for _, p in scored[:3]]
+
+    # 3) Fallback: primeiros parágrafos curtos
+    return paras[:2]
 
 def _build_context(metas: List[Dict[str, Any]], idxs: List[int], question: str,
                    max_chars=4800) -> str:
@@ -365,7 +410,7 @@ def _build_context(metas: List[Dict[str, Any]], idxs: List[int], question: str,
         m = metas[i] or {}
         raw = str(m.get("text") or m.get("text_preview") or "").replace("\u200b", " ")
         title = str(m.get("title", ""))[:160]
-        hits = _extract_paragraph_hits(raw, keys)
+        hits = _extract_paragraph_hits(raw, keys, question)
         if not hits: continue
         block = (f"{title}\n" if title else "") + "\n\n".join(hits)
         parts.append(block); total += len(block)
