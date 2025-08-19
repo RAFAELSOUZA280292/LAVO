@@ -1,14 +1,16 @@
 # app.py
-# LAVO - Especialista em Reforma Tributária (RAG + FAISS + BM25)
-# Modo atual: Contexto alimenta o modelo (sem "ancorar" trechos). O modelo sempre sintetiza a resposta.
-# Mantido: cálculo determinístico de "quantos dias", sanitização, sem exemplo automático, sem expander.
+# LAVO - Especialista em Reforma Tributária (RAG "como o ChatGPT": busca precisa + síntese)
+# - Recuperação híbrida (FAISS + BM25) com âncora por termos/sinônimos (parágrafos-alvo, não texto bruto)
+# - Modelo SEMPRE sintetiza em linguagem clara (nada de colar trechos crus)
+# - Foco em fatos da base: leis (EC/LC/artigos), datas, nomes (ex.: Miguel Abuhab), mecanismos (ex.: Split Payment)
+# - Sem expander, sem exemplo automático. Sanitização de números. Regra determinística para "quantos dias".
 
 import os
 import re
 import json
 import pickle
 from typing import List, Tuple, Dict, Any, Optional
-from datetime import date, datetime
+from datetime import date
 
 import numpy as np
 import faiss
@@ -22,7 +24,7 @@ except Exception:
     raise RuntimeError("Instale: pip install openai>=1.40.0")
 
 # ----------------------------------------------------------------------
-# 🔧 HOTFIX para deserializar faiss_meta.pkl legado
+# 🔧 HOTFIX para deserializar faiss_meta.pkl legado (classe Meta ausente)
 # ----------------------------------------------------------------------
 try:
     from dataclasses import dataclass
@@ -79,22 +81,22 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 # -----------------------------
 INDEX_DIR = "index"
 FAISS_FILE = os.path.join(INDEX_DIR, "faiss.index")
-META_PKL  = os.path.join(INDEX_DIR, "faiss_meta.pkl")       # legado
-META_JSONL = os.path.join(INDEX_DIR, "metas.jsonl")         # novo estável
-MANIFEST_JSON = os.path.join(INDEX_DIR, "manifest.json")    # info do índice
+META_PKL   = os.path.join(INDEX_DIR, "faiss_meta.pkl")     # legado
+META_JSONL = os.path.join(INDEX_DIR, "metas.jsonl")        # novo estável
+MANIFEST   = os.path.join(INDEX_DIR, "manifest.json")
 
 # -----------------------------
-# Prompt
+# Prompt "como o ChatGPT" (fiel à base)
 # -----------------------------
 SYSTEM_PROMPT = (
     "Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.\n"
-    "POLÍTICA DE RESPOSTA:\n"
-    "1) Use o <contexto> como base para responder; sintetize em linguagem clara e direta.\n"
-    "2) Só complemente com conhecimento geral se o contexto não cobrir o necessário.\n"
-    "3) Só inclua exemplo numérico se o usuário pedir explicitamente. Quando houver exemplo, use notação brasileira (R$ 1.234,56 e 12%).\n"
-    "4) Cite leis/EC/LC apenas quando estritamente necessárias e de forma enxuta; não invente.\n"
-    "5) Nunca mencione arquivos internos (.txt, .pdf) nem índices.\n"
-    "6) Não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e evite espaços entre dígitos.\n"
+    "REGRAS:\n"
+    "• Responda de forma clara, direta e profissional, sempre sintetizando o <contexto>.\n"
+    "• Priorize fatos explícitos do <contexto>: nomes, leis (EC/LC/artigos), datas, prazos, percentuais, mecanismos.\n"
+    "• Se a resposta depender de algo que NÃO está no <contexto>, diga brevemente que não há detalhe na base e evite inventar.\n"
+    "• Só traga exemplo numérico se o usuário pedir. Quando houver exemplo, use notação brasileira (R$ 1.234,56 e 12%).\n"
+    "• Não mencione arquivos internos (.txt, .pdf) nem o índice. Não cole trechos extensos literalmente: reescreva em tom humano.\n"
+    "• Não quebre números em linhas; mantenha 'R$' colado ao valor (R$ 1.000,00) e sem espaços entre dígitos.\n"
 )
 
 # -----------------------------
@@ -121,7 +123,7 @@ def login_box():
     st.stop()
 
 # -----------------------------
-# Utilidades
+# Utilidades & Sanitização
 # -----------------------------
 def _coerce_dict_list(obj_list) -> List[Dict[str, Any]]:
     out = []
@@ -131,8 +133,7 @@ def _coerce_dict_list(obj_list) -> List[Dict[str, Any]]:
         else:
             d = {}
             for attr in ("text", "text_preview", "title", "source", "path", "chunk_id"):
-                if hasattr(x, attr):
-                    d[attr] = getattr(x, attr)
+                if hasattr(x, attr): d[attr] = getattr(x, attr)
             if not d and hasattr(x, "__dict__"):
                 try:
                     d = {k: v for k, v in x.__dict__.items() if not k.startswith("__")}
@@ -147,15 +148,12 @@ def _read_jsonl(path: str) -> List[Dict[str, Any]]:
         for line in f:
             line = line.strip()
             if not line: continue
-            try:
-                items.append(json.loads(line))
-            except:
-                continue
+            try: items.append(json.loads(line))
+            except: continue
     return items
 
 def _chunks_count(metas): return len(metas or [])
 
-# ===== Sanitização =====
 _EXAMPLE_TAG_RE = re.compile(r'(?is)\bexemplo\s+num[eé]rico.*?(?:\n\n|$)')
 
 def _wants_example(question: str) -> bool:
@@ -164,145 +162,99 @@ def _wants_example(question: str) -> bool:
     return any(k in q for k in keys)
 
 def _clean_output(s: str) -> str:
-    if not s:
-        return s
+    if not s: return s
     s = s.replace("\r\n", "\n").replace("\u200b", " ")
-    s = re.sub(r'(?<!\n)\n(?!\n)', ' ', s)            # quebra simples -> espaço
-    s = re.sub(r'(?<=\d)\s+(?=\d)', '', s)            # 1 000 -> 1000
-    s = re.sub(r'R\s*\$', 'R$', s)                    # R $ -> R$
-    s = re.sub(r'R\$(\s+)(?=\d)', 'R$', s)            # R$  1 -> R$1
-    s = re.sub(r'\s+%', '%', s)                       # 12 % -> 12%
-    s = re.sub(r'[ \t]{2,}', ' ', s)                  # múltiplos espaços
-    s = re.sub(r'\n{3,}', '\n\n', s)                  # quebras em excesso
+    s = re.sub(r'(?<!\n)\n(?!\n)', ' ', s)           # quebra simples -> espaço
+    s = re.sub(r'(?<=\d)\s+(?=\d)', '', s)           # 1 000 -> 1000
+    s = re.sub(r'R\s*\$', 'R$', s)                   # R $ -> R$
+    s = re.sub(r'R\$(\s+)(?=\d)', 'R$', s)           # R$  1 -> R$1
+    s = re.sub(r'\s+%', '%', s)                      # 12 % -> 12%
+    s = re.sub(r'[ \t]{2,}', ' ', s)                 # múltiplos espaços
+    s = re.sub(r'\n{3,}', '\n\n', s)                 # quebras em excesso
     return s.strip()
 
 def _strip_example_if_unwanted(text: str, question: str) -> str:
-    if _wants_example(question):
-        return text
-    return _EXAMPLE_TAG_RE.sub('', text).strip()
+    return text if _wants_example(question) else _EXAMPLE_TAG_RE.sub('', text).strip()
 
-# ===== Datas & contagens (determinístico) =====
-BR_DATE_RE = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{4})')
-CTX_TODAY_RE = re.compile(r'(?i)\bhoje\s+é\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
-CTX_DAYS_RE  = re.compile(r'(?i)\b(restam|faltam)\s+(\d{1,4})\s+dias\b')
-CTX_TARGET_RE = re.compile(r'(?i)\b(em|no|para)\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
+# -----------------------------
+# Datas & contagens (determinístico para “quantos dias”)
+# -----------------------------
+BR_DATE_RE     = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{4})')
+CTX_TODAY_RE   = re.compile(r'(?i)\bhoje\s+é\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
+CTX_DAYS_RE    = re.compile(r'(?i)\b(restam|faltam)\s+(\d{1,4})\s+dias\b')
+CTX_TARGET_RE  = re.compile(r'(?i)\b(em|no|para)\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
 
 def _parse_br_date_str(s: str) -> Optional[date]:
     m = BR_DATE_RE.search(s or "")
     if not m: return None
     d, mth, y = map(int, m.groups())
-    try:
-        return date(y, mth, d)
-    except ValueError:
-        return None
+    try: return date(y, mth, d)
+    except ValueError: return None
 
 def _date_from_context_text(txt: str) -> Optional[date]:
-    m = CTX_TODAY_RE.search(txt or "")
-    if m:
-        return _parse_br_date_str(m.group(1))
-    return _parse_br_date_str(txt or "")
+    m = CTX_TODAY_RE.search(txt or "");  return _parse_br_date_str(m.group(1)) if m else _parse_br_date_str(txt or "")
 
 def _target_from_context_text(txt: str) -> Optional[date]:
-    m = CTX_TARGET_RE.search(txt or "")
-    if m:
-        return _parse_br_date_str(m.group(2))
-    return None
+    m = CTX_TARGET_RE.search(txt or ""); return _parse_br_date_str(m.group(2)) if m else None
 
 def _days_from_context_text(txt: str) -> Optional[int]:
-    m = CTX_DAYS_RE.search(txt or "")
-    if m:
-        try:
-            return int(m.group(2))
-        except:
-            return None
-    return None
+    m = CTX_DAYS_RE.search(txt or "");   return int(m.group(2)) if m else None
 
 def _best_candidate_snippet(context_text: str) -> str:
     paras = [p.strip() for p in context_text.split("\n") if p.strip()]
     for p in paras:
-        if CTX_DAYS_RE.search(p) or CTX_TODAY_RE.search(p):
-            return p
+        if CTX_DAYS_RE.search(p) or CTX_TODAY_RE.search(p): return p
     return context_text[:2000]
 
 def _extract_ref_and_target_from_question(q: str) -> Tuple[date, date]:
     ref = _parse_br_date_str(q) or date.today()
-    all_dates = BR_DATE_RE.findall(q or "")
     target = None
-    for d, mth, y in all_dates:
+    for d, mth, y in BR_DATE_RE.findall(q or ""):
         dt = _parse_br_date_str(f"{d}/{mth}/{y}")
-        if dt and dt.year >= 2026:
-            target = dt
-            break
-    if not target:
-        target = date(2026, 1, 1)
-    return ref, target
-
-def ctx_reference_is_useful(ctx_ref: Optional[date], ctx_days: Optional[int]) -> bool:
-    return (ctx_ref is not None) and (ctx_days is not None)
+        if dt and dt.year >= 2026: target = dt; break
+    return ref, (target or date(2026, 1, 1))
 
 def _recompute_days_paragraph(paragraph: str, question: str) -> Optional[str]:
-    if not paragraph:
-        return None
-    ctx_ref = _date_from_context_text(paragraph)
-    ctx_days = _days_from_context_text(paragraph)
+    if not paragraph: return None
+    ctx_ref    = _date_from_context_text(paragraph)
+    ctx_days   = _days_from_context_text(paragraph)
     ctx_target = _target_from_context_text(paragraph)
-    if not ctx_reference_is_useful(ctx_ref, ctx_days):
-        return None
+    if not (ctx_ref and ctx_days is not None): return None
     q_ref, q_target = _extract_ref_and_target_from_question(question)
     target = q_target or ctx_target or date(2026, 1, 1)
     new_days = (target - q_ref).days
-    if new_days > 0:
-        return f"Faltam **{new_days} dias** para o início em {target.strftime('%d/%m/%Y')}."
-    elif new_days == 0:
-        return f"**Hoje** ({q_ref.strftime('%d/%m/%Y')}) é o início."
-    else:
-        return f"O início ({target.strftime('%d/%m/%Y')}) já passou há **{abs(new_days)} dias**."
+    if new_days > 0:   return f"Faltam **{new_days} dias** para o início em {target.strftime('%d/%m/%Y')}."
+    if new_days == 0:  return f"**Hoje** ({q_ref.strftime('%d/%m/%Y')}) é o início."
+    return f"O início ({target.strftime('%d/%m/%Y')}) já passou há **{abs(new_days)} dias**."
 
 # -----------------------------
-# Loaders (cacheados)
+# Carregamento do índice (cacheado)
 # -----------------------------
 @st.cache_resource(show_spinner=False)
 def load_index() -> Tuple[Any, List[Dict[str, Any]], Dict[str, Any]]:
-    if not os.path.exists(FAISS_FILE):
-        return None, [], {}
-    try:
-        idx = faiss.read_index(FAISS_FILE)
+    if not os.path.exists(FAISS_FILE): return None, [], {}
+    try: idx = faiss.read_index(FAISS_FILE)
     except Exception as e:
-        st.error(f"Falha ao carregar FAISS: {e}")
-        return None, [], {}
-
+        st.error(f"Falha ao carregar FAISS: {e}"); return None, [], {}
     metas: List[Dict[str, Any]] = []
     if os.path.exists(META_JSONL):
-        try:
-            metas = _read_jsonl(META_JSONL)
-        except Exception as e:
-            st.error(f"Falha ao ler metas.jsonl: {e}")
-            metas = []
-
+        try: metas = _read_jsonl(META_JSONL)
+        except Exception as e: st.error(f"Falha ao ler metas.jsonl: {e}"); metas = []
     if not metas and os.path.exists(META_PKL):
         try:
-            with open(META_PKL, "rb") as f:
-                raw = pickle.load(f)
-            if isinstance(raw, list):
-                metas = _coerce_dict_list(raw)
-            else:
-                metas = _coerce_dict_list([raw])
+            with open(META_PKL, "rb") as f: raw = pickle.load(f)
+            metas = _coerce_dict_list(raw if isinstance(raw, list) else [raw])
         except Exception as e:
-            st.error(f"Falha ao carregar faiss_meta.pkl: {e}")
-            metas = []
-
+            st.error(f"Falha ao carregar faiss_meta.pkl: {e}"); metas = []
     manifest = {}
-    if os.path.exists(MANIFEST_JSON):
+    if os.path.exists(MANIFEST):
         try:
-            with open(MANIFEST_JSON, "r", encoding="utf-8") as f:
-                manifest = json.load(f)
-        except Exception:
-            manifest = {}
-
+            with open(MANIFEST, "r", encoding="utf-8") as f: manifest = json.load(f)
+        except Exception: manifest = {}
     return idx, metas, manifest
 
 # -----------------------------
-# Embeddings / Busca
+# Busca (FAISS + BM25) com reforço lexical
 # -----------------------------
 def embed_query(text: str) -> np.ndarray:
     resp = client.embeddings.create(model="text-embedding-3-small", input=[text])
@@ -310,110 +262,158 @@ def embed_query(text: str) -> np.ndarray:
     faiss.normalize_L2(vec.reshape(1, -1))
     return vec
 
-def _faiss_search(index, query_vec: np.ndarray, k: int = 5):
-    D, I = index.search(query_vec.reshape(1, -1), k)
-    return D[0], I[0]
+def _faiss_search(index, query_vec: np.ndarray, k: int = 8):
+    D, I = index.search(query_vec.reshape(1, -1), k);  return D[0], I[0]
 
 @st.cache_resource(show_spinner=False)
 def _bm25_index(metas: List[Dict[str, Any]]):
     docs = []
     for m in metas:
         txt = str(m.get("text") or m.get("text_preview") or "")
-        tokens = txt.lower().split()
-        docs.append(tokens)
+        docs.append(txt.lower().split())
     return BM25Okapi(docs)
 
-def _hybrid_rank(
-    question: str,
-    index,
-    metas: List[Dict[str, Any]],
-    k_faiss: int = 8,
-    k_bm25: int = 12,
-    top_k: int = 6,
-) -> List[int]:
-    if not metas:
-        return []
+SYNONYMS = {
+    "split payment": ["split payment", "pagamento dividido", "split"],
+    "imposto do pecado": ["imposto do pecado", "imposto seletivo", "is"],
+    "imposto seletivo": ["imposto seletivo", "imposto do pecado", "is"],
+    "iva dual": ["iva dual", "iva", "ibs e cbs"],
+    "ibs": ["ibs", "imposto sobre bens e serviços"],
+    "cbs": ["cbs", "contribuição sobre bens e serviços"],
+}
 
+def _keywords_from_question(q: str) -> List[str]:
+    ql = (q or "").lower()
+    keys = set()
+    for k, syns in SYNONYMS.items():
+        if k in ql: keys.update(syns)
+    # n-grams simples da pergunta
+    toks = [t for t in re.split(r'[^a-zà-ú0-9]+', ql) if t]
+    for n in range(4, 0, -1):
+        for i in range(len(toks)-n+1):
+            phrase = " ".join(toks[i:i+n]).strip()
+            if len(phrase) >= 4: keys.add(phrase)
+    return list(keys)[:24]
+
+def _hybrid_rank(question: str, index, metas: List[Dict[str, Any]],
+                 k_faiss: int = 12, k_bm25: int = 24, top_k: int = 10) -> List[int]:
+    if not metas: return []
     faiss_idxs, faiss_scores = [], {}
     if index is not None:
         qv = embed_query(question)
         D, I = _faiss_search(index, qv, k=k_faiss)
         for score, idx in zip(D, I):
-            if 0 <= idx < len(metas):
-                faiss_idxs.append(idx)
-                faiss_scores[idx] = float(score)
-
+            if 0 <= idx < len(metas): faiss_idxs.append(idx); faiss_scores[idx] = float(score)
     bm25 = _bm25_index(metas)
     bm25_scores = bm25.get_scores(question.lower().split())
     bm25_top = np.argsort(bm25_scores)[::-1][:k_bm25].tolist()
 
-    pool = set(faiss_idxs) | set(bm25_top)
-    if not pool:
-        return []
+    # reforço lexical: se o item contém palavras-chave, ganha bônus
+    keys = _keywords_from_question(question)
+    bonus = {}
+    if keys:
+        for i, m in enumerate(metas):
+            txt = (m.get("text") or m.get("text_preview") or "").lower()
+            sc = sum(1 for kw in keys if kw in txt)
+            if sc: bonus[i] = float(sc)
+
+    pool = set(faiss_idxs) | set(bm25_top) | set(list(bonus.keys())[:k_bm25])
+    if not pool: return []
 
     def _norm(vals: Dict[int, float]):
         if not vals: return {}
         arr = np.array(list(vals.values()), dtype=float)
         vmin, vmax = float(np.min(arr)), float(np.max(arr))
-        if vmax - vmin < 1e-9:
-            return {k: 0.0 for k in vals}
+        if vmax - vmin < 1e-9: return {k: 0.0 for k in vals}
         return {k: (v - vmin) / (vmax - vmin) for k, v in vals.items()}
 
     f_full = {i: faiss_scores.get(i, 0.0) for i in pool}
     b_full = {i: float(bm25_scores[i]) for i in pool}
+    x_full = {i: bonus.get(i, 0.0)       for i in pool}
 
-    f_n = _norm(f_full)
-    b_n = _norm(b_full)
-
-    combo = {i: 0.55 * f_n.get(i, 0.0) + 0.45 * b_n.get(i, 0.0) for i in pool}
+    f_n = _norm(f_full); b_n = _norm(b_full); x_n = _norm(x_full)
+    combo = {i: 0.50*f_n.get(i,0.0) + 0.35*b_n.get(i,0.0) + 0.15*x_n.get(i,0.0) for i in pool}
     reranked = sorted(combo.items(), key=lambda x: x[1], reverse=True)
     return [i for i, _ in reranked[:top_k]]
 
-def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800) -> str:
+# -----------------------------
+# Construção de contexto: pega PARÁGRAFOS que batem com a pergunta
+# -----------------------------
+PARA_SPLIT_RE = re.compile(r'\n\s*\n')
+
+def _extract_paragraph_hits(text: str, keywords: List[str]) -> List[str]:
+    if not text: return []
+    paras = [p.strip() for p in PARA_SPLIT_RE.split(text) if p.strip()]
+    if not keywords: return paras[:2][:]  # fallback: 1-2 parágrafos
+    scored = []
+    low = text.lower()
+    for p in paras:
+        pl = p.lower()
+        score = sum(1 for kw in keywords if kw in pl)
+        if score: scored.append((score, p))
+    if not scored:  # se nada bate, devolve primeiros parágrafos curtos
+        return paras[:2]
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [p for _, p in scored[:3]]  # até 3 parágrafos mais relevantes
+
+def _build_context(metas: List[Dict[str, Any]], idxs: List[int], question: str,
+                   max_chars=4800) -> str:
+    keys = _keywords_from_question(question)
     parts, total = [], 0
-    for rank, i in enumerate(idxs, start=1):
-        if i < 0 or i >= len(metas):
-            continue
+    for i in idxs:
+        if i < 0 or i >= len(metas): continue
         m = metas[i] or {}
-        snippet = str(m.get("text") or m.get("text_preview") or "").replace("\u200b", " ")
-        title   = str(m.get("title", ""))[:200]
-        piece = f"[{rank}] {title}\n{snippet}\n"
-        parts.append(piece); total += len(piece)
-        if total >= max_chars:
-            break
-    return "\n".join(parts).strip()
+        raw = str(m.get("text") or m.get("text_preview") or "").replace("\u200b", " ")
+        title = str(m.get("title", ""))[:160]
+        hits = _extract_paragraph_hits(raw, keys)
+        if not hits: continue
+        block = (f"{title}\n" if title else "") + "\n\n".join(hits)
+        parts.append(block); total += len(block)
+        if total >= max_chars: break
+    # fallback se nada entrou
+    if not parts and idxs:
+        i = idxs[0]; m = metas[i] or {}
+        parts = [str(m.get("text") or m.get("text_preview") or "")]
+    return ("\n\n---\n\n").join(parts).strip()[:max_chars]
 
 # -----------------------------
-# Resposta (sempre sintetizada pelo modelo) + atalho de "quantos dias"
+# Resposta (modelo SEMPRE sintetiza) + atalho “quantos dias”
 # -----------------------------
-def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> str:
-    # Atalho determinístico para contagem de dias (não limita a inteligência, apenas evita erro de cálculo)
-    if any(k in (question or "").lower() for k in ["quantos dias", "faltam quantos dias", "dias faltam", "quanto tempo"]):
-        # tenta usar contexto para achar alvo; se não, padrão 01/01/2026
-        # (reuso do pipeline de contexto para pegar datas que eventualmente estejam nos trechos)
+DAYS_INTENT_RE = re.compile(
+    r'(?i)(faltam\s+quantos\s+dias|quantos\s+dias\s+faltam|quantos\s+dias|dias\s+faltam|quanto\s+tempo).*?(reforma|ibs|cbs|in[ií]cio)',
+    re.DOTALL
+)
+
+def answer_with_rag(question: str, user_name: str, index, metas, top_k=10) -> str:
+    # Atalho determinístico para "quantos dias"
+    if DAYS_INTENT_RE.search(question or ""):
         context_text = ""
         if index is not None and metas:
-            idxs = _hybrid_rank(question, index, metas, k_faiss=8, k_bm25=12, top_k=top_k)
-            context_text = _build_context(metas, idxs, max_chars=2000)
+            idxs = _hybrid_rank(question, index, metas, top_k=top_k)
+            context_text = _build_context(metas, idxs, question, max_chars=3000)
         para = _best_candidate_snippet(context_text) if context_text else ""
         fixed = _recompute_days_paragraph(para, question)
-        if fixed:
-            return _clean_output(fixed)
+        if fixed: return _clean_output(fixed)
 
-    # Caso geral: sempre usar o modelo para sintetizar a partir do contexto
+    # Contexto focado (parágrafos que batem com a pergunta)
     context_text = ""
     if index is not None and metas:
-        idxs = _hybrid_rank(question, index, metas, k_faiss=8, k_bm25=12, top_k=top_k)
-        context_text = _build_context(metas, idxs, max_chars=2800)
+        idxs = _hybrid_rank(question, index, metas, top_k=top_k)
+        context_text = _build_context(metas, idxs, question, max_chars=4800)
+
+    # Se não houver contexto, não inventa
+    if not context_text:
+        return "Não encontrei detalhes na base sobre isso. Pode reformular ou dar mais contexto?"
 
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user",
          "content": (
              f"Usuário: {user_name}\n"
-             + (f"<contexto>\n{context_text}\n</contexto>\n" if context_text else "")
-             + f"Pergunta: {question}\n"
-             "- Responda de forma natural e concisa, sintetizando o contexto; evite copiar trechos longos literalmente."
+             f"<contexto>\n{context_text}\n</contexto>\n"
+             f"Pergunta: {question}\n"
+             "- Responda com base no contexto. Se o contexto trouxer nomes/leis/datas, inclua-os. "
+             "- Evite generalidades. Não copie blocos longos; explique com suas palavras em 1–3 parágrafos."
          )},
     ]
     resp = client.chat.completions.create(
@@ -433,7 +433,6 @@ st.set_page_config(page_title="LAVO - Reforma Tributária", page_icon="📄", la
 
 if "auth" not in st.session_state:
     st.session_state.auth = False
-
 if not st.session_state.auth:
     login_box()
 
@@ -450,7 +449,7 @@ if not index or not metas:
     )
 else:
     emb_model = manifest.get("emb_model", "desconhecido")
-    st.caption(f"Base carregada • trechos: {_chunks_count(metas)} • modelo de embedding: {emb_model}")
+    st.caption(f"Base carregada • trechos: {_chunks_count(metas)} • embedding: {emb_model}")
 
 # Histórico
 if "history" not in st.session_state:
@@ -469,11 +468,10 @@ if user_q:
     with st.chat_message("assistant"):
         with st.spinner("Pensando…"):
             try:
-                text = answer_with_rag(user_q, user_name, index, metas, top_k=6)
+                text = answer_with_rag(user_q, user_name, index, metas, top_k=10)
             except Exception as e:
                 text = f"Desculpe, ocorreu um erro ao gerar a resposta. Detalhe: {e}"
-
             st.markdown(text)
             st.session_state.history.append(("assistant", text))
 
-st.caption("Dica: se quiser um exemplo com números, peça explicitamente.")
+st.caption("Dica: peça exemplos explicitamente (“traga 1 exemplo com números”) quando quiser simulações.")
