@@ -1,0 +1,5 @@
+{
+  "num_chunks": 154,
+  "embed_model": "text-embedding-3-small",
+  "dim": 1536
+}
