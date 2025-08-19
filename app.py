@@ -1,7 +1,7 @@
 # app.py
-# LAVO - Especialista em Reforma Tributária (RAG + FAISS + BM25 + Context-First Engine)
-# Novidade: âncora de seção — se a pergunta bater com um título/termo do contexto,
-#           a resposta sai diretamente do trecho correspondente (sem passar pelo modelo).
+# LAVO - Especialista em Reforma Tributária (RAG + FAISS + BM25)
+# Modo atual: Contexto alimenta o modelo (sem "ancorar" trechos). O modelo sempre sintetiza a resposta.
+# Mantido: cálculo determinístico de "quantos dias", sanitização, sem exemplo automático, sem expander.
 
 import os
 import re
@@ -89,11 +89,11 @@ MANIFEST_JSON = os.path.join(INDEX_DIR, "manifest.json")    # info do índice
 SYSTEM_PROMPT = (
     "Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.\n"
     "POLÍTICA DE RESPOSTA:\n"
-    "1) SEMPRE priorize as informações do <contexto> quando ele existir; se o contexto já trouxer a resposta, responda com base nele.\n"
-    "2) Somente complemente com conhecimento próprio se o contexto não cobrir o necessário.\n"
+    "1) Use o <contexto> como base para responder; sintetize em linguagem clara e direta.\n"
+    "2) Só complemente com conhecimento geral se o contexto não cobrir o necessário.\n"
     "3) Só inclua exemplo numérico se o usuário pedir explicitamente. Quando houver exemplo, use notação brasileira (R$ 1.234,56 e 12%).\n"
     "4) Cite leis/EC/LC apenas quando estritamente necessárias e de forma enxuta; não invente.\n"
-    "5) Nunca mencione arquivos internos (.txt, .pdf).\n"
+    "5) Nunca mencione arquivos internos (.txt, .pdf) nem índices.\n"
     "6) Não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e evite espaços entre dígitos.\n"
 )
 
@@ -164,7 +164,7 @@ def _wants_example(question: str) -> bool:
     return any(k in q for k in keys)
 
 def _clean_output(s: str) -> str:
-    if not s: 
+    if not s:
         return s
     s = s.replace("\r\n", "\n").replace("\u200b", " ")
     s = re.sub(r'(?<!\n)\n(?!\n)', ' ', s)            # quebra simples -> espaço
@@ -257,103 +257,6 @@ def _recompute_days_paragraph(paragraph: str, question: str) -> Optional[str]:
         return f"**Hoje** ({q_ref.strftime('%d/%m/%Y')}) é o início."
     else:
         return f"O início ({target.strftime('%d/%m/%Y')}) já passou há **{abs(new_days)} dias**."
-
-# ===== Detecção de intenção "dias"
-DAYS_INTENT_RE = re.compile(
-    r'(?i)(faltam\s+quantos\s+dias|quantos\s+dias\s+faltam|quantos\s+dias|dias\s+faltam|quanto\s+tempo).*?(reforma|ibs|cbs|in[ií]cio)',
-    re.DOTALL
-)
-def _is_days_intent(q: str) -> bool:
-    return bool(DAYS_INTENT_RE.search(q or ""))
-
-# ===== Âncora de seção (genérico + sinônimos)
-SYNONYMS = {
-    "imposto do pecado": ["imposto do pecado", "imposto seletivo", "is"],
-    "imposto seletivo": ["imposto seletivo", "imposto do pecado", "is"],
-    "iva dual": ["iva dual", "iva", "ibs e cbs"],
-    "ibs": ["ibs", "imposto sobre bens e serviços"],
-    "cbs": ["cbs", "contribuição sobre bens e serviços"],
-    "split payment": ["split payment", "pagamento dividido", "split"],
-}
-
-HEADER_RE = re.compile(r'^\s*\d+\s*[-–]\s', re.IGNORECASE)  # ex.: "7 - O QUE É ..."
-
-def _anchor_answer_from_context(question: str, context_text: str) -> Optional[str]:
-    q = (question or "").lower().strip()
-    if not q or not context_text:
-        return None
-
-    # gera candidatos (palavras-chave + sinônimos)
-    cand = set()
-    for key, vals in SYNONYMS.items():
-        if key in q:
-            cand.update(vals)
-    # também acrescenta n-grams simples da própria pergunta (até 4 palavras)
-    tokens = [t for t in re.split(r'[^a-zà-ú0-9]+', q) if t]
-    for n in range(4, 0, -1):
-        for i in range(len(tokens) - n + 1):
-            phrase = " ".join(tokens[i:i+n]).strip()
-            if len(phrase) >= 4:
-                cand.add(phrase)
-
-    if not cand:
-        return None
-
-    # varre o contexto por linha; ao bater, coleta o bloco daquela "seção"
-    lines = context_text.splitlines()
-    lower = [ln.lower() for ln in lines]
-
-    def matches_any(idx: int) -> bool:
-        s = lower[idx]
-        return any(c in s for c in cand)
-
-    # encontra a primeira linha que casa
-    hit = None
-    for i in range(len(lines)):
-        if matches_any(i):
-            hit = i
-            break
-    if hit is None:
-        return None
-
-    # coleta bloco: inclui a linha encontrada e segue até próxima seção/linha vazia longa
-    start = hit
-    # se a linha anterior for um cabeçalho tipo "7 - ...", puxa desde lá
-    j = hit
-    while j-1 >= 0 and not lines[j-1].strip() == "" and not HEADER_RE.match(lines[j]):
-        j -= 1
-    # se havia um header imediatamente antes, usa-o como início
-    if j-1 >= 0 and HEADER_RE.match(lines[j-1]):
-        start = j-1
-    else:
-        start = j
-
-    block = [lines[start].strip()]
-    i = hit + 1
-    empty_run = 0
-    while i < len(lines):
-        ln = lines[i]
-        if HEADER_RE.match(ln):  # nova seção numerada
-            break
-        if not ln.strip():
-            empty_run += 1
-            if empty_run >= 2:  # dois parágrafos vazios seguidos -> parar
-                break
-            block.append("")  # mantém separação de parágrafos
-            i += 1
-            continue
-        empty_run = 0
-        block.append(ln.strip())
-        # limite de segurança
-        if len("\n".join(block)) > 1500:
-            break
-        i += 1
-
-    answer = "\n".join([b for b in block if b is not None]).strip()
-    # Se o bloco for curto demais, não vale a pena
-    if len(answer) < 40:
-        return None
-    return answer
 
 # -----------------------------
 # Loaders (cacheados)
@@ -469,7 +372,7 @@ def _hybrid_rank(
 def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800) -> str:
     parts, total = [], 0
     for rank, i in enumerate(idxs, start=1):
-        if i < 0 or i >= len(metas): 
+        if i < 0 or i >= len(metas):
             continue
         m = metas[i] or {}
         snippet = str(m.get("text") or m.get("text_preview") or "").replace("\u200b", " ")
@@ -481,40 +384,28 @@ def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800)
     return "\n".join(parts).strip()
 
 # -----------------------------
-# Context-First Answer Engine (com âncora de seção)
-# -----------------------------
-def _context_first_transform(question: str, context_text: str) -> Optional[str]:
-    # 1) ÂNCORA: se a pergunta contém termo que aparece no contexto, retorna o bloco daquela seção
-    anchored = _anchor_answer_from_context(question, context_text)
-    if anchored:
-        return anchored
-
-    # 2) Regra de "faltam quantos dias" (recalcula determinístico)
-    if _is_days_intent(question):
-        para = _best_candidate_snippet(context_text)
-        fixed = _recompute_days_paragraph(para, question)
-        if fixed:
-            return fixed
-
-    # (Novas transformações genéricas podem ser plugadas aqui)
-    return None
-
-# -----------------------------
-# Resposta (RAG) com política context-first
+# Resposta (sempre sintetizada pelo modelo) + atalho de "quantos dias"
 # -----------------------------
 def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> str:
+    # Atalho determinístico para contagem de dias (não limita a inteligência, apenas evita erro de cálculo)
+    if any(k in (question or "").lower() for k in ["quantos dias", "faltam quantos dias", "dias faltam", "quanto tempo"]):
+        # tenta usar contexto para achar alvo; se não, padrão 01/01/2026
+        # (reuso do pipeline de contexto para pegar datas que eventualmente estejam nos trechos)
+        context_text = ""
+        if index is not None and metas:
+            idxs = _hybrid_rank(question, index, metas, k_faiss=8, k_bm25=12, top_k=top_k)
+            context_text = _build_context(metas, idxs, max_chars=2000)
+        para = _best_candidate_snippet(context_text) if context_text else ""
+        fixed = _recompute_days_paragraph(para, question)
+        if fixed:
+            return _clean_output(fixed)
+
+    # Caso geral: sempre usar o modelo para sintetizar a partir do contexto
     context_text = ""
     if index is not None and metas:
         idxs = _hybrid_rank(question, index, metas, k_faiss=8, k_bm25=12, top_k=top_k)
         context_text = _build_context(metas, idxs, max_chars=2800)
 
-    # 1) Context-first transform: responde direto do contexto quando possível
-    if context_text:
-        direct = _context_first_transform(question, context_text)
-        if direct:
-            return _clean_output(direct)
-
-    # 2) Caso não dê, consulta o modelo (forçado a usar contexto primeiro)
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user",
@@ -522,7 +413,7 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> str
              f"Usuário: {user_name}\n"
              + (f"<contexto>\n{context_text}\n</contexto>\n" if context_text else "")
              + f"Pergunta: {question}\n"
-             "- Use o contexto acima como base; responda de forma direta e fiel ao texto."
+             "- Responda de forma natural e concisa, sintetizando o contexto; evite copiar trechos longos literalmente."
          )},
     ]
     resp = client.chat.completions.create(
@@ -572,7 +463,7 @@ for role, content in st.session_state.history:
 user_q = st.chat_input("Pergunte algo sobre Reforma Tributária…")
 if user_q:
     st.session_state.history.append(("user", user_q))
-    with st.chat_message("user"): 
+    with st.chat_message("user"):
         st.markdown(user_q)
 
     with st.chat_message("assistant"):
@@ -585,4 +476,4 @@ if user_q:
             st.markdown(text)
             st.session_state.history.append(("assistant", text))
 
-st.caption("Dica: pergunte por um termo específico (ex.: “imposto do pecado”, “split payment”) para ver a resposta ancorada na seção correta da base.")
+st.caption("Dica: se quiser um exemplo com números, peça explicitamente.")
