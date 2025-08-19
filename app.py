@@ -1,11 +1,7 @@
 # app.py
 # LAVO - Especialista em Reforma Tributária (RAG + FAISS + BM25 + Context-First Engine)
-# Principais pontos:
-#  - Context-first: se o contexto já contém a resposta, usamos e normalizamos (ex.: 'faltam X dias')
-#  - Normalização de datas e contagens (recalcula de forma determinística)
-#  - Hybrid Search (FAISS + BM25) e metadados JSONL estáveis
-#  - Sem expander de fontes; sem exemplo automático
-#  - Sanitizador forte para números/moedas
+# Novidade: âncora de seção — se a pergunta bater com um título/termo do contexto,
+#           a resposta sai diretamente do trecho correspondente (sem passar pelo modelo).
 
 import os
 import re
@@ -187,7 +183,6 @@ def _strip_example_if_unwanted(text: str, question: str) -> str:
 
 # ===== Datas & contagens (determinístico) =====
 BR_DATE_RE = re.compile(r'(\d{1,2})[/-](\d{1,2})[/-](\d{4})')
-# Frases típicas no contexto: "Hoje é 19/08/2025", "Restam 135 dias", "faltam 135 dias"
 CTX_TODAY_RE = re.compile(r'(?i)\bhoje\s+é\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
 CTX_DAYS_RE  = re.compile(r'(?i)\b(restam|faltam)\s+(\d{1,4})\s+dias\b')
 CTX_TARGET_RE = re.compile(r'(?i)\b(em|no|para)\s+(\d{1,2}[/-]\d{1,2}[/-]\d{4})')
@@ -202,19 +197,15 @@ def _parse_br_date_str(s: str) -> Optional[date]:
         return None
 
 def _date_from_context_text(txt: str) -> Optional[date]:
-    # Prioriza "Hoje é dd/mm/aaaa" no contexto
     m = CTX_TODAY_RE.search(txt or "")
     if m:
         return _parse_br_date_str(m.group(1))
-    # Se não houver, pega a primeira data qualquer do trecho
     return _parse_br_date_str(txt or "")
 
 def _target_from_context_text(txt: str) -> Optional[date]:
-    # Tenta achar uma data futura explicitada (ex.: "em 01/01/2026")
     m = CTX_TARGET_RE.search(txt or "")
     if m:
         return _parse_br_date_str(m.group(2))
-    # Se não houver, padrão = 01/01/2026
     return None
 
 def _days_from_context_text(txt: str) -> Optional[int]:
@@ -227,20 +218,14 @@ def _days_from_context_text(txt: str) -> Optional[int]:
     return None
 
 def _best_candidate_snippet(context_text: str) -> str:
-    """
-    Pega o primeiro parágrafo do contexto que contenha 'restam/faltam ... dias' ou 'Hoje é ...'.
-    """
     paras = [p.strip() for p in context_text.split("\n") if p.strip()]
     for p in paras:
         if CTX_DAYS_RE.search(p) or CTX_TODAY_RE.search(p):
             return p
-    # fallback: todo contexto (curto)
     return context_text[:2000]
 
 def _extract_ref_and_target_from_question(q: str) -> Tuple[date, date]:
-    # data de referência na pergunta ("Hoje é 20/08/2025")
     ref = _parse_br_date_str(q) or date.today()
-    # data-alvo mencionada na pergunta (ex.: 05/01/2026); se não houver, padrão 01/01/2026
     all_dates = BR_DATE_RE.findall(q or "")
     target = None
     for d, mth, y in all_dates:
@@ -252,29 +237,20 @@ def _extract_ref_and_target_from_question(q: str) -> Tuple[date, date]:
         target = date(2026, 1, 1)
     return ref, target
 
+def ctx_reference_is_useful(ctx_ref: Optional[date], ctx_days: Optional[int]) -> bool:
+    return (ctx_ref is not None) and (ctx_days is not None)
+
 def _recompute_days_paragraph(paragraph: str, question: str) -> Optional[str]:
-    """
-    Se o parágrafo do contexto disser 'Hoje é X' e 'Restam/Faltam N dias' até 'data-alvo',
-    recalcula N considerando a data da PERGUNTA e (se houver) uma nova data-alvo.
-    """
     if not paragraph:
         return None
-
-    # Extrai do parágrafo
-    ctx_ref = _date_from_context_text(paragraph)              # ex.: 19/08/2025
-    ctx_days = _days_from_context_text(paragraph)             # ex.: 135
-    ctx_target = _target_from_context_text(paragraph)         # ex.: 01/01/2026 (se escrito)
+    ctx_ref = _date_from_context_text(paragraph)
+    ctx_days = _days_from_context_text(paragraph)
+    ctx_target = _target_from_context_text(paragraph)
     if not ctx_reference_is_useful(ctx_ref, ctx_days):
         return None
-
-    # Extrai da pergunta
     q_ref, q_target = _extract_ref_and_target_from_question(question)
     target = q_target or ctx_target or date(2026, 1, 1)
-
-    # Recalcula a partir da data da pergunta (q_ref)
     new_days = (target - q_ref).days
-
-    # Constrói frase simples e correta
     if new_days > 0:
         return f"Faltam **{new_days} dias** para o início em {target.strftime('%d/%m/%Y')}."
     elif new_days == 0:
@@ -282,16 +258,102 @@ def _recompute_days_paragraph(paragraph: str, question: str) -> Optional[str]:
     else:
         return f"O início ({target.strftime('%d/%m/%Y')}) já passou há **{abs(new_days)} dias**."
 
-def ctx_reference_is_useful(ctx_ref: Optional[date], ctx_days: Optional[int]) -> bool:
-    return (ctx_ref is not None) and (ctx_days is not None)
-
-# ====== Detecção de intenção "dias" (pergunta) ======
+# ===== Detecção de intenção "dias"
 DAYS_INTENT_RE = re.compile(
     r'(?i)(faltam\s+quantos\s+dias|quantos\s+dias\s+faltam|quantos\s+dias|dias\s+faltam|quanto\s+tempo).*?(reforma|ibs|cbs|in[ií]cio)',
     re.DOTALL
 )
 def _is_days_intent(q: str) -> bool:
     return bool(DAYS_INTENT_RE.search(q or ""))
+
+# ===== Âncora de seção (genérico + sinônimos)
+SYNONYMS = {
+    "imposto do pecado": ["imposto do pecado", "imposto seletivo", "is"],
+    "imposto seletivo": ["imposto seletivo", "imposto do pecado", "is"],
+    "iva dual": ["iva dual", "iva", "ibs e cbs"],
+    "ibs": ["ibs", "imposto sobre bens e serviços"],
+    "cbs": ["cbs", "contribuição sobre bens e serviços"],
+    "split payment": ["split payment", "pagamento dividido", "split"],
+}
+
+HEADER_RE = re.compile(r'^\s*\d+\s*[-–]\s', re.IGNORECASE)  # ex.: "7 - O QUE É ..."
+
+def _anchor_answer_from_context(question: str, context_text: str) -> Optional[str]:
+    q = (question or "").lower().strip()
+    if not q or not context_text:
+        return None
+
+    # gera candidatos (palavras-chave + sinônimos)
+    cand = set()
+    for key, vals in SYNONYMS.items():
+        if key in q:
+            cand.update(vals)
+    # também acrescenta n-grams simples da própria pergunta (até 4 palavras)
+    tokens = [t for t in re.split(r'[^a-zà-ú0-9]+', q) if t]
+    for n in range(4, 0, -1):
+        for i in range(len(tokens) - n + 1):
+            phrase = " ".join(tokens[i:i+n]).strip()
+            if len(phrase) >= 4:
+                cand.add(phrase)
+
+    if not cand:
+        return None
+
+    # varre o contexto por linha; ao bater, coleta o bloco daquela "seção"
+    lines = context_text.splitlines()
+    lower = [ln.lower() for ln in lines]
+
+    def matches_any(idx: int) -> bool:
+        s = lower[idx]
+        return any(c in s for c in cand)
+
+    # encontra a primeira linha que casa
+    hit = None
+    for i in range(len(lines)):
+        if matches_any(i):
+            hit = i
+            break
+    if hit is None:
+        return None
+
+    # coleta bloco: inclui a linha encontrada e segue até próxima seção/linha vazia longa
+    start = hit
+    # se a linha anterior for um cabeçalho tipo "7 - ...", puxa desde lá
+    j = hit
+    while j-1 >= 0 and not lines[j-1].strip() == "" and not HEADER_RE.match(lines[j]):
+        j -= 1
+    # se havia um header imediatamente antes, usa-o como início
+    if j-1 >= 0 and HEADER_RE.match(lines[j-1]):
+        start = j-1
+    else:
+        start = j
+
+    block = [lines[start].strip()]
+    i = hit + 1
+    empty_run = 0
+    while i < len(lines):
+        ln = lines[i]
+        if HEADER_RE.match(ln):  # nova seção numerada
+            break
+        if not ln.strip():
+            empty_run += 1
+            if empty_run >= 2:  # dois parágrafos vazios seguidos -> parar
+                break
+            block.append("")  # mantém separação de parágrafos
+            i += 1
+            continue
+        empty_run = 0
+        block.append(ln.strip())
+        # limite de segurança
+        if len("\n".join(block)) > 1500:
+            break
+        i += 1
+
+    answer = "\n".join([b for b in block if b is not None]).strip()
+    # Se o bloco for curto demais, não vale a pena
+    if len(answer) < 40:
+        return None
+    return answer
 
 # -----------------------------
 # Loaders (cacheados)
@@ -419,22 +481,22 @@ def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800)
     return "\n".join(parts).strip()
 
 # -----------------------------
-# Context-First Answer Engine
+# Context-First Answer Engine (com âncora de seção)
 # -----------------------------
 def _context_first_transform(question: str, context_text: str) -> Optional[str]:
-    """
-    Tenta responder SOMENTE com base no contexto, aplicando transformações determinísticas
-    (ex.: recalcular 'faltam X dias' quando a data da pergunta mudou).
-    Retorna a resposta pronta se conseguir; caso contrário, retorna None (para cair no modelo).
-    """
-    # Se intenção for dias: tente achar no contexto um parágrafo com 'dias'
+    # 1) ÂNCORA: se a pergunta contém termo que aparece no contexto, retorna o bloco daquela seção
+    anchored = _anchor_answer_from_context(question, context_text)
+    if anchored:
+        return anchored
+
+    # 2) Regra de "faltam quantos dias" (recalcula determinístico)
     if _is_days_intent(question):
         para = _best_candidate_snippet(context_text)
         fixed = _recompute_days_paragraph(para, question)
         if fixed:
             return fixed
 
-    # (Outras transformações genéricas poderiam entrar aqui no futuro)
+    # (Novas transformações genéricas podem ser plugadas aqui)
     return None
 
 # -----------------------------
@@ -446,13 +508,13 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> str
         idxs = _hybrid_rank(question, index, metas, k_faiss=8, k_bm25=12, top_k=top_k)
         context_text = _build_context(metas, idxs, max_chars=2800)
 
-    # 1) Context-first transform: se der para responder só com contexto, faça
+    # 1) Context-first transform: responde direto do contexto quando possível
     if context_text:
         direct = _context_first_transform(question, context_text)
         if direct:
             return _clean_output(direct)
 
-    # 2) Caso não dê, consulta o modelo (forçado a usar o contexto primeiro)
+    # 2) Caso não dê, consulta o modelo (forçado a usar contexto primeiro)
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user",
@@ -460,7 +522,7 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> str
              f"Usuário: {user_name}\n"
              + (f"<contexto>\n{context_text}\n</contexto>\n" if context_text else "")
              + f"Pergunta: {question}\n"
-             "- Use o contexto acima como base, responda de forma direta; só complemente se necessário.\n"
+             "- Use o contexto acima como base; responda de forma direta e fiel ao texto."
          )},
     ]
     resp = client.chat.completions.create(
@@ -523,4 +585,4 @@ if user_q:
             st.markdown(text)
             st.session_state.history.append(("assistant", text))
 
-st.caption("Dica: você pode dizer “Hoje é 20/08/2025, quantos dias para o início?” que eu calculo direto.")
+st.caption("Dica: pergunte por um termo específico (ex.: “imposto do pecado”, “split payment”) para ver a resposta ancorada na seção correta da base.")
