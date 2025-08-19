@@ -1,0 +1,124 @@
+Como será o calculo de IBS e CBS na venda de um produto a R$ 100,00 ?
+
+Resposta:
+
+Você quer entender como se calcula o IBS e a CBS na venda de um produto de R$ 100,00, certo? Esse é um excelente ponto para começar a desvendar a Reforma Tributária.
+
+
+Vamos lá:
+
+
+Primeiro, é fundamental compreender que o IBS (Imposto sobre Bens e Serviços) e a CBS (Contribuição sobre Bens e Serviços) formam o que chamamos de IVA Dual, substituindo impostos como o PIS, Cofins, IPI, ICMS e ISS, conforme a Emenda Constitucional nº 132 de 2023. Eles são tributos sobre o consumo e compartilham as mesmas regras de não cumulatividade e creditamento, como estabelecido na Lei Complementar nº 214 de 2025.
+
+
+Como funciona o cálculo "por fora":
+
+
+A base de cálculo do IBS e da CBS é o valor da operação, ou seja, o preço integral cobrado pelo fornecedor a qualquer título, incluindo juros, multas, acréscimos, custos de transporte (quando parte da operação), tributos e preços públicos (exceto o próprio IBS e CBS, IPI, ICMS, ISS), seguros e taxas (Art. 12, §§ 1º e 2º, da Lei Complementar nº 214 de 2025).
+
+
+A grande novidade é que o cálculo será "por fora". Isso significa que o montante do IBS e da CBS não integra sua própria base de cálculo (Art. 12, § 2º, I, da Lei Complementar nº 214 de 2025). Essa metodologia visa trazer mais transparência e evitar a cumulatividade de imposto sobre imposto.
+
+
+Vamos a um exemplo prático com a sua dúvida:
+
+
+Imagine que você, uma empresa varejista, vende um produto para um consumidor final.
+
+
+
+Preço do produto (Valor da Operação, sem o imposto): R$ 100,00
+
+Alíquota padrão estimada para IBS e CBS: O PLP 68/2024 estima uma alíquota combinada de 26,5% (por exemplo, 8,8% para a CBS e 17,7% para o IBS). Para este exemplo, usaremos 26,5%.
+
+
+Cálculo:
+
+
+
+
+Valor do IBS e CBS a ser cobrado:
+R$ 100,00 (valor da operação) x 26,5% (alíquota estimada) = R$ 26,50
+
+
+
+
+Valor total que o consumidor final pagará:
+R$ 100,00 (preço do produto) + R$ 26,50 (IBS e CBS) = R$ 126,50
+
+
+
+
+Nesse cenário, os R$ 26,50 são o total dos novos tributos que incidirão sobre a venda.
+
+
+E o crédito?
+
+
+O modelo do IBS e da CBS é de não cumulatividade plena (Art. 156-A, § 1º, VIII, da Constituição Federal, conforme a Emenda Constitucional nº 132 de 2023). Isso significa que, ao longo da cadeia de produção e comercialização, as empresas que adquirem bens e serviços para revenda ou como insumos podem aproveitar integralmente os créditos dos tributos pagos nas etapas anteriores.
+
+
+Por exemplo, se o seu varejo comprou esse produto por R$ 70,00 e pagou, digamos, R$ 18,55 de IBS e CBS na aquisição (70,00 x 26,5%), esse valor de R$ 18,55 se torna um crédito. No momento da venda ao consumidor final, você calculará o débito (R$ 26,50) e deduzirá o crédito (R$ 18,55). Assim, o valor a ser recolhido ao fisco será a diferença, que corresponde ao valor adicionado na sua etapa da cadeia.
+
+
+Exemplo completo da cadeia (simplificado):
+
+
+
+
+Indústria (Produção):
+
+
+
+Vende o produto para o atacado por R$ 50,00 (preço sem imposto).
+
+IBS/CBS (50,00 x 26,5%) = R$ 13,25
+
+Valor total da nota = R$ 63,25.
+
+Recolhimento da Indústria ao fisco = R$ 13,25 (considerando zero crédito na etapa anterior, para fins didáticos).
+
+
+
+
+Atacado (Distribuição):
+
+
+
+Compra da indústria por R$ 50,00 (+ R$ 13,25 de IBS/CBS = R$ 63,25).
+
+Vende para o varejo por R$ 70,00 (preço sem imposto).
+
+IBS/CBS (70,00 x 26,5%) = R$ 18,55
+
+Valor total da nota = R$ 88,55.
+
+Recolhimento do Atacado ao fisco: Débito (R$ 18,55) - Crédito (R$ 13,25) = R$ 5,30
+
+
+
+
+Varejo (Sua Operação):
+
+
+
+Compra do atacado por R$ 70,00 (+ R$ 18,55 de IBS/CBS = R$ 88,55).
+
+Vende para o consumidor final por R$ 100,00 (preço sem imposto).
+
+IBS/CBS (100,00 x 26,5%) = R$ 26,50
+
+Valor total da nota = R$ 126,50.
+
+Recolhimento do Varejo ao fisco: Débito (R$ 26,50) - Crédito (R$ 18,55) = R$ 7,95
+
+
+
+
+Total de IBS e CBS recolhido na cadeia = R$ 13,25 (Indústria) + R$ 5,30 (Atacado) + R$ 7,95 (Varejo) = R$ 26,50.
+
+
+Observe que o valor total do imposto pago pelo consumidor final (R$ 26,50) é exatamente a soma dos valores recolhidos por cada etapa da cadeia. Isso demonstra a neutralidade do sistema para as empresas intermediárias e a incidência sobre o consumo final.
+
+
+É importante ressaltar que a operacionalização envolverá documentos fiscais eletrônicos e mecanismos como o split payment, onde os prestadores de serviços de pagamento podem segregar e recolher os valores dos tributos diretamente para o fisco no momento da liquidação da transação, conforme os Artigos 33 e 50 da Lei Complementar nº 214 de 2025.
