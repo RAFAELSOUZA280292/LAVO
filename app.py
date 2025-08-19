@@ -1,9 +1,11 @@
 # app.py
 # LAVO - Especialista em Reforma Tributária (RAG + FAISS + OpenAI)
-# Revisão: Hybrid Search (FAISS + BM25), metadados JSONL estáveis e citações
-# Observação: requer index/faiss.index e index/metas.jsonl (ou faiss_meta.pkl legado)
+# Revisão: Hybrid Search (FAISS + BM25), metadados JSONL estáveis
+# Removido: expander de fontes
+# Adicionado: sanitizador de saída para evitar quebras em números/moedas
 
 import os
+import re
 import json
 import pickle
 from typing import List, Tuple, Dict, Any
@@ -21,7 +23,6 @@ except Exception:
 
 # ----------------------------------------------------------------------
 # 🔧 HOTFIX para deserializar faiss_meta.pkl legado
-#     (o pickle procura por uma classe Meta no módulo em execução)
 # ----------------------------------------------------------------------
 try:
     from dataclasses import dataclass
@@ -47,16 +48,12 @@ def _get_secret(key: str, default: str = "") -> str:
     return os.getenv(key, default)
 
 def _to_float(v: str, d: float) -> float:
-    try:
-        return float(v)
-    except:
-        return d
+    try: return float(v)
+    except: return d
 
 def _to_int(v: str, d: int) -> int:
-    try:
-        return int(v)
-    except:
-        return d
+    try: return int(v)
+    except: return d
 
 OPENAI_API_KEY = _get_secret("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
@@ -72,10 +69,8 @@ u1 = _get_secret("APP_USER_RAF", "").strip()
 p1 = _get_secret("APP_PASS_RAF", "")
 u2 = _get_secret("APP_USER_ALEX", "").strip()
 p2 = _get_secret("APP_PASS_ALEX", "")
-if u1 and p1:
-    USERS[u1.lower()] = p1
-if u2 and p2:
-    USERS[u2.lower()] = p2
+if u1 and p1: USERS[u1.lower()] = p1
+if u2 and p2: USERS[u2.lower()] = p2
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -84,7 +79,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 # -----------------------------
 INDEX_DIR = "index"
 FAISS_FILE = os.path.join(INDEX_DIR, "faiss.index")
-META_PKL = os.path.join(INDEX_DIR, "faiss_meta.pkl")       # legado
+META_PKL  = os.path.join(INDEX_DIR, "faiss_meta.pkl")       # legado
 META_JSONL = os.path.join(INDEX_DIR, "metas.jsonl")        # novo estável
 MANIFEST_JSON = os.path.join(INDEX_DIR, "manifest.json")   # info do índice
 
@@ -99,7 +94,8 @@ SYSTEM_PROMPT = (
     "Não invente referência legal. "
     "Nunca mencione arquivos internos (.txt, .pdf). "
     "Se a pergunta estiver vaga, peça UMA precisão curta. "
-    "Evite listas padronizadas; responda no formato adequado ao que foi perguntado."
+    "Evite listas padronizadas; responda no formato adequado ao que foi perguntado. "
+    "Importante: não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e evite espaços entre dígitos."
 )
 
 # -----------------------------
@@ -112,7 +108,7 @@ def login_box():
     st.title("🧑‍🏫 LAVO - Especialista em Reforma Tributária")
     with st.container():
         st.subheader("Login")
-        nome = st.text_input("Nome (igual ao cadastro)", key="login_nome")
+        nome  = st.text_input("Nome (igual ao cadastro)", key="login_nome")
         senha = st.text_input("Senha", type="password", key="login_senha")
         if st.button("Entrar", type="primary"):
             ok = USERS.get(_norm_name(nome)) == (senha or "")
@@ -151,23 +147,36 @@ def _read_jsonl(path: str) -> List[Dict[str, Any]]:
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if not line:
-                continue
+            if not line: continue
             try:
                 items.append(json.loads(line))
             except:
                 continue
     return items
 
-def _chunks_count(metas): 
-    return len(metas or [])
+def _chunks_count(metas): return len(metas or [])
+
+# Sanitizador de saída para evitar quebras/espaços indevidos em números/moedas
+def _clean_output(s: str) -> str:
+    if not s: return s
+    s = s.replace("\u200b", " ")
+    # remover espaços entre dígitos (ex.: 1 000 -> 1000), sem afetar letras
+    s = re.sub(r'(?<=\d)\s+(?=\d)', '', s)
+    # manter "R$" colado ao número
+    s = re.sub(r'R\s*\$', 'R$', s)
+    s = re.sub(r'R\$(\s+)(?=\d)', 'R$', s)
+    # remover espaços antes de % (ex.: 12 % -> 12%)
+    s = re.sub(r'\s+%', '%', s)
+    # limpar múltiplas quebras
+    s = re.sub(r'\s+\n', '\n', s)
+    s = re.sub(r'\n{3,}', '\n\n', s)
+    return s.strip()
 
 # -----------------------------
 # Loaders (cacheados)
 # -----------------------------
 @st.cache_resource(show_spinner=False)
 def load_index() -> Tuple[Any, List[Dict[str, Any]], Dict[str, Any]]:
-    # 1) FAISS
     if not os.path.exists(FAISS_FILE):
         return None, [], {}
     try:
@@ -176,7 +185,6 @@ def load_index() -> Tuple[Any, List[Dict[str, Any]], Dict[str, Any]]:
         st.error(f"Falha ao carregar FAISS: {e}")
         return None, [], {}
 
-    # 2) Metas JSONL (novo formato preferencial)
     metas: List[Dict[str, Any]] = []
     if os.path.exists(META_JSONL):
         try:
@@ -185,7 +193,6 @@ def load_index() -> Tuple[Any, List[Dict[str, Any]], Dict[str, Any]]:
             st.error(f"Falha ao ler metas.jsonl: {e}")
             metas = []
 
-    # 3) Fallback para PKL legado
     if not metas and os.path.exists(META_PKL):
         try:
             with open(META_PKL, "rb") as f:
@@ -198,7 +205,6 @@ def load_index() -> Tuple[Any, List[Dict[str, Any]], Dict[str, Any]]:
             st.error(f"Falha ao carregar faiss_meta.pkl: {e}")
             metas = []
 
-    # 4) Manifest
     manifest = {}
     if os.path.exists(MANIFEST_JSON):
         try:
@@ -224,7 +230,6 @@ def _faiss_search(index, query_vec: np.ndarray, k: int = 5):
 
 @st.cache_resource(show_spinner=False)
 def _bm25_index(metas: List[Dict[str, Any]]):
-    """Cria BM25 sobre os textos/previas para complementar a busca vetorial."""
     docs = []
     for m in metas:
         txt = str(m.get("text") or m.get("text_preview") or "")
@@ -240,14 +245,9 @@ def _hybrid_rank(
     k_bm25: int = 12,
     top_k: int = 6,
 ) -> List[int]:
-    """
-    Combina FAISS (cosine) + BM25: normaliza scores e faz rerank linear simples.
-    Retorna índices finais de 'metas'.
-    """
     if not metas:
         return []
 
-    # FAISS
     faiss_idxs = []
     faiss_scores = {}
     if index is not None:
@@ -258,20 +258,16 @@ def _hybrid_rank(
                 faiss_idxs.append(idx)
                 faiss_scores[idx] = float(score)
 
-    # BM25
     bm25 = _bm25_index(metas)
     bm25_scores = bm25.get_scores(question.lower().split())
     bm25_top = np.argsort(bm25_scores)[::-1][:k_bm25].tolist()
 
-    # União
     pool = set(faiss_idxs) | set(bm25_top)
     if not pool:
         return []
 
-    # Normalização min-max
     def _norm(vals: Dict[int, float]):
-        if not vals:
-            return {}
+        if not vals: return {}
         arr = np.array(list(vals.values()), dtype=float)
         vmin, vmax = float(np.min(arr)), float(np.max(arr))
         if vmax - vmin < 1e-9:
@@ -293,15 +289,14 @@ def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800)
     parts, total = [], 0
     used = []
     for rank, i in enumerate(idxs, start=1):
-        if i < 0 or i >= len(metas):
+        if i < 0 or i >= len(metas): 
             continue
         m = metas[i] or {}
         snippet = str(m.get("text") or m.get("text_preview") or "").replace("\u200b", " ")
-        title = str(m.get("title", ""))[:200]
-        source = str(m.get("source", ""))
+        title   = str(m.get("title", ""))[:200]
+        source  = str(m.get("source", ""))
         piece = f"[{rank}] {title}\n{snippet}\n"
-        parts.append(piece)
-        total += len(piece)
+        parts.append(piece); total += len(piece)
         used.append({
             "rank": rank,
             "title": title,
@@ -379,25 +374,18 @@ for role, content in st.session_state.history:
 user_q = st.chat_input("Pergunte algo sobre Reforma Tributária…")
 if user_q:
     st.session_state.history.append(("user", user_q))
-    with st.chat_message("user"):
+    with st.chat_message("user"): 
         st.markdown(user_q)
 
     with st.chat_message("assistant"):
         with st.spinner("Pensando…"):
             try:
-                text, cites = answer_with_rag(user_q, user_name, index, metas, top_k=6)
+                text, _cites = answer_with_rag(user_q, user_name, index, metas, top_k=6)
+                text = _clean_output(text)
             except Exception as e:
-                text, cites = f"Desculpe, ocorreu um erro ao gerar a resposta. Detalhe: {e}", []
+                text = f"Desculpe, ocorreu um erro ao gerar a resposta. Detalhe: {e}"
 
             st.markdown(text)
-            if cites:
-                with st.expander("🔎 Fontes utilizadas nesta resposta"):
-                    for c in cites:
-                        st.markdown(
-                            f"- **[{c['rank']}]** *{c['title']}* — `{c['source']}` (chunk {c.get('chunk_id')})\n\n"
-                            f"  > {c['preview']}…"
-                        )
-
             st.session_state.history.append(("assistant", text))
 
 st.caption("Dica: se quiser respostas com números, peça: “traga 1 exemplo com números”.")
