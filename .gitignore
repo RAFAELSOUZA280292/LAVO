@@ -1,4 +1,9 @@
+# arquivos locais
 .env
 __pycache__/
 *.pyc
-index/*.tmp
+.DS_Store
+
+# NÃO ignore a pasta index/, pois os binários do índice
+# precisam ser versionados pelo Actions para o app consumir.
+# index/
