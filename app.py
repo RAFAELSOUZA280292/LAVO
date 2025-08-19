@@ -1,8 +1,10 @@
 # app.py
 # LAVO - Especialista em Reforma Tributária (RAG + FAISS + OpenAI)
 # Revisão: Hybrid Search (FAISS + BM25), metadados JSONL estáveis
-# Removido: expander de fontes
-# Adicionado: sanitizador de saída para evitar quebras em números/moedas
+# Mudanças:
+#  - Sem expander de fontes
+#  - Sem exemplo automático: só inclui se o usuário pedir
+#  - Sanitizador forte para remover \n no meio de números/palavras
 
 import os
 import re
@@ -80,22 +82,21 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 INDEX_DIR = "index"
 FAISS_FILE = os.path.join(INDEX_DIR, "faiss.index")
 META_PKL  = os.path.join(INDEX_DIR, "faiss_meta.pkl")       # legado
-META_JSONL = os.path.join(INDEX_DIR, "metas.jsonl")        # novo estável
-MANIFEST_JSON = os.path.join(INDEX_DIR, "manifest.json")   # info do índice
+META_JSONL = os.path.join(INDEX_DIR, "metas.jsonl")         # novo estável
+MANIFEST_JSON = os.path.join(INDEX_DIR, "manifest.json")    # info do índice
 
 # -----------------------------
 # Prompt
 # -----------------------------
 SYSTEM_PROMPT = (
     "Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group. "
-    "Seja objetiva e clara. Quando fizer sentido, traga UM exemplo numérico simples "
-    "com notação brasileira (R$ 1.234,56 e 12%). "
-    "Cite leis/EC/LC apenas quando forem estritamente necessárias e de forma enxuta. "
-    "Não invente referência legal. "
+    "Responda com objetividade e clareza. "
+    "Só inclua exemplo numérico se o usuário pedir explicitamente. "
+    "Quando houver exemplo, use notação brasileira (R$ 1.234,56 e 12%). "
+    "Cite leis/EC/LC apenas quando forem estritamente necessárias e de forma enxuta; não invente. "
     "Nunca mencione arquivos internos (.txt, .pdf). "
     "Se a pergunta estiver vaga, peça UMA precisão curta. "
-    "Evite listas padronizadas; responda no formato adequado ao que foi perguntado. "
-    "Importante: não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e evite espaços entre dígitos."
+    "Não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e evite espaços entre dígitos."
 )
 
 # -----------------------------
@@ -156,21 +157,38 @@ def _read_jsonl(path: str) -> List[Dict[str, Any]]:
 
 def _chunks_count(metas): return len(metas or [])
 
-# Sanitizador de saída para evitar quebras/espaços indevidos em números/moedas
+# ====== Sanitização de saída ======
+_EXAMPLE_TAG_RE = re.compile(r'(?is)\bexemplo\s+num[eé]rico.*?(?:\n\n|$)')
+
+def _wants_example(question: str) -> bool:
+    q = (question or "").lower()
+    keys = ("exemplo", "exemplifique", "simule", "cálculo", "calculo", "número", "numeros", "números")
+    return any(k in q for k in keys)
+
 def _clean_output(s: str) -> str:
-    if not s: return s
-    s = s.replace("\u200b", " ")
-    # remover espaços entre dígitos (ex.: 1 000 -> 1000), sem afetar letras
+    if not s: 
+        return s
+    s = s.replace("\r\n", "\n").replace("\u200b", " ")
+    # 1) converter quebras simples em espaço (preserva parágrafos duplos)
+    s = re.sub(r'(?<!\n)\n(?!\n)', ' ', s)
+    # 2) remover espaços entre dígitos (1 000 -> 1000)
     s = re.sub(r'(?<=\d)\s+(?=\d)', '', s)
-    # manter "R$" colado ao número
+    # 3) manter "R$" colado ao número
     s = re.sub(r'R\s*\$', 'R$', s)
     s = re.sub(r'R\$(\s+)(?=\d)', 'R$', s)
-    # remover espaços antes de % (ex.: 12 % -> 12%)
+    # 4) remover espaços antes de % (12 % -> 12%)
     s = re.sub(r'\s+%', '%', s)
-    # limpar múltiplas quebras
-    s = re.sub(r'\s+\n', '\n', s)
+    # 5) reduzir múltiplos espaços
+    s = re.sub(r'[ \t]{2,}', ' ', s)
+    # 6) reduzir quebras excessivas
     s = re.sub(r'\n{3,}', '\n\n', s)
     return s.strip()
+
+def _strip_example_if_unwanted(text: str, question: str) -> str:
+    if _wants_example(question):
+        return text
+    # remove bloco iniciado por "Exemplo numérico:" até fim do parágrafo
+    return _EXAMPLE_TAG_RE.sub('', text).strip()
 
 # -----------------------------
 # Loaders (cacheados)
@@ -248,8 +266,7 @@ def _hybrid_rank(
     if not metas:
         return []
 
-    faiss_idxs = []
-    faiss_scores = {}
+    faiss_idxs, faiss_scores = [], {}
     if index is not None:
         qv = embed_query(question)
         D, I = _faiss_search(index, qv, k=k_faiss)
@@ -282,8 +299,7 @@ def _hybrid_rank(
 
     combo = {i: 0.55 * f_n.get(i, 0.0) + 0.45 * b_n.get(i, 0.0) for i in pool}
     reranked = sorted(combo.items(), key=lambda x: x[1], reverse=True)
-    final_idxs = [i for i, _ in reranked[:top_k]]
-    return final_idxs
+    return [i for i, _ in reranked[:top_k]]
 
 def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800) -> Tuple[str, List[Dict[str, Any]]]:
     parts, total = [], 0
@@ -311,12 +327,11 @@ def _build_context(metas: List[Dict[str, Any]], idxs: List[int], max_chars=2800)
 # -----------------------------
 # Resposta (RAG)
 # -----------------------------
-def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> Tuple[str, List[Dict[str, Any]]]:
+def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> str:
     contexto = ""
-    citations: List[Dict[str, Any]] = []
     if index is not None and metas:
         idxs = _hybrid_rank(question, index, metas, k_faiss=8, k_bm25=12, top_k=top_k)
-        contexto, citations = _build_context(metas, idxs, max_chars=2800)
+        contexto, _ = _build_context(metas, idxs, max_chars=2800)
 
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
@@ -325,7 +340,6 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> Tup
              f"Usuário: {user_name}\n"
              + (f"<contexto>\n{contexto}\n</contexto>\n" if contexto else "")
              + f"Pergunta: {question}\n"
-             "- Seja direto e útil; se couber, traga UM pequeno exemplo com números em notação brasileira.\n"
              "- Evite fórmulas que quebrem a renderização."
          )},
     ]
@@ -335,7 +349,11 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=6) -> Tup
         temperature=TEMPERATURE,
         max_tokens=MAX_TOKENS,
     )
-    return resp.choices[0].message.content.strip(), citations
+    text = resp.choices[0].message.content.strip()
+    # remover bloco "Exemplo numérico" se não pedido
+    text = _strip_example_if_unwanted(text, question)
+    # limpar quebras/espaços indevidos
+    return _clean_output(text)
 
 # -----------------------------
 # App
@@ -380,8 +398,7 @@ if user_q:
     with st.chat_message("assistant"):
         with st.spinner("Pensando…"):
             try:
-                text, _cites = answer_with_rag(user_q, user_name, index, metas, top_k=6)
-                text = _clean_output(text)
+                text = answer_with_rag(user_q, user_name, index, metas, top_k=6)
             except Exception as e:
                 text = f"Desculpe, ocorreu um erro ao gerar a resposta. Detalhe: {e}"
 
