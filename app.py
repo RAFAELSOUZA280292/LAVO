@@ -20,8 +20,8 @@ st.title("🧑‍🏫 LAVO - Especialista em Reforma Tributária")
 
 # ===================== CONFIG =====================
 EMBED_MODEL  = "text-embedding-3-small"
-CHAT_MODEL   = os.getenv("CHAT_MODEL", "gpt-4o")       # modelo principal
-RERANK_MODEL = os.getenv("RERANK_MODEL", "gpt-4o")     # re-ranking
+CHAT_MODEL   = os.getenv("CHAT_MODEL", "gpt-4o")
+RERANK_MODEL = os.getenv("RERANK_MODEL", "gpt-4o")
 
 OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", "")).strip()
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -44,11 +44,10 @@ PERSONA
 
 PERSONALIZAÇÃO
 - Cumprimente o usuário usando o NOME do login, já fornecido no contexto.
-- Use o nome ao longo da resposta quando fizer sentido.
 
 ESCOPO
 - Responda SOMENTE sobre Reforma Tributária (BR).
-- Cite apenas leis, ECs, PECs, PLPs, pareceres e nomes de professores/relatores (sem links).
+- Cite apenas leis, ECs, PECs, PLPs, pareceres e nomes de professores/relatores.
 - Nunca mencione “arquivos/PDFs/slides/material/chunks/contexto”.
 
 INCERTEZA
@@ -60,31 +59,44 @@ FORMATAÇÃO
   2) Detalhamento prático (bullets com regras, prazos, cálculos e exemplos).
   3) Referências normativas (ex.: EC 132/2023; PLP 68/2024).
 - Valores: use vírgula (R$ 1.000,00) e mostre a conta: 18% de R$ 1.000,00 → R$ 180,00.
-- **NUNCA quebre números, moedas (ex.: R$ 1.000,00), percentuais (ex.: 18%) ou siglas (ex.: IBS/CBS) com quebras de linha ou espaços no meio. Mantenha-os em linha única e contínua.**
+- **NUNCA quebre números, moedas (ex.: R$ 1.000,00), percentuais (ex.: 18%) ou siglas (ex.: IBS/CBS) com quebras de linha ou espaços no meio.**
 """
 
-# ===================== SANITIZADOR DE FORMATAÇÃO =====================
+# ===================== SANITIZADOR DE FORMATAÇÃO (REFORÇADO) =====================
 def tidy_text(s: str) -> str:
+    """Conserta quebras no meio de números, moedas e siglas (IBS/CBS), e normaliza setas/percentuais."""
     if not s:
         return s
 
-    # Normalizar "R $", "R  $", "R\n$" -> "R$"
-    s = re.sub(r'R\s*\$\s*', 'R$', s)
+    # Normaliza NBSP e similares
+    s = s.replace("\u00A0", " ")
 
-    # Remover quebras/espaços entre dígitos, pontos, vírgulas e % (ex.: "1  . 000 , 00" -> "1.000,00")
-    s = re.sub(r'(?<=\d)[\s\u00A0]+(?=[\d\.,%])', '', s)
-    s = re.sub(r'(?<=[\d\.,])[\s\u00A0]+(?=\d)', '', s)
+    # 1) Moeda: colar 'R$' e garantir espaço antes do número (R$1000 -> R$ 1000), inclusive casos 'R 100,00' e 'R\n100,00'
+    s = re.sub(r'R\s*\$\s*', 'R$ ', s)                   # R $  -> R$
+    s = re.sub(r'\bR\$(?=\d)', 'R$ ', s)                 # R$100 -> R$ 100
+    s = re.sub(r'\bR\s+(?=\d)', 'R$ ', s)                # R 100 -> R$ 100
+    s = re.sub(r'\bR(?=\d)', 'R$ ', s)                   # R100  -> R$ 100
 
-    # Garantir espaço após "R$" quando seguido de número (ex.: "R$1000" -> "R$ 1000")
-    s = re.sub(r'R\$(?=\d)', r'R$ ', s)
+    # 2) Números “quebrados”: remove QUALQUER espaço/linha entre dígitos e separadores (.,%)
+    #   Ex.: "1  . 000 , 00" / "1\n000,\n00" -> "1.000,00"
+    s = re.sub(r'(?:(?<=\d)|(?<=[\.,]))\s+(?=(\d|[.,%]))', '', s)
 
-    # Colar siglas quebradas por espaços/linhas: I B S -> IBS, C B S -> CBS, etc.
-    def join_acronyms(m):
-        return m.group(0).replace(' ', '').replace('\n', '')
-    s = re.sub(r'\b(?:[A-Z]\s+){1,}[A-Z]\b', join_acronyms, s)
+    # 3) Percentuais: 12 % -> 12%
+    s = re.sub(r'(\d)\s*%\b', r'\1%', s)
 
-    # Remover espaços extras ao redor de "/" em siglas compostas (IBS / CBS -> IBS/CBS)
-    s = re.sub(r'\s*/\s*', '/', s)
+    # 4) Siglas: juntar letras separadas (IBS, CBS etc.), inclusive dentro de parênteses
+    def _join_acronym(m: re.Match) -> str:
+        return re.sub(r'\s+', '', m.group(0))
+    s = re.sub(r'\b(?:[A-Z]\s+){1,}[A-Z]\b', _join_acronym, s)                     # I B S -> IBS
+    s = re.sub(r'\((?:\s*[A-Z]\s*){2,}\)', lambda m: '(' + re.sub(r'\s+', '', m.group(0))[1:-1] + ')', s)
+    s = re.sub(r'\s*/\s*', '/', s)                                                 # IBS / CBS -> IBS/CBS
+
+    # 5) Setas: normalizar espaço
+    s = re.sub(r'\s*→\s*', ' → ', s)
+
+    # 6) Pequenos ajustes de moeda (casos raros)
+    s = re.sub(r'R\$\s*,', 'R$,', s)            # evita "R$ ,00"
+    s = re.sub(r'R\$\s+\.', 'R$.', s)
 
     return s
 
@@ -268,6 +280,6 @@ if q:
         with st.chat_message("assistant"):
             with st.spinner("Consultando…"):
                 raw = answer_with_context(q, index, metas, nome)
-                fixed = tidy_text(raw)  # <<<<<< CORREÇÃO DE FORMATAÇÃO AQUI
+                fixed = tidy_text(raw)  # <<<<<< SANITIZADOR REFORÇADO
                 st.markdown(fixed)
                 st.session_state.history.append(("assistant", fixed))
