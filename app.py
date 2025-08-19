@@ -1,9 +1,8 @@
 # app.py
-# LAVO - Especialista em Reforma Tributária (RAG "como o ChatGPT": busca precisa + síntese)
-# - Recuperação híbrida (FAISS + BM25) com reforço lexical e prioridade a nomes próprios
-# - Modelo SEMPRE sintetiza em linguagem clara (nada de colar trechos crus)
-# - Foco em fatos da base: leis (EC/LC/artigos), datas, nomes (ex.: Miguel Abuhab, Alex Montu), mecanismos (ex.: Split Payment)
-# - Sem expander, sem exemplo automático. Sanitização de números. Regra determinística para "quantos dias".
+# LAVO - Especialista em Reforma Tributária (RAG com inteligência completa + base como reforço)
+# - Recuperação híbrida (FAISS + BM25) com reforço lexical, prioridade a nomes e force-find
+# - Modelo SEMPRE responde: usa a base se houver; sem base, responde geral, SEM inventar leis/datas
+# - Sem expander, sem exemplo automático. Sanitização. Regra determinística para "quantos dias".
 
 import os
 import re
@@ -86,17 +85,18 @@ META_JSONL = os.path.join(INDEX_DIR, "metas.jsonl")        # novo estável
 MANIFEST   = os.path.join(INDEX_DIR, "manifest.json")
 
 # -----------------------------
-# Prompt "como o ChatGPT" (fiel à base)
+# Prompt (inteligência completa + base como reforço)
 # -----------------------------
 SYSTEM_PROMPT = (
     "Você é a LAVO, especialista em Reforma Tributária da Lavoratory Group.\n"
-    "REGRAS:\n"
-    "• Responda de forma clara, direta e profissional, sempre sintetizando o <contexto>.\n"
-    "• Priorize fatos explícitos do <contexto>: nomes, leis (EC/LC/artigos), datas, prazos, percentuais, mecanismos.\n"
-    "• Se a resposta depender de algo que NÃO está no <contexto>, diga brevemente que não há detalhe na base e evite inventar.\n"
-    "• Só traga exemplo numérico se o usuário pedir. Quando houver exemplo, use notação brasileira (R$ 1.234,56 e 12%).\n"
-    "• Não mencione arquivos internos (.txt, .pdf) nem o índice. Não cole trechos extensos literalmente: reescreva em tom humano.\n"
-    "• Não quebre números em linhas; mantenha 'R$' colado ao valor (R$ 1.000,00) e sem espaços entre dígitos.\n"
+    "POLÍTICA DE RESPOSTA:\n"
+    "1) Use o <contexto> (se houver) como base preferencial para fatos específicos (leis, artigos, datas, nomes).\n"
+    "2) SEMPRE responda em linguagem clara e direta. Se o contexto for insuficiente, use conhecimento geral, mas:\n"
+    "   • NÃO invente números de lei, artigos, datas, percentuais ou nomes que não estejam no <contexto>.\n"
+    "   • Quando faltar base jurídica específica, responda de forma geral sem citar números/atos normativos.\n"
+    "3) Só traga exemplo numérico se o usuário pedir. Quando houver, use notação brasileira (R$ 1.234,56 e 12%).\n"
+    "4) Nunca mencione arquivos internos (.txt, .pdf) nem o índice. Não copie blocos longos; sintetize com suas palavras.\n"
+    "5) Não quebre números em linhas; mantenha 'R$' colado ao valor (ex.: R$ 1.000,00) e sem espaços entre dígitos.\n"
 )
 
 # -----------------------------
@@ -254,7 +254,7 @@ def load_index() -> Tuple[Any, List[Dict[str, Any]], Dict[str, Any]]:
     return idx, metas, manifest
 
 # -----------------------------
-# Busca (FAISS + BM25) com reforço lexical e prioridade a nomes próprios
+# Busca (FAISS + BM25) com reforço lexical, nomes e force-find
 # -----------------------------
 def embed_query(text: str) -> np.ndarray:
     resp = client.embeddings.create(model="text-embedding-3-small", input=[text])
@@ -282,7 +282,7 @@ SYNONYMS = {
     "cbs": ["cbs", "contribuição sobre bens e serviços"],
 }
 
-# === Detecção simples de nomes próprios na pergunta (sequências de 2+ palavras com inicial maiúscula)
+# === Detecção de nomes próprios na pergunta (sequências de 2+ palavras com inicial maiúscula)
 NAME_SEQ_RE = re.compile(r'((?:[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-zà-ú]+(?:\s+|$)){2,})')
 
 def _name_queries(question: str) -> List[str]:
@@ -363,7 +363,7 @@ def _hybrid_rank(question: str, index, metas: List[Dict[str, Any]],
     return [i for i, _ in reranked[:top_k]]
 
 # -----------------------------
-# Construção de contexto: pega PARÁGRAFOS que batem com a pergunta (com prioridade a nomes)
+# Construção de contexto (parágrafos relevantes + force-find para nomes)
 # -----------------------------
 PARA_SPLIT_RE = re.compile(r'\n\s*\n')
 
@@ -374,7 +374,7 @@ def _extract_paragraph_hits(text: str, keywords: List[str], question: str = "") 
     if not paras:
         return []
 
-    # 1) Prioriza parágrafos que contenham NOME(S) detectado(s) na pergunta
+    # 1) Prioriza parágrafos com NOME(S) detectado(s)
     name_qs = [n.strip() for n in _name_queries(question) if n.strip()]
     if name_qs:
         name_hits = []
@@ -401,6 +401,26 @@ def _extract_paragraph_hits(text: str, keywords: List[str], question: str = "") 
     # 3) Fallback: primeiros parágrafos curtos
     return paras[:2]
 
+def _force_find_name_context(metas: List[Dict[str, Any]], question: str, max_chars=2200) -> str:
+    """Se a pergunta tiver nome próprio e o contexto vier vazio, faz uma varredura direta por esse nome."""
+    names = [n.lower() for n in _name_queries(question)]
+    if not names: 
+        return ""
+    parts, total = [], 0
+    for m in metas:
+        raw = str(m.get("text") or m.get("text_preview") or "")
+        title = str(m.get("title") or "")
+        low = (raw + "\n" + title).lower()
+        if any(n in low for n in names):
+            # recorta parágrafos onde o nome aparece
+            hits = _extract_paragraph_hits(raw, [], question)
+            block = (f"{title}\n" if title else "") + "\n\n".join(hits)
+            if block.strip():
+                parts.append(block); total += len(block)
+                if total >= max_chars:
+                    break
+    return ("\n\n---\n\n").join(parts).strip()[:max_chars]
+
 def _build_context(metas: List[Dict[str, Any]], idxs: List[int], question: str,
                    max_chars=4800) -> str:
     keys = _keywords_from_question(question)
@@ -415,14 +435,13 @@ def _build_context(metas: List[Dict[str, Any]], idxs: List[int], question: str,
         block = (f"{title}\n" if title else "") + "\n\n".join(hits)
         parts.append(block); total += len(block)
         if total >= max_chars: break
-    # fallback se nada entrou
     if not parts and idxs:
         i = idxs[0]; m = metas[i] or {}
         parts = [str(m.get("text") or m.get("text_preview") or "")]
     return ("\n\n---\n\n").join(parts).strip()[:max_chars]
 
 # -----------------------------
-# Resposta (modelo SEMPRE sintetiza) + atalho “quantos dias”
+# Resposta (modelo SEMPRE responde) + atalho “quantos dias”
 # -----------------------------
 DAYS_INTENT_RE = re.compile(
     r'(?i)(faltam\s+quantos\s+dias|quantos\s+dias\s+faltam|quantos\s+dias|dias\s+faltam|quanto\s+tempo).*?(reforma|ibs|cbs|in[ií]cio)',
@@ -430,7 +449,7 @@ DAYS_INTENT_RE = re.compile(
 )
 
 def answer_with_rag(question: str, user_name: str, index, metas, top_k=10) -> str:
-    # Atalho determinístico para "quantos dias"
+    # 0) Atalho determinístico para "quantos dias"
     if DAYS_INTENT_RE.search(question or ""):
         context_text = ""
         if index is not None and metas:
@@ -440,26 +459,30 @@ def answer_with_rag(question: str, user_name: str, index, metas, top_k=10) -> st
         fixed = _recompute_days_paragraph(para, question)
         if fixed: return _clean_output(fixed)
 
-    # Contexto focado (parágrafos que batem com a pergunta)
+    # 1) Monta contexto a partir do índice
     context_text = ""
     if index is not None and metas:
         idxs = _hybrid_rank(question, index, metas, top_k=top_k)
         context_text = _build_context(metas, idxs, question, max_chars=4800)
 
-    # Se não houver contexto, não inventa
-    if not context_text:
-        return "Não encontrei detalhes na base sobre isso. Pode reformular ou dar mais contexto?"
+    # 2) Se não veio nada e a pergunta tem NOME(S), tenta force-find
+    if not context_text and metas:
+        forced = _force_find_name_context(metas, question, max_chars=2200)
+        if forced:
+            context_text = forced
+
+    # 3) Sempre responder: com ou sem contexto
+    user_content = (
+        f"Usuário: {user_name}\n"
+        + (f"<contexto>\n{context_text}\n</contexto>\n" if context_text else "")
+        + f"Pergunta: {question}\n"
+        "- Regras: use o contexto para fatos específicos (leis/datas/nomes). "
+        "Sem contexto suficiente, responda de forma geral e NÃO invente números de lei/artigos/datas."
+    )
 
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user",
-         "content": (
-             f"Usuário: {user_name}\n"
-             f"<contexto>\n{context_text}\n</contexto>\n"
-             f"Pergunta: {question}\n"
-             "- Responda com base no contexto. Se o contexto trouxer nomes/leis/datas, inclua-os. "
-             "- Evite generalidades. Não copie blocos longos; explique com suas palavras em 1–3 parágrafos."
-         )},
+        {"role": "user", "content": user_content},
     ]
     resp = client.chat.completions.create(
         model=CHAT_MODEL,
