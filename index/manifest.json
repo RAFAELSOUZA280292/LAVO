@@ -1,5 +1,7 @@
 {
-  "num_chunks": 154,
+  "num_chunks": 160,
   "embed_model": "text-embedding-3-small",
-  "dim": 1536
+  "dim": 1536,
+  "max_chars_per_chunk": 1800,
+  "chunk_overlap": 200
 }
